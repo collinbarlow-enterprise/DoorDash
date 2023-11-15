@@ -7,7 +7,7 @@ const restaurantSchema = new Schema({
     name: {type: String},
     cuisineType: {type: String},
     picture: {type: Image},
-    menu: {type: Schema.Types.ObjectId, ref: 'menuItem'},
+    menu: [{type: Schema.Types.ObjectId, ref: 'menuItem'}],
     avgRating: [{type: Schema.Types.ObjectId, ref: 'menuItem'}],
     orderHistory: {type: Schema.Types.ObjectId, ref: 'Order'}
 
