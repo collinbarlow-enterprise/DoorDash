@@ -5,17 +5,11 @@ const Schema = mongoose.Schema;
 
 const restaurantSchema = new Schema({
     name: {type: String},
-    cuisine: {type: String},
+    cuisineType: {type: String},
     picture: {type: Image},
     menu: {type: Schema.Types.ObjectId, ref: 'menuItem'},
-
-    
-    user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-    content: String,
-    // double check how to use a created at date
-    date: {type: Date},
-    recipe: {type: Schema.Types.ObjectId, ref: 'Recipe'},
-    comments: {type: Schema.Types.ObjectId, ref:'Comment'}
+    avgRating: [{type: Schema.Types.ObjectId, ref: 'menuItem'}],
+    orderHistory: {type: Schema.Types.ObjectId, ref: 'Order'}
 
 });
 

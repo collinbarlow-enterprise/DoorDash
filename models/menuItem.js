@@ -4,13 +4,12 @@ const Schema = mongoose.Schema;
 // not used in this version of Magic Chef
 
 const menuItemSchema = new Schema({
-    user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-    content: String,
-    // double check how to use a created at date
-    date: {type: Date},
-    recipe: {type: Schema.Types.ObjectId, ref: 'Recipe'},
-    comments: {type: Schema.Types.ObjectId, ref:'Comment'}
-
+    dishName: {type: String},
+    description: {type: String},
+    ingredients: [{type: String}], 
+    price: {type: Number},
+    ratings: {type: Number},
+    reviews: [{type: String}],
 });
 
 module.exports = mongoose.model("MenuItem", menuItemSchema)

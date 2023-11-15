@@ -4,12 +4,11 @@ const Schema = mongoose.Schema;
 // not used in this version of Magic Chef
 
 const orderSchema = new Schema({
-    user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-    content: String,
-    // double check how to use a created at date
-    date: {type: Date},
-    recipe: {type: Schema.Types.ObjectId, ref: 'Recipe'},
-    comments: {type: Schema.Types.ObjectId, ref:'Comment'}
+    restaurant: {type: Schema.Types.ObjectId, ref: 'Restaurant', required: true},
+    orderItems: [{type: Schema.Types.ObjectId, ref: 'MenuItem', required: true}],
+    driver: {type: Schema.Types.ObjectId, ref: 'Driver', required: true},
+    totalPrice: {type: Number},
+    status: {type: String},
 
 });
 
