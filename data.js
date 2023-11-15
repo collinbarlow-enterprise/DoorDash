@@ -278,7 +278,7 @@ exports.restaurants = [
             { dishName: 'Chicken and Waffles', description: 'Fried chicken on top of a crispy waffle, drizzled with honey', ingredients: ['fried chicken', 'waffle', 'honey'], price: 14.99 },
             { dishName: 'Grilled Cheese Sandwich', description: 'Melted cheese between slices of buttered bread', ingredients: ['cheese', 'bread', 'butter'], price: 10.99 },
             { dishName: 'BLT Sandwich', description: 'Classic bacon, lettuce, and tomato sandwich', ingredients: ['bacon', 'lettuce', 'tomato', 'bread'], price: 11.99 },
-            { dishName: 'Mac 'n' Cheese', description: 'Creamy macaroni and cheese', ingredients: ['macaroni', 'cheese', 'milk'], price: 12.99 },
+            { dishName: 'Mac n Cheese', description: 'Creamy macaroni and cheese', ingredients: ['macaroni', 'cheese', 'milk'], price: 12.99 },
         ]
     },
     {

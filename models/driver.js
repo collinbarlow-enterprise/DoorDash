@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const driverSchema = new Schema({
     name: {type: String},
-    picture: {type: Image},
+    picture: {type: String},
     car: {type: String},
     rating: [{type: Number}]
 });
