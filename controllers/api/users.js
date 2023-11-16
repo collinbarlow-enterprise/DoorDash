@@ -9,10 +9,12 @@ module.exports = {
 
 async function create(req, res){
   try {
+    console.log('made it to create controller')
     const user = await User.create(req.body)
     const token = createJWT(user)
     res.json(token)
   } catch (error) {
+    console.log(error, 'error here')
     res.status(400).json(error)
   }
 }

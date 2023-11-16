@@ -3,11 +3,14 @@ const Schema = mongoose.Schema;
 const SALT_ROUNDS = 6;
 const bcrypt = require('bcrypt')
 
+// add first name, last name, address, and credit card to sign up form
+// need to reformat entire sign up form, not a big deal just change fields and what data value they map to
+
 const userSchema = new Schema({
-  firstName: {type: String, required: true},
-  lastName: {type: String, required: true},
-  address: { type: String, required: true},
-  creditCard: {type: Number, required: true, length: 9},
+  firstName: {type: String, required: false},
+  lastName: {type: String, required: false},
+  address: { type: String, required: false},
+  creditCard: {type: Number, required: false, length: 9},
   favoriteRestaurant: [{type: Schema.Types.ObjectId, ref: 'Restaurant'}],
   orders: [{type: Schema.Types.ObjectId, ref: 'Order'}],
   email: {
