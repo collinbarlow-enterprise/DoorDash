@@ -22,8 +22,16 @@ export default function App() {
         <>
           <NavBar user={user} updateUser={updateUser}/>
           <Routes>
-            <Route path="/orders/" element={<OrderHistoryPage />} />
-            <Route path="/orders/new" element={<NewOrderPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/restaurant" element={<RestaurantPage />} />
+            <Route path="/restaurant/:id/itempage" element={<ItemPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/deals" element={<DealPage />} />
+            <Route path="/pastorders" element={<PastOrderPage />} />
+            <Route path="/cart" element={<Cartpage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/orderstatus" element={<OrderStatus />} />
           </Routes>
         </>
         :
