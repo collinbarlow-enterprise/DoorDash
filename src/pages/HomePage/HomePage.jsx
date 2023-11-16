@@ -25,9 +25,9 @@ const restaurantMap = restaurants.map((r, index) =>
    <RestaurantComponent
    key = {index}
    id = {r.id}
-
-   
-   
+   name = {r.name}
+   cuisine = {r.cuisine}
+   menu = {r.menu}   
    />
 );
 
