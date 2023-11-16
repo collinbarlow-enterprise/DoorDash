@@ -7,6 +7,17 @@ import { Routes, Route } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar'
 import { getUser } from '../../utilities/users-service';
 
+import HomePage from '../HomePage/HomePage'
+import RestaurantPage from '../RestaurantPage/RestaurantPage'
+import ItemPage from '../ItemPage/ItemPage'
+import SearchPage from '../SearchPage/SearchPage'
+import DealPage from '../DealPage/DealPage'
+import PastOrderPage from '../PastOrderPage/PastOrderPage'
+import CartPage from '../CartPage/CartPage'
+import AccountPage from '../AccountPage/AccountPage'
+import CheckOutPage from '../CheckOutPage/CheckOutPage'
+import OrderStatusPage from '../OrderStatusPage/OrderStatusPage'
+
 export default function App() {
 
   const [user, setUser] = useState(getUser())
@@ -28,10 +39,10 @@ export default function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/deals" element={<DealPage />} />
             <Route path="/pastorders" element={<PastOrderPage />} />
-            <Route path="/cart" element={<Cartpage />} />
+            <Route path="/cart" element={<CartPage />} />
             <Route path="/account" element={<AccountPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/orderstatus" element={<OrderStatus />} />
+            <Route path="/checkout" element={<CheckOutPage />} />
+            <Route path="/orderstatus" element={<OrderStatusPage />} />
           </Routes>
         </>
         :
