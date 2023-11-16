@@ -1,5 +1,5 @@
-const Restaurant = require('../models/restaurant')
-const User = require('../models/user')
+const Restaurant = require('../../models/restaurant')
+const User = require('../../models/user')
 
 // what crud activities do I need?
 
@@ -15,7 +15,12 @@ module.exports = {
 }
 
 async function getRestaurant(req, res) {
+    console.log('made it inside restraunt Controller')
+    try {
     const restaurants = await Restaurant.find({})
     console.log(restaurants, 'restaurants in getRestaurant controller')
-    res.json(restaurants)
+    res.json(restaurants);
+    } catch(error) {
+        console.log(error, 'error in getRestaurantController')
+    }
 }
