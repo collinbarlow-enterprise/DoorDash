@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt')
 // add first name, last name, address, and credit card to sign up form
 // need to reformat entire sign up form, not a big deal just change fields and what data value they map to
 
+// does the restaurant/business owner profile live here too? If so, need to incorporate some way of signfiying that (probably a different sign in, that has a different ternary option on the home page if the user has a user.businessOwner field marked as a boolean?)
+
 const userSchema = new Schema({
   firstName: {type: String, required: false},
   lastName: {type: String, required: false},

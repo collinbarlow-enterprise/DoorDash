@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// not used in this version of Magic Chef
 
 const restaurantSchema = new Schema({
     name: {type: String},
@@ -15,6 +14,10 @@ const restaurantSchema = new Schema({
         ratings: { type: Number },
         reviews: [{ type: String }],
     }],
+    
+    // if menu items are in an array, how do i access avgRating?
+    // will need to reseed data after changing this 
+    
     avgRating: [{type: Schema.Types.ObjectId, ref: 'menuItem'}],
     orderHistory: {type: Schema.Types.ObjectId, ref: 'Order'}
 

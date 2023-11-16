@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// not used in this version of Magic Chef
+// possibly not even being used in this version of doordash 
 
 const menuItemSchema = new Schema({
     dishName: {type: String},
