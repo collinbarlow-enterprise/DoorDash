@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
-import RestaurantComponent from '../../components/RestaurantComponent/RestaurantComponent'
+import RestaurantHomePageComponent from '../../components/RestaurantHomePageComponent/RestaurantHomePageComponent'
 
 
 export default function HomePage() {
@@ -20,52 +20,52 @@ export default function HomePage() {
 async function getRestaurants() {
     try {
         const restaurantsData = await restaurantAPI.getRestaurant();
-        console.log(restaurantsData, 'restaurantsData in getRestaurants HomePage')
+        // console.log(restaurantsData, 'restaurantsData in getRestaurants HomePage')
         setRestaurants(restaurantsData);
     } catch(error) {
         console.error(error, 'error for getRestaurant in Home Page')
     }
 }
 
-async function getCart() {
-    const cart = await ordersAPI.getCart();
-    setCart(cart);
-    };
+// async function getCart() {
+//     const cart = await ordersAPI.getCart();
+//     setCart(cart);
+//     };
     
-async function handleCheckout() {
-    await ordersAPI.checkout();
-    navigate('/orders');
-    };
+// async function handleCheckout() {
+//     await ordersAPI.checkout();
+//     navigate('/orders');
+//     };
 
-async function handleAddToOrder(itemId) {
-    try {
-    const updatedCart = await ordersAPI.addToCart(itemId)
-    setCart(updatedCart)
-    } catch (error) {
-      console.error(error);
-    }};
+// async function handleAddToOrder(itemId) {
+//     try {
+//     const updatedCart = await ordersAPI.addToCart(itemId)
+//     setCart(updatedCart)
+//     } catch (error) {
+//       console.error(error);
+//     }};
     
-async function handleChangeQty(itemId, newQty) {
-    const updatedCart = await ordersAPI.setItem(itemId, newQty);
-    setCart(updatedCart)
-    };
+// async function handleChangeQty(itemId, newQty) {
+//     const updatedCart = await ordersAPI.setItem(itemId, newQty);
+//     setCart(updatedCart)
+//     };
     
-function handleShow(setShowCheckout) {
-    setShowCheckout((current) => !current)
-    };
+// function handleShow(setShowCheckout) {
+//     setShowCheckout((current) => !current)
+//     };
 
 
 useEffect(() => {
     getRestaurants();
-    getCart();
+    // getCart();
 }, [])
 
 const restaurantMap = restaurants.map((r, index) =>
-   <RestaurantComponent
+   <RestaurantHomePageComponent
    key = {index}
    id = {r._id}
    name = {r.name}
-   cuisine = {r.cuisine}
+   cuisine = {r.cuisineType}
    menu = {r.menu}   
    />
 );

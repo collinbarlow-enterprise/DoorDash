@@ -3,7 +3,7 @@ import ItemComponent from '../ItemComponent/ItemComponent'
 import { useNavigate } from 'react-router-dom'
 
 export default function RestaurantComponent({name, cuisine, menu, id}) {
-console.log(id, 'id for restaurant component')
+// console.log(id, 'id for restaurant component')
   const navigate = useNavigate();
 
 function toRestaurantPage(id) {

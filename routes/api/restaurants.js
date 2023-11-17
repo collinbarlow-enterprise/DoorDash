@@ -4,7 +4,10 @@ const restaurantCtrl = require('../../controllers/api/restaurants');
 
 const ensureLoggedIn = require('../../config/ensureLoggedIn')
 
-//get restaruants
+//get restaurants
 router.get('/', restaurantCtrl.getRestaurant)
+
+// get one restaurant
+router.get('/getOneRestaurant/:id', restaurantCtrl.findSpecificRestaurant)
 
 module.exports = router;

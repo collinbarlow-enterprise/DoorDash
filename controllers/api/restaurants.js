@@ -11,16 +11,23 @@ const User = require('../../models/user')
 
 module.exports = {
     getRestaurant,
+    findSpecificRestaurant
     
 }
 
 async function getRestaurant(req, res) {
-    console.log('made it inside restraunt Controller')
+    console.log('made it inside restaurant CONTROLLER')
     try {
     const restaurants = await Restaurant.find({})
-    console.log(restaurants, 'restaurants in getRestaurant controller')
+    // console.log(restaurants, 'restaurants in getRestaurant controller')
     res.json(restaurants);
     } catch(error) {
         console.log(error, 'error in getRestaurantController')
     }
+}
+
+async function findSpecificRestaurant(req, res) {
+    console.log('made it inside findSpecificRestaurant CONTROLLER')
+    const restaurant = await Restaurant.findById(req.params.id);
+    res.json(restaurant);
 }
