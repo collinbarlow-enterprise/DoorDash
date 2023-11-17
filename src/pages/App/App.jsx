@@ -34,8 +34,8 @@ export default function App() {
           <NavBar user={user} updateUser={updateUser}/>
           <Routes>
             <Route path="/home" element={<HomePage />} />
-            <Route path="/restaurant" element={<RestaurantPage />} />
-            <Route path="/restaurant/:id/itempage" element={<ItemPage />} />
+            <Route path="/restaurant/:id" element={<RestaurantPage />} />
+            <Route path="/restaurant/:id/itempage/:id" element={<ItemPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/deals" element={<DealPage />} />
             <Route path="/pastorders" element={<PastOrderPage />} />

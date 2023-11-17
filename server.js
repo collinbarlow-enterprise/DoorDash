@@ -21,6 +21,8 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/users/login', require('./routes/api/users'));
 
 app.use('/api/restaurants', require ('./routes/api/restaurants'));
+app.use('/api/orders', require('./routes/api/orders'));
+
 
 
 //catch all
