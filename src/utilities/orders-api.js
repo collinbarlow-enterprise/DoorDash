@@ -5,6 +5,7 @@ export function getCart() {
     return sendRequest(`${BASE_URL}/cart`);
 }
 export function addToCart(itemId) {
+    console.log(itemId, 'itemID in ORDERS API')
     return sendRequest(`${BASE_URL}/cart/items/${itemId}`, 'POST');
 }
 export function setItem(itemId, newQty) {

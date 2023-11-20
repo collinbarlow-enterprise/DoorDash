@@ -7,15 +7,29 @@ const lineItemSchema = new Schema ({
     quantity: {type: Number, default: 1},
 
     // ref restaurant may not be right
+    
     item: {type: Schema.Types.ObjectId, ref: 'Restaurant'}
 },{
     timestamps: true,
     toJSON: {virtuals: true}
 })
 
-lineItemSchema.virtual('extPrice').get(function() {
-    return this.quantity*this.item.price
-})
+// this.item.price doesnt work, and price is null. item i sreferring to my restaurants.object.id
+// lineItemSchema.virtual('extPrice').get(function() {
+//     console.log(this, 'this in lineItem virtual')
+//     return this.quantity*this.item.menu.price
+// })
+
+// lineItemSchema.virtual('extPrice').get(async function() {
+//     // Populate the 'item' field to access the menu
+//     const populatedLineItem = await this.populate('item').execPopulate();
+    
+//     if (populatedLineItem.item && populatedLineItem.item.menu.length > 0) {
+//       return this.quantity * populatedLineItem.item.menu[0].price;
+//     } else {
+//       return 0; // or handle the case where the item or menu is missing
+//     }
+//   });
 
 
 const orderSchema = new Schema({
@@ -80,7 +94,8 @@ orderSchema.statics.getPaidCart = function(userId) {
 
 orderSchema.methods.addItemToCart = async function (itemId) {
     const cart = this;
-    const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId));
+    console.log(cart, 'cart in addItem')
+    const lineItem = cart.lineItems.find(lineItem => lineItem._id.equals(itemId));
     if (lineItem) {
         lineItem.quantity +=1;
     } else {
