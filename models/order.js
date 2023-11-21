@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // the orderItems may be wrong. May just need to figure out a way to add the items to the array, maybe its just an empty array that has the restaurant.menu[] objects added to it?
 
 const lineItemSchema = new Schema ({
-    quantity: {type: Number, default: 1},
+    quantity: {type: Number},
 
     // ref restaurant may not be right
     
@@ -92,16 +92,49 @@ orderSchema.statics.getPaidCart = function(userId) {
 
 // may need to update mongoose.model("Restaurant") to something else
 
-orderSchema.methods.addItemToCart = async function (itemId) {
+orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
+    // console.log(req.body, 'req.body in addItem Moodel')
     const cart = this;
+
+    console.log(index, 'index in addItem MODEL')
+    console.log(itemId, 'itemId in addItem MODEL')
+    console.log(restaurant, 'RESTAURANT in addItem MODEL')
+
     console.log(cart, 'cart in addItem')
-    const lineItem = cart.lineItems.find(lineItem => lineItem._id.equals(itemId));
-    if (lineItem) {
-        lineItem.quantity +=1;
-    } else {
-        const item = await mongoose.model('Restaurant').findById(itemId); 
-        cart.lineItems.push({item});
-    }
+
+    const lineItemIndex = cart.lineItems.find(lineItem => lineItem._id.equals(itemId));
+
+    // if (lineItem) {
+    //     lineItem.quantity +=1;
+
+    // } else {
+
+    //     // const item = await mongoose.model('Restaurant').findById(itemId); 
+    //     // cart.lineItems.push({item});
+
+    //     const selectedItem = restaurant.menu[index]; // Select the menu item by index
+    //     cart.lineItems.push({ quantity: 1, item: selectedItem._id }); // Use selectedItem._id
+    // }
+
+
+
+    if (lineItemIndex !== -1) {
+        // If the item is already in the cart, update its quantity
+        cart.lineItems[lineItemIndex].quantity += 1;
+      } else {
+        // If the item is not in the cart, add it
+        const selectedItem = restaurant.menu[index];
+        const newItem = {
+          quantity: 1,
+          item: selectedItem._id,
+        };
+        cart.lineItems.push(newItem);
+      }
+    
+      // Filter out entries with null items
+      cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
+
+    // console.log(cart, 'cart after everything')
     return cart.save();
     };
 

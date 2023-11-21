@@ -43,8 +43,9 @@ export default function RestaurantPageComponent({}) {
     console.log(restaurant, 'restaurant in restaurantPageComponent')
     console.log(index, 'index in restaurantPageComponent')
     try {
-      const updatedCart = await ordersAPI.addToCart(itemId)
+      const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant)
       setCart(updatedCart)
+      console.log(cart, 'cart in HANDLEADD TOO ORDER')
     } catch (error) {
       console.error(error);
     }
@@ -67,6 +68,7 @@ useEffect(() => {
       <div>{restaurant.name}</div>
       <div>{restaurant.cuisineType}</div>
       <div>
+        
       <h6>Menu:</h6>
       <ul>
         {restaurant.menu?.map((menuItem, index) => (
