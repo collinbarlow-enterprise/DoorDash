@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const menuItemSchema = new Schema({
     dishName: { type: String },
     description: { type: String },
@@ -19,4 +20,7 @@ const restaurantSchema = new Schema({
     orderHistory: { type: Schema.Types.ObjectId, ref: 'Order' },
 });
 
-module.exports = mongoose.model("Restaurant", restaurantSchema);
+const Restaurant = mongoose.model("Restaurant", restaurantSchema);
+const MenuItem = mongoose.model("MenuItem", menuItemSchema);
+
+module.exports = { Restaurant, MenuItem };

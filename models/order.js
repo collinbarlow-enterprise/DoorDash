@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { Restaurant, MenuItem } = require('./restaurant'); 
+const { ObjectId } = require('mongodb');
 
 // the orderItems may be wrong. May just need to figure out a way to add the items to the array, maybe its just an empty array that has the restaurant.menu[] objects added to it?
 
 const lineItemSchema = new Schema ({
     quantity: {type: Number},
-
-    // ref restaurant may not be right
-    
-    item: {type: Schema.Types.ObjectId, ref: 'Restaurant'}
+    item: [{type: Schema.Types.ObjectId, ref: 'MenuItem'}]
 },{
     timestamps: true,
     toJSON: {virtuals: true}
@@ -90,53 +89,56 @@ orderSchema.statics.getPaidCart = function(userId) {
     .exec();
 };
 
-// may need to update mongoose.model("Restaurant") to something else
-
 orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
-    // console.log(req.body, 'req.body in addItem Moodel')
     const cart = this;
-
-    console.log(index, 'index in addItem MODEL')
-    console.log(itemId, 'itemId in addItem MODEL')
-    console.log(restaurant, 'RESTAURANT in addItem MODEL')
-
-    console.log(cart, 'cart in addItem')
-
-    const lineItemIndex = cart.lineItems.find(lineItem => lineItem._id.equals(itemId));
-
-    // if (lineItem) {
-    //     lineItem.quantity +=1;
-
-    // } else {
-
-    //     // const item = await mongoose.model('Restaurant').findById(itemId); 
-    //     // cart.lineItems.push({item});
-
-    //     const selectedItem = restaurant.menu[index]; // Select the menu item by index
-    //     cart.lineItems.push({ quantity: 1, item: selectedItem._id }); // Use selectedItem._id
-    // }
-
-
-
-    if (lineItemIndex !== -1) {
-        // If the item is already in the cart, update its quantity
-        cart.lineItems[lineItemIndex].quantity += 1;
-      } else {
-        // If the item is not in the cart, add it
-        const selectedItem = restaurant.menu[index];
-        const newItem = {
-          quantity: 1,
-          item: selectedItem._id,
-        };
-        cart.lineItems.push(newItem);
-      }
     
+    const restaurantId = restaurant._id;
+    console.log(restaurantId, 'restaurantId in ORDEER')
+
+    const specificRestaurant = await mongoose.model('Restaurant').findById(restaurantId);
+
+    if (specificRestaurant) {
+        // Find the menuItem in the menu array
+        const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
+      console.log(menuItem, 'MENU ITEM IF RESTAURANT IS FOUND')
+    
+
+    // console.log(index, 'index in addItem MODEL')
+    // console.log(itemId, 'itemId in addItem MODEL')
+    // console.log(restaurant, 'RESTAURANT in addItem MODEL')
+    // console.log(cart, 'cart in addItem')
+    // console.log(typeof itemId, 'Type of itemId before query');
+
+    // const objectId = new ObjectId(itemId)  
+
+    // const convertedItemId = mongoose.Types.ObjectId(itemId);
+    // console.log(typeof convertedItemId, 'Type of itemId before query');
+    // console.log(typeof objectId, 'Type of OBJECTid before query');
+    // console.log(objectId, 'objectId of itemId before query');
+
+    // const item = await mongoose.model('MenuItem').findById(itemId);
+
+    // console.log(item, 'lineItem AFTER QUERYING DATABASE')
+    // const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId));
+    console.log(cart, 'CART IN ADDTOCART')
+    console.log(cart.lineItems, 'CART.LINEITEMs')
+    const lineItem = cart.lineItems.find(lineItem => lineItem.item && lineItem._id.equals(menuItem._id));
+
+    if (lineItem) {
+        lineItem.quantity +=1;
+
+    } else {
+        // const item = await mongoose.model('MenuItem').findById(itemId);
+        // const item = await mongoose.model('Restaurant').findById(itemId); 
+        cart.lineItems.push({menuItem});
+
+    }
       // Filter out entries with null items
       cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
 
     // console.log(cart, 'cart after everything')
     return cart.save();
-    };
+}};
 
 
 //couldnt use remove b/c I was calling remove on an object that matches the schema rather than an instance. The remove() needed to update to include a splice method involving the index of the lineItem and removing it via splice. FindIndex is used to find the index of the line item in the lineItems array that matches the itemId and then splice is used to remove that line item from the array 

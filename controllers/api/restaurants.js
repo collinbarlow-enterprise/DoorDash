@@ -1,4 +1,4 @@
-const Restaurant = require('../../models/restaurant')
+const { Restaurant, MenuItem } = require('../../models/restaurant');
 const User = require('../../models/user')
 
 // what crud activities do I need?
