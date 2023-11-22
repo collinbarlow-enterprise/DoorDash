@@ -105,12 +105,14 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
 
         // Filter out entries with null items
         // cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
-        // cart.lineItems = cart.lineItems.filter((entry) => entry.item && entry.item !== null);
+        cart.lineItems = cart.lineItems.filter((entry) => entry.item && entry.item !== null);
 
 
 
         console.log(cart.lineItems, 'cart.lineItems ')
-        const lineItem = cart.lineItems.find(lineItem => lineItem.item && lineItem.item._id.equals(menuItem._id));
+        console.log(cart.lineItems.item, 'CART LINE ITEMS ITEM BEFOR PUSH ')
+        console.log(cart, 'CART ')
+        const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(menuItem._id));
         console.log(lineItem, 'LINEITEM IF TRUE')
 
         if (lineItem) {
@@ -119,7 +121,9 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
 
         } else {
             console.log(menuItem, 'MENUITEM BEFORE PUSHING')
-            cart.lineItems.push({ quantity: 1, item: { menuItem } });
+            // cart.lineItems.push({ quantity: 1, item: { ...menuItem } });
+            const newMenuItem = { ...menuItem };
+            cart.lineItems.push({ quantity: 1, item: { menuItem: newMenuItem } });
         }
 
 
