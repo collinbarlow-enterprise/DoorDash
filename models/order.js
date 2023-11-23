@@ -16,7 +16,7 @@ const lineItemSchema = new Schema({
 // this.item.price doesnt work, and price is null. item i sreferring to my restaurants.object.id
 // lineItemSchema.virtual('extPrice').get(function() {
 //     console.log(this, 'this in lineItem virtual')
-//     return this.quantity*this.item.menu.price
+//     return this.quantity*this.item.price
 // })
 
 // lineItemSchema.virtual('extPrice').get(async function() {
@@ -65,14 +65,18 @@ orderSchema.virtual('orderId').get(function () {
 });
 
 
-orderSchema.statics.getCart = function (userId) {
-    return this.findOneAndUpdate(
+orderSchema.statics.getCart = async function (userId) {
+    console.log('TRYING TO POPULATE IN THE GET CART STATICS')
+   const populatedLineItem = await this.findOneAndUpdate(
         { user: userId, isPaid: false },
         { user: userId },
         { upsert: true, new: true }
     )
         .populate('lineItems.item')
         .exec();
+    console.log(populatedLineItem,'POPULATED LINE ITEM IN GET CART');
+return populatedLineItem;
+    
 };
 
 // need to include populate 'lineItems.item' b/c without that I will only have access to the document id (in this case Fish Id)
@@ -91,44 +95,59 @@ orderSchema.statics.getPaidCart = function (userId) {
 
 orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
     const cart = this;
-
+    // console.log(cart, 'CART BEFORE EVERYTHING IN ADDITEM TO CART')
     const restaurantId = restaurant._id;
-    console.log(restaurantId, 'restaurantId in ORDEER')
+    // console.log(restaurantId, 'restaurantId in ORDEER')
 
     const specificRestaurant = await mongoose.model('Restaurant').findById(restaurantId);
+    // console.log(specificRestaurant, 'SPECIFIC RESTAURANT')
+
+  
 
     if (specificRestaurant) {
         const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
+
+        // const populatedLineItems = specificRestaurant.menu.find(item => item._id.equals(itemId)).populate('lineItems.item').exec();
+        // const populatedLineItems = await mongoose.model('Restaurant').findById({restaurantId }).populate().exec();
+        // console.log(populatedLineItems, 'POPULATED LINE ITEMS')
+
+        console.log(itemId, 'ITEMID AFTER MENUITEM IS DEFINED')
         console.log(menuItem, 'MENU ITEM IF RESTAURANT IS FOUND')
         console.log(typeof menuItem, 'TYPE OF MENU ITEM IF RESTAURANT IS FOUND')
-        console.log( menuItem._id, 'MENU ITEM ID')
+        console.log(menuItem._id, 'MENU ITEM ID')
 
         // Filter out entries with null items
-        // cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
-        cart.lineItems = cart.lineItems.filter((entry) => entry.item && entry.item !== null);
+        cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
+
+        // cart.lineItems = cart.lineItems.filter((entry) => entry.item && entry.item !== null);
 
 
 
-        console.log(cart.lineItems, 'cart.lineItems ')
-        console.log(cart.lineItems.item, 'CART LINE ITEMS ITEM BEFOR PUSH ')
-        console.log(cart, 'CART ')
+        // console.log(cart.lineItems, 'cart.lineItems ')
+        // console.log(cart.lineItems.item, 'CART LINE ITEMS ITEM BEFOR PUSH ')
+        console.log(cart, 'CART CART CART BEFORE PUSH')
+
+        console.log(cart.lineItems, 'CART LINE ITEMS BEFORE FIND');
         const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(menuItem._id));
+
         console.log(lineItem, 'LINEITEM IF TRUE')
 
         if (lineItem) {
-
             lineItem.quantity += 1;
 
         } else {
-            console.log(menuItem, 'MENUITEM BEFORE PUSHING')
+            // console.log(menuItem, 'MENUITEM BEFORE PUSHING')
             // cart.lineItems.push({ quantity: 1, item: { ...menuItem } });
             const newMenuItem = { ...menuItem };
-            cart.lineItems.push({ quantity: 1, item: { menuItem: newMenuItem } });
+            // cart.lineItems.push({ quantity: 1, item: { menuItem: newMenuItem } });
+            cart.lineItems.push({ quantity: 1, item: newMenuItem } );
         }
 
 
         console.log(cart, 'cart after everything')
-        return cart.save();
+        await cart.save();
+        console.log(cart, 'cart after saving')
+        return cart;
     }
 };
 

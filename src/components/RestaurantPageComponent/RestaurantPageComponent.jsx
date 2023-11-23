@@ -23,6 +23,7 @@ export default function RestaurantPageComponent({}) {
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
+    console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO')
     setCart(cart);
   }
 

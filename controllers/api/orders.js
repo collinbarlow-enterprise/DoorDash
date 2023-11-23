@@ -11,6 +11,7 @@ module.exports = {
 
 async function cart(req, res) {
     const cart = await Order.getCart(req.user._id);
+    console.log(cart, 'CART IN CART CONTROLLER AFTER GETCART STATIC IS CALLED')
     res.json(cart)
 }
 
@@ -19,6 +20,7 @@ async function addToCart(req, res) {
     const cart = await Order.getCart(req.user._id);
     // await cart.addItemToCart(req.params.id);
     await cart.addItemToCart(req.body.itemId, req.body.index, req.body.restaurant);
+    console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER')
     res.json(cart);
 }
 

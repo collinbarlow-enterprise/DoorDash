@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // possibly not even being used in this version of doordash 
 
-const menuItemSchema = new Schema({
+const testmenuItemSchema = new Schema({
     dishName: {type: String},
     description: {type: String},
     ingredients: [{type: String}], 
@@ -12,4 +12,4 @@ const menuItemSchema = new Schema({
     reviews: [{type: String}],
 });
 
-module.exports = mongoose.model("MenuItem", menuItemSchema)
+module.exports = mongoose.model("testMenuItem", testmenuItemSchema)
