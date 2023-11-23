@@ -23,8 +23,9 @@ export default function RestaurantPageComponent({}) {
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
-    console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO')
+    console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
     setCart(cart);
+    console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
 
   async function changeShowQty() {
@@ -39,14 +40,28 @@ export default function RestaurantPageComponent({}) {
     navigate('/home');
   }
 
+  // async function handleAddToOrder(itemId, index, restaurant) {
+  //   console.log(itemId, 'itemID in restaurantPageComponent')
+  //   console.log(restaurant, 'restaurant in restaurantPageComponent')
+  //   console.log(index, 'index in restaurantPageComponent')
+  //   try {
+  //     const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant)
+  //     console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json')
+  //     setCart(updatedCart)
+  //     console.log(cart, 'cart in HANDLEADD TOO ORDER AFTER IT RETURNS')
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
   async function handleAddToOrder(itemId, index, restaurant) {
-    console.log(itemId, 'itemID in restaurantPageComponent')
-    console.log(restaurant, 'restaurant in restaurantPageComponent')
-    console.log(index, 'index in restaurantPageComponent')
     try {
-      const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant)
-      setCart(updatedCart)
-      console.log(cart, 'cart in HANDLEADD TOO ORDER')
+      const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant);
+      setCart((prevCart) => {
+        console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
+        console.log(prevCart, 'PREVIOUS CART STATE');
+        return updatedCart;
+      });
     } catch (error) {
       console.error(error);
     }

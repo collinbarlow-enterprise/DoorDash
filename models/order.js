@@ -6,6 +6,7 @@ const { ObjectId } = require('mongodb');
 // the orderItems may be wrong. May just need to figure out a way to add the items to the array, maybe its just an empty array that has the restaurant.menu[] objects added to it?
 
 const lineItemSchema = new Schema({
+    // does this need a default value? 
     quantity: { type: Number },
     item: { type: Schema.Types.ObjectId, ref: 'MenuItem' }
 }, {
@@ -34,10 +35,15 @@ const lineItemSchema = new Schema({
 const orderSchema = new Schema({
     // update 'required' to true once the workflow is working
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    // need to add the restaurant field as part of either the addItem or purchase (probably addItem b/c then I could create a limitation/handler that prevents another ordered being made if the restaurant value is different than a restaurant state value on the front end)
     restaurant: { type: Schema.Types.ObjectId, ref: 'Restaurant', required: false },
+    // just copy the linteItems value into this array
     orderItems: [{ type: Schema.Types.ObjectId, ref: 'Restaurant', required: false }],
+    // this would be assigned as part of the purchase function, and would just be a RNG that would match with the index value of a driver document 
     driver: { type: Schema.Types.ObjectId, ref: 'Driver', required: false },
+    // would be a property that is assigned at time of purchase
     totalPrice: { type: Number },
+    // this is a property that is going to be updated as part of the delivery workflow (just a series of time delays before moving through 3 stages)
     status: { type: String },
 
     lineItems: [lineItemSchema],
