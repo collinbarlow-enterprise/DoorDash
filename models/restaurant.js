@@ -19,7 +19,7 @@ const restaurantSchema = new Schema({
     picture: { type: String },
     menu: [menuItemSchema], // Embed the menuItemSchema directly
     // dont think the avgRating should be an object type. It would probably be a virtual that accessed the all the reviews in the menuItems documents
-    avgRating: [{ type: Schema.Types.ObjectId, ref: 'menuItem' }],
+    avgRating: [{ type: Schema.Types.ObjectId, ref: 'MenuItem' }],
     // this may need to be an array - it should store all the order id's that come through this restaurant. Would probably a findOneAndUpdate or just a push as part of the purchase function
     orderHistory: { type: Schema.Types.ObjectId, ref: 'Order' },
 });

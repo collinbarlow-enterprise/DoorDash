@@ -17,10 +17,16 @@ async function cart(req, res) {
 
 async function addToCart(req, res) {
     console.log(req.body, 'req.body in addtocart controller')
-    const cart = await Order.getCart(req.user._id);
+    // item id, restaurant, and index are in req.body
+
+    const cart = await Order.getCart(req.user._id, req.body);
+    // item is set to null in this console.log
+    console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER BEFORE TRIGGERING ADDITEM TO CART')
+
     // await cart.addItemToCart(req.params.id);
     await cart.addItemToCart(req.body.itemId, req.body.index, req.body.restaurant);
     console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER')
+    console.log(cart.lineItems, 'CART LINEITEM IN ADDTOCART ORDER CONTROLLER')
     res.json(cart);
 }
 

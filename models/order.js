@@ -71,18 +71,25 @@ orderSchema.virtual('orderId').get(function () {
 });
 
 
-orderSchema.statics.getCart = async function (userId) {
-    console.log('TRYING TO POPULATE IN THE GET CART STATICS')
+orderSchema.statics.getCart = async function (userId, reqBody) {
+    console.log(reqBody, 'reqBody in getCart Static')
+    console.log(this, 'THIS in getCart Static')
+    console.log(MenuItem, 'MENUITEM in getCart Static')
+    // console.log('TRYING TO POPULATE IN THE GET CART STATICS')
    const populatedLineItem = await this.findOneAndUpdate(
         { user: userId, isPaid: false },
         { user: userId },
         { upsert: true, new: true }
     )
-        .populate('lineItems.item')
-        .exec();
-    console.log(populatedLineItem,'POPULATED LINE ITEM IN GET CART');
-return populatedLineItem;
     
+        // .populate('lineItems.item')
+        .exec();
+
+    console.log(populatedLineItem,'POPULATED LINE ITEM IN GET CART');
+    console.log('First Line Item:', populatedLineItem.lineItems[0]);
+
+    // item is null
+return populatedLineItem;
 };
 
 // need to include populate 'lineItems.item' b/c without that I will only have access to the document id (in this case Fish Id)
@@ -117,10 +124,10 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
         // const populatedLineItems = await mongoose.model('Restaurant').findById({restaurantId }).populate().exec();
         // console.log(populatedLineItems, 'POPULATED LINE ITEMS')
 
-        console.log(itemId, 'ITEMID AFTER MENUITEM IS DEFINED')
-        console.log(menuItem, 'MENU ITEM IF RESTAURANT IS FOUND')
-        console.log(typeof menuItem, 'TYPE OF MENU ITEM IF RESTAURANT IS FOUND')
-        console.log(menuItem._id, 'MENU ITEM ID')
+        // console.log(itemId, 'ITEMID AFTER MENUITEM IS DEFINED')
+        // console.log(menuItem, 'MENU ITEM IF RESTAURANT IS FOUND')
+        // console.log(typeof menuItem, 'TYPE OF MENU ITEM IF RESTAURANT IS FOUND')
+        // console.log(menuItem._id, 'MENU ITEM ID')
 
         // Filter out entries with null items
         cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
@@ -136,9 +143,10 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
         console.log(cart.lineItems, 'CART LINE ITEMS BEFORE FIND');
         const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(menuItem._id));
 
-        console.log(lineItem, 'LINEITEM IF TRUE')
+        console.log(lineItem, 'LINEITEM IF TRUE AFTER FIND')
 
         if (lineItem) {
+            console.log(lineItem, 'MADE IT INSIDE IF STATEMENT FOR LINEITEM')
             lineItem.quantity += 1;
 
         } else {
@@ -153,6 +161,7 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
         console.log(cart, 'cart after everything')
         await cart.save();
         console.log(cart, 'cart after saving')
+        console.log(cart.lineItems, 'cart.lineItems after saving')
         return cart;
     }
 };
