@@ -1,8 +1,11 @@
 import React, { useState, useEffect} from 'react'
 import * as ordersAPI from '../../utilities/orders-api'
 
-export default function CartComponent({}) {
+export default function CartComponent({cartItem, itemQty}) {
 
+  console.log(cartItem, 'cartItem in cartComponent')
+  console.log(itemQty, 'itemQty in cartComponent')
+  console.log(cartItem.item, 'cartItem.ITEM in cartComponent')
   const [cart, setCart] = useState(null)
 
   async function getCart() {
@@ -38,6 +41,9 @@ export default function CartComponent({}) {
   return (
     <div className="container">
       <h6 className="text-center">Cart Component</h6>
+      {/* need to have a get menuItem function that takes the cartItem.item value and returns the menuItem */}
+      {/* need to add a remove and add button to the qty?  */}
+      <div>Dish:{cartItem.item} Quantity: {itemQty}</div>
     </div>
   )
 }

@@ -2,11 +2,12 @@ import React, { useState, useEffect} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import * as restaurantsAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
+import CartComponent from '../CartComponent/CartComponent'
 
 export default function RestaurantPageComponent({}) {
   
   const [restaurant, setRestaurant] = useState([])
-  const [cart, setCart] = useState(null)
+  const [cart, setCart] = useState({})
   const [showQty, setShowQty] = useState(null)
   const { id } = useParams();
 
@@ -67,6 +68,14 @@ export default function RestaurantPageComponent({}) {
     }
   }
 
+  const cartMap = cart.lineItems ? cart.lineItems.map((item) => 
+  <CartComponent
+  key = {item._id}
+  cartItem = {item}
+  itemQty = {item.quantity}
+  />
+  ) : [];
+
   async function handleChangeQty(itemId, newQty) {
     const updatedCart = await ordersAPI.setItem(itemId, newQty);
     setCart(updatedCart)
@@ -83,6 +92,12 @@ useEffect(() => {
       <h6 className="text-center">Restaurant Page Component</h6>
       <div>{restaurant.name}</div>
       <div>{restaurant.cuisineType}</div>
+
+      <div>
+        {cartMap}
+      
+      </div>
+
       <div>
         
       <h6>Menu:</h6>
@@ -90,6 +105,9 @@ useEffect(() => {
         {restaurant.menu?.map((menuItem, index) => (
           <li key={index}>
             <strong>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>
+            {/* need to destructure my cart object, then map it, and then do a ternary to determine if the menuItem is present in the cart then show the handleChangeQty */}
+            <button onClick={() => handleChangeQty(lineItem.item._id, lineItem.quantity +1)}> Add </button>
+            <button onClick={() => handleChangeQty(lineItem.item._id, lineItem.quantity -1)}> Remove </button>
           </li>
         ))}
       </ul>
