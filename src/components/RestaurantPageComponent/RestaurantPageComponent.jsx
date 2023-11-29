@@ -94,7 +94,7 @@ useEffect(() => {
   getRestaurant(id);
   getCart();
   // console.log(restaurant, 'restaurant in useEffect')
-},[cart])
+},[])
 
   return (
     <div className="container">
@@ -115,8 +115,13 @@ useEffect(() => {
           <li key={index}>
             <strong>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>
             {/* need to destructure my cart object, then map it, and then do a ternary to determine if the menuItem is present in the cart then show the handleChangeQty */}
-            <button onClick={() => handleChangeQty(lineItem.item._id, lineItem.quantity +1)}> Add </button>
-            <button onClick={() => handleChangeQty(lineItem.item._id, lineItem.quantity -1)}> Remove </button>
+
+            {/* don't need to the add or remove here. I don't think... */}
+            {/* another question is how would I select the cartItem.item in this instance where my cartItems are still in an array? They need to be mapped over, and maybe that's the answer, just a quick map? */}
+
+            {/* <button onClick={() => handleChangeQty(cartItem.item, itemQty +1)}> Add </button>
+            <button onClick={() => handleChangeQty(lineItem.item._id, lineItem.quantity -1)}> Remove </button> */}
+         
           </li>
         ))}
       </ul>
