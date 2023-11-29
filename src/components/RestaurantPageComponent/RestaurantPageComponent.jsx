@@ -68,24 +68,33 @@ export default function RestaurantPageComponent({}) {
     }
   }
 
+
+
+  async function handleChangeQty(itemId, newQty) {
+    console.log(cart, 'cart in handleChangeQty')
+    console.log(itemId, 'item id in handleChangeQty on Cart Component')
+    console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
+    const updatedCart = await ordersAPI.setItem(itemId, newQty);
+    console.log(updatedCart, 'updatedCart in handleChangeQty')
+    setCart(updatedCart)
+  }
+
   const cartMap = cart.lineItems ? cart.lineItems.map((item) => 
   <CartComponent
   key = {item._id}
   cartItem = {item}
   itemQty = {item.quantity}
+  cart = {cart}
+  handleChangeQty = {handleChangeQty}
+  
   />
   ) : [];
-
-  async function handleChangeQty(itemId, newQty) {
-    const updatedCart = await ordersAPI.setItem(itemId, newQty);
-    setCart(updatedCart)
-  }
 
 useEffect(() => {
   getRestaurant(id);
   getCart();
   // console.log(restaurant, 'restaurant in useEffect')
-},[])
+},[cart])
 
   return (
     <div className="container">

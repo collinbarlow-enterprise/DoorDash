@@ -1,17 +1,18 @@
 import React, { useState, useEffect} from 'react'
 import * as ordersAPI from '../../utilities/orders-api'
 
-export default function CartComponent({cartItem, itemQty}) {
+export default function CartComponent({cartItem, itemQty, cart, handleChangeQty}) {
 
   // console.log(cartItem, 'cartItem in cartComponent')
   // console.log(itemQty, 'itemQty in cartComponent')
   // console.log(cartItem.item, 'cartItem.ITEM in cartComponent')
-  const [cart, setCart] = useState(null)
 
-  async function getCart() {
-    const cart = await ordersAPI.getCart();
-    setCart(cart);
-  }
+  // const [cart, setCart] = useState(null)
+
+  // async function getCart() {
+  //   const cart = await ordersAPI.getCart();
+  //   setCart(cart);
+  // }
 
   async function handleCheckout() {
     await ordersAPI.checkout();
@@ -29,18 +30,18 @@ export default function CartComponent({cartItem, itemQty}) {
     }
   }
 
-  async function handleChangeQty(itemId, newQty) {
-    console.log(cart, 'cart in handleChangeQty')
-    console.log(itemId, 'item id in handleChangeQty on Cart Component')
-    console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
-    const updatedCart = await ordersAPI.setItem(itemId, newQty);
-    console.log(updatedCart, 'updatedCart in handleChangeQty')
-    setCart(updatedCart)
-  }
+  // async function handleChangeQty(itemId, newQty) {
+  //   console.log(cart, 'cart in handleChangeQty')
+  //   console.log(itemId, 'item id in handleChangeQty on Cart Component')
+  //   console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
+  //   const updatedCart = await ordersAPI.setItem(itemId, newQty);
+  //   console.log(updatedCart, 'updatedCart in handleChangeQty')
+  //   setCart(updatedCart)
+  // }
 
-  useEffect(function () {
-    getCart();
-  }, []);
+  // useEffect(function () {
+  //   getCart();
+  // }, []);
 
   return (
     <div className="container">
