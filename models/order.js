@@ -171,13 +171,36 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
 
 
 orderSchema.methods.setItemQty = function (itemId, newQty) {
+   
+    // define the cart
     const cart = this;
-    const lineItemIndex = cart.lineItems.findIndex(lineItem => lineItem.item._id.equals(itemId));
-    if (lineItemIndex !== 1 && newQty <= 0) {
-        cart.lineItems.splice(lineItemIndex, 1);
-    } else if (lineItemIndex !== -1) {
-        cart.lineItems[lineItemIndex].quantity = newQty;
+    console.log(cart, 'cart & made it inside setItemQty METHOD')
+    console.log(cart.lineItems, 'cart.lineItems in setItemQty')
+    console.log(cart.lineItems.length, 'cart.lineItems length in setItemQty')
+
+    // iterate through the cart to see which itemId matches with what lineItems.item 
+    for (let i = 0; i < cart.lineItems.length; i++) {
+        console.log('made it inside for loop')
+    // once we find it, we set the lineItems.quantity to newQty
+        if (cart.lineItems[i].item == itemId) {
+            cart.lineItems[i].quantity = newQty;
+            console.log('made it inside if statement')
+            // return cart.lineItems[i].quantity;
+        }
+        
+    // if we don't find it, we return a string or an error
+
     }
+
+
+    // const lineItemIndex = cart.lineItems.findIndex(lineItem => lineItem.item._id.equals(itemId));
+    // console.log(lineItemIndex, 'lineItemIndex in setItemQty')
+    // if (lineItemIndex !== 1 && newQty <= 0) {
+    //     cart.lineItems.splice(lineItemIndex, 1);
+    // } else if (lineItemIndex !== -1) {
+    //     cart.lineItems[lineItemIndex].quantity = newQty;
+    // }
+    console.log(cart, 'cart before save in setItemQty')
     return cart.save();
 };
 

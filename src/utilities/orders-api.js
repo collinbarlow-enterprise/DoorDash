@@ -12,6 +12,8 @@ export function addToCart(itemId, index, restaurant) {
 }
 
 export function setItem(itemId, newQty) {
+    console.log(itemId, 'itemId in ordersAPI');
+    console.log(newQty, 'newQty in ordersAPI');
     return sendRequest(`${BASE_URL}/cart/quantity`, 'PUT', {itemId, newQty });
 }
 export function checkout() {

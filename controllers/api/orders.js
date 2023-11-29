@@ -31,8 +31,12 @@ async function addToCart(req, res) {
 }
 
 async function setItem(req, res) {
+    // console.log(req, 'req in setItem CONTROLLER')
+    // req.body has itemId and newQty
     const cart = await Order.getCart(req.user._id);
+    console.log(cart, 'cart in setItem CONTROLLER')
     await cart.setItemQty(req.body.itemId, req.body.newQty);
+    console.log(cart, 'cart before sending back in setItem')
     res.json(cart);
 }
 

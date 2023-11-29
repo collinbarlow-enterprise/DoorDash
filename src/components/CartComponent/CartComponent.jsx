@@ -3,9 +3,9 @@ import * as ordersAPI from '../../utilities/orders-api'
 
 export default function CartComponent({cartItem, itemQty}) {
 
-  console.log(cartItem, 'cartItem in cartComponent')
-  console.log(itemQty, 'itemQty in cartComponent')
-  console.log(cartItem.item, 'cartItem.ITEM in cartComponent')
+  // console.log(cartItem, 'cartItem in cartComponent')
+  // console.log(itemQty, 'itemQty in cartComponent')
+  // console.log(cartItem.item, 'cartItem.ITEM in cartComponent')
   const [cart, setCart] = useState(null)
 
   async function getCart() {
@@ -30,7 +30,11 @@ export default function CartComponent({cartItem, itemQty}) {
   }
 
   async function handleChangeQty(itemId, newQty) {
+    console.log(cart, 'cart in handleChangeQty')
+    console.log(itemId, 'item id in handleChangeQty on Cart Component')
+    console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
     const updatedCart = await ordersAPI.setItem(itemId, newQty);
+    console.log(updatedCart, 'updatedCart in handleChangeQty')
     setCart(updatedCart)
   }
 
@@ -43,7 +47,8 @@ export default function CartComponent({cartItem, itemQty}) {
       <h6 className="text-center">Cart Component</h6>
       {/* need to have a get menuItem function that takes the cartItem.item value and returns the menuItem */}
       {/* need to add a remove and add button to the qty?  */}
-      <div>Dish:{cartItem.item} Quantity: {itemQty}</div>
+      <div>Dish:{cartItem.item} Quantity: {itemQty}  <button onClick={() => handleChangeQty(cartItem.item, itemQty +1)}> Add </button>
+            <button onClick={() => handleChangeQty(cartItem.item, itemQty -1)}> Remove </button></div>
     </div>
   )
 }
