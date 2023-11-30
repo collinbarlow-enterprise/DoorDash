@@ -10,3 +10,8 @@ export function getOneRestaurant(id) {
     console.log(id, 'ID made it inside getOneRestaurant api')
     return sendRequest(`${BASE_URL}/getOneRestaurant/${id}`)
 }
+
+export function getMenuItem(id) {
+    console.log(id, 'ID made it inside getMenuItem api')
+    return sendRequest(`${BASE_URL}/getMenuItem/${id}`)
+}

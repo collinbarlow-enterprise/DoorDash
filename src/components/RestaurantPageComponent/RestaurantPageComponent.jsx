@@ -10,6 +10,13 @@ export default function RestaurantPageComponent({}) {
   const [cart, setCart] = useState({})
   const [showQty, setShowQty] = useState(null)
   const { id } = useParams();
+  const navigate = useNavigate();
+
+
+  function toMenuItemPage(menuId) {
+    console.log(menuId, 'id in toMenuItem function');
+    navigate(`/itempage/${menuId}`)
+  }
 
   async function getRestaurant(restaurantID) {
     // console.log(restaurantID, 'getRestaurant in Restaurant Page Component')
@@ -110,10 +117,13 @@ useEffect(() => {
       <div>
         
       <h6>Menu:</h6>
+      {/* right now I have the name, description, price, and add to order...I think I really just want the name, image, price, and add to order...the description can be saved for the item page itself */}
+      {/* the list item is underneath the map function, so I can include a onClick for the 'li' that would link to the item details page */}
+      {/* if the li has the onClick, how do I organize it so the addToOrder button doesn't also send you to the page? maybe use a seperate div or inline block that would house the name and image, then another div for the add to order button...wouldn't be in the 'li' tag then */}
       <ul>
         {restaurant.menu?.map((menuItem, index) => (
           <li key={index}>
-            <strong>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>
+            <strong onClick={()=> {toMenuItemPage(menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>
             {/* need to destructure my cart object, then map it, and then do a ternary to determine if the menuItem is present in the cart then show the handleChangeQty */}
 
             {/* don't need to the add or remove here. I don't think... */}

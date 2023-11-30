@@ -171,6 +171,7 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
 
 
 orderSchema.methods.setItemQty = function (itemId, newQty) {
+    // add some sort of check to see if newQty is 0 or lower and then remove the item from the array
    
     // define the cart
     const cart = this;

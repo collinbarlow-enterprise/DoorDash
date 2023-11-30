@@ -11,7 +11,8 @@ const User = require('../../models/user')
 
 module.exports = {
     getRestaurant,
-    findSpecificRestaurant
+    findSpecificRestaurant,
+    findSpecificMenuItem
     
 }
 
@@ -30,4 +31,12 @@ async function findSpecificRestaurant(req, res) {
     console.log('made it inside findSpecificRestaurant CONTROLLER')
     const restaurant = await Restaurant.findById(req.params.id);
     res.json(restaurant);
+}
+
+async function findSpecificMenuItem(req, res) {
+    console.log(req.params.id, 'req.params in findSpecificMenu CONTROLLER')
+    console.log('made it inside findSpecific Menu Item CONTROLLER')
+    const menuItem = await MenuItem.findById(req.params.id);
+    console.log(menuItem, 'menuItem in find specific MENU ITEM CONTROLLER')
+    res.json(menuItem)
 }
