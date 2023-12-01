@@ -32,19 +32,6 @@ export default function ItemPage() {
     console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
 
-  async function handleAddToOrder(itemId, index, restaurant) {
-    try {
-      const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant);
-      setCart((prevCart) => {
-        console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
-        console.log(prevCart, 'PREVIOUS CART STATE');
-        return updatedCart;
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   async function handleChangeQty(itemId, newQty) {
     console.log(cart, 'cart in handleChangeQty')
     console.log(itemId, 'item id in handleChangeQty on Cart Component')
@@ -54,9 +41,15 @@ export default function ItemPage() {
     setCart(updatedCart)
   }
 
-  async function handleAddToOrder(itemId, index, restaurant) {
+  async function handleAddToOrderFromItemPage() {
+    console.log(id, 'restaurantId in add to order')
+    console.log(menuId, 'menuId in add to order')
+
+    const itemId = menuId;
+    const restaurantId = id;
+
     try {
-      const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant);
+      const updatedCart = await ordersAPI.addToCartFromItemPage(itemId, restaurantId);
       setCart((prevCart) => {
         console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
         console.log(prevCart, 'PREVIOUS CART STATE');
@@ -79,6 +72,7 @@ export default function ItemPage() {
         <h1>Item Page</h1>
         <div>{menuItem.dishName}</div>
         {/* need to add the add to order button, can create a new function that takes ids and then uses that to find and populate the card...there was an issue with what the current functions were expecting and what I was giving them in this page, so may just need to do it differently  */}
+        <div><button onClick = {() => handleAddToOrderFromItemPage()}> Add to Order </button></div>
         <div>{menuItem.description}</div>
         <div>{menuItem.price}</div>
         <div><strong>Ingredients:</strong>

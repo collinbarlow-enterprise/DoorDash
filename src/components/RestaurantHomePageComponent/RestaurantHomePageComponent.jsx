@@ -7,7 +7,7 @@ export default function RestaurantComponent({name, cuisine, menu, id}) {
   const navigate = useNavigate();
 
 function toRestaurantPage(id) {
-  console.log(id, 'id in toRestaurantPage function')
+  // console.log(id, 'id in toRestaurantPage function')
     navigate(`/restaurant/${id}`);
   }
 

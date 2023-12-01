@@ -31,9 +31,9 @@ export default function RestaurantPageComponent({}) {
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
-    console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
+    // console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
     setCart(cart);
-    console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
+    // console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
 
   async function changeShowQty() {
@@ -66,8 +66,8 @@ export default function RestaurantPageComponent({}) {
     try {
       const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant);
       setCart((prevCart) => {
-        console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
-        console.log(prevCart, 'PREVIOUS CART STATE');
+        // console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
+        // console.log(prevCart, 'PREVIOUS CART STATE');
         return updatedCart;
       });
     } catch (error) {
@@ -78,11 +78,11 @@ export default function RestaurantPageComponent({}) {
 
 
   async function handleChangeQty(itemId, newQty) {
-    console.log(cart, 'cart in handleChangeQty')
-    console.log(itemId, 'item id in handleChangeQty on Cart Component')
-    console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
+    // console.log(cart, 'cart in handleChangeQty')
+    // console.log(itemId, 'item id in handleChangeQty on Cart Component')
+    // console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
     const updatedCart = await ordersAPI.setItem(itemId, newQty);
-    console.log(updatedCart, 'updatedCart in handleChangeQty')
+    // console.log(updatedCart, 'updatedCart in handleChangeQty')
     setCart(updatedCart)
   }
 

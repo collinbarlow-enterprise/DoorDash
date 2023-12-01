@@ -17,7 +17,7 @@ module.exports = {
 }
 
 async function getRestaurant(req, res) {
-    console.log('made it inside restaurant CONTROLLER')
+    // console.log('made it inside restaurant CONTROLLER')
     try {
     const restaurants = await Restaurant.find({})
     // console.log(restaurants, 'restaurants in getRestaurant controller')
@@ -28,7 +28,7 @@ async function getRestaurant(req, res) {
 }
 
 async function findSpecificRestaurant(req, res) {
-    console.log('made it inside findSpecificRestaurant CONTROLLER')
+    // console.log('made it inside findSpecificRestaurant CONTROLLER')
     const restaurant = await Restaurant.findById(req.params.id);
     res.json(restaurant);
 }

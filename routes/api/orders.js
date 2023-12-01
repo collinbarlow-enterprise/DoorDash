@@ -11,6 +11,9 @@ router.get('/cart',  ordersCtrl.cart);
 //post to add to cart
 router.post('/cart/items/:id', ordersCtrl.addToCart);
 
+// post to add to cart from itemPage
+router.post('/cart/items/itemPage/:id', ordersCtrl.addToCartFromItemPage);
+
 //post to set item quantity
 router.put('/cart/quantity', ordersCtrl.setItem);
 

@@ -3,6 +3,7 @@ const Order = require('../../models/order')
 module.exports = {
     cart,
     addToCart,
+    addToCartFromItemPage,
     setItem,
     checkout,
     getPaidCartController,
@@ -27,6 +28,17 @@ async function addToCart(req, res) {
     await cart.addItemToCart(req.body.itemId, req.body.index, req.body.restaurant);
     // console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER')
     // console.log(cart.lineItems, 'CART LINEITEM IN ADDTOCART ORDER CONTROLLER')
+    res.json(cart);
+}
+
+async function addToCartFromItemPage(req, res) {
+    console.log(req.body, 'req.body in addToCART CONTROLLER FROM ITEMPAGE')
+    const cart = await Order.getCart(req.user._id, req.body);
+    console.log(cart, 'cart in add to order from item page')
+
+    await cart.addItemToCartFromItemPage(req.body.itemId, req.body.restaurantId);
+
+    console.log(cart, 'cart after addItem');
     res.json(cart);
 }
 

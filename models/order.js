@@ -166,6 +166,45 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
     }
 };
 
+orderSchema.methods.addItemToCartFromItemPage = async function (itemId, restaurantId) {
+    const cart = this;
+    console.log(itemId, 'itemId in MODELS')
+    console.log(restaurantId, 'restaurantId in MODELS')
+
+    const specificRestaurant = await mongoose.model('Restaurant').findById(restaurantId);
+    console.log(specificRestaurant, 'SpecificRestaurant ')
+
+    if (specificRestaurant) {
+        const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
+
+        console.log(menuItem, 'menuItem if specific restaurant is found')
+
+        cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
+        // cart.lineItems = cart.lineItems.filter((entry) => entry.item && entry.item !== null);
+        // console.log(cart.lineItems, 'cart.lineItems ')
+        // console.log(cart.lineItems.item, 'CART LINE ITEMS ITEM BEFOR PUSH ')
+        // console.log(cart, 'CART CART CART BEFORE PUSH')
+        // console.log(cart.lineItems, 'CART LINE ITEMS BEFORE FIND');
+        const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(menuItem._id));
+        // console.log(lineItem, 'LINEITEM IF TRUE AFTER FIND')
+        if (lineItem) {
+            // console.log(lineItem, 'MADE IT INSIDE IF STATEMENT FOR LINEITEM')
+            lineItem.quantity += 1;
+
+        } else {
+            // console.log(menuItem, 'MENUITEM BEFORE PUSHING')
+            // cart.lineItems.push({ quantity: 1, item: { ...menuItem } });
+            const newMenuItem = { ...menuItem };
+            // cart.lineItems.push({ quantity: 1, item: { menuItem: newMenuItem } });
+            cart.lineItems.push({ quantity: 1, item: newMenuItem } );
+        }
+        // console.log(cart, 'cart after everything')
+        await cart.save();
+        // console.log(cart, 'cart after saving')
+        // console.log(cart.lineItems, 'cart.lineItems after saving')
+        return cart;
+    }
+};
 
 //couldnt use remove b/c I was calling remove on an object that matches the schema rather than an instance. The remove() needed to update to include a splice method involving the index of the lineItem and removing it via splice. FindIndex is used to find the index of the line item in the lineItems array that matches the itemId and then splice is used to remove that line item from the array 
 

@@ -11,6 +11,12 @@ export function addToCart(itemId, index, restaurant) {
     return sendRequest(`${BASE_URL}/cart/items/${itemId}`, 'POST', {itemId, index, restaurant});
 }
 
+export function addToCartFromItemPage(itemId, restaurantId) {
+    console.log(itemId, 'itemId in orders api FOR ITEM PAGE')
+    console.log(restaurantId, 'restaurantID for add to Order Item Page')
+    return sendRequest(`${BASE_URL}/cart/items/itemPage/${itemId}`, 'POST', {itemId, restaurantId});
+}
+
 export function setItem(itemId, newQty) {
     console.log(itemId, 'itemId in ordersAPI');
     console.log(newQty, 'newQty in ordersAPI');
