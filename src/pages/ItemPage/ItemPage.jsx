@@ -8,6 +8,7 @@ export default function ItemPage() {
 
   const [menuItem, setMenuItem] = useState({})
   const [cart, setCart] = useState({})
+  const [itemQty, setItemQty] = useState({})
   const { id, menuId } = useParams();
   const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ export default function ItemPage() {
       setMenuItem((prevState) => {
         // console.log(menuItemData, 'menuitemData inside setFunction');
         return menuItemData;
-      });
+         });
     } catch(error) {
       console.error(error, 'error for getMenuItem in ItemPage')}
   }
@@ -30,6 +31,16 @@ export default function ItemPage() {
     // console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
     setCart(cart);
     console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
+  }
+
+  async function getItemQuantity() {
+    const item = await cart?.lineItems?.find((item) => item.item === menuId)
+    console.log(item, "item in getItemQuantity");
+    
+    if (item) {
+    setItemQty((prevQty) => {
+      return item.quantity
+    })}
   }
 
   async function handleChangeQty(menuId, newQty) {
@@ -71,13 +82,19 @@ export default function ItemPage() {
   useEffect(() => {
     getMenuitem(id);
     getCart();
+    // getItemQuantity();
   },[])
+
+  useEffect(() => {
+    getItemQuantity();
+  }, [cart])
 
   return (
     <div>
         <h1>Still Under Construction</h1>
         <h1>Item Page</h1>
         <div>{menuItem.dishName}</div>
+        <div>{itemQty ? (itemQty) : ("Not in Cart")}</div>
         {/* need to add the add to order button, can create a new function that takes ids and then uses that to find and populate the card...there was an issue with what the current functions were expecting and what I was giving them in this page, so may just need to do it differently  */}
 
           {/* Render buttons based on whether item is in the cart */}
