@@ -225,6 +225,10 @@ orderSchema.methods.setItemQty = function (itemId, newQty) {
     // once we find it, we set the lineItems.quantity to newQty
         if (cart.lineItems[i].item == itemId) {
             cart.lineItems[i].quantity = cart.lineItems[i].quantity + newQty;
+
+            if (cart.lineItems[i].quantity <= 0) {
+                cart.lineItems.splice(cart.lineItems[i], 1)
+            }
             // console.log('made it inside if statement')
             // return cart.lineItems[i].quantity;
         }
