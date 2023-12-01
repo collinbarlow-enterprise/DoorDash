@@ -34,9 +34,20 @@ async function findSpecificRestaurant(req, res) {
 }
 
 async function findSpecificMenuItem(req, res) {
-    console.log(req.params.id, 'req.params in findSpecificMenu CONTROLLER')
+    console.log('MADE IT INSIDE FIND SPECIFIC MENUITEM ')
+    console.log(req.body, 'req.body in findSpecificMenuItem')
+    console.log(req.params, 'req.params in findSpecificMenu CONTROLLER')
     console.log('made it inside findSpecific Menu Item CONTROLLER')
-    const menuItem = await MenuItem.findById(req.params.id);
-    console.log(menuItem, 'menuItem in find specific MENU ITEM CONTROLLER')
-    res.json(menuItem)
+
+    try{
+        const restaurant = await Restaurant.findById(req.params.id);
+        console.log(restaurant, 'restaurant in SpecificMENU ITEM')
+
+        const menuItemId = req.params.menuId;
+        const menuItem = restaurant.menu.find(item => item._id == menuItemId);
+        console.log(menuItem, 'menuItem in CONTROLLER')
+
+        res.json(menuItem);
+    } catch(error) {
+        console.log(error, 'error for findSpecificMenuItem')}
 }

@@ -11,6 +11,6 @@ router.get('/', restaurantCtrl.getRestaurant)
 router.get('/getOneRestaurant/:id', restaurantCtrl.findSpecificRestaurant)
 
 // get menuItem
-router.get('/getMenuItem/:id', restaurantCtrl.findSpecificMenuItem)
+router.get('/getMenuItem/:id/:menuId', restaurantCtrl.findSpecificMenuItem)
 
 module.exports = router;

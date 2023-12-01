@@ -72,9 +72,9 @@ orderSchema.virtual('orderId').get(function () {
 
 
 orderSchema.statics.getCart = async function (userId, reqBody) {
-    console.log(reqBody, 'reqBody in getCart Static')
-    console.log(this, 'THIS in getCart Static')
-    console.log(MenuItem, 'MENUITEM in getCart Static')
+    // console.log(reqBody, 'reqBody in getCart Static')
+    // console.log(this, 'THIS in getCart Static')
+    // console.log(MenuItem, 'MENUITEM in getCart Static')
     // console.log('TRYING TO POPULATE IN THE GET CART STATICS')
    const populatedLineItem = await this.findOneAndUpdate(
         { user: userId, isPaid: false },
@@ -85,8 +85,8 @@ orderSchema.statics.getCart = async function (userId, reqBody) {
         // .populate('lineItems.item')
         .exec();
 
-    console.log(populatedLineItem,'POPULATED LINE ITEM IN GET CART');
-    console.log('First Line Item:', populatedLineItem.lineItems[0]);
+    // console.log(populatedLineItem,'POPULATED LINE ITEM IN GET CART');
+    // console.log('First Line Item:', populatedLineItem.lineItems[0]);
 
     // item is null
 return populatedLineItem;
@@ -98,7 +98,7 @@ return populatedLineItem;
 
 
 orderSchema.statics.getPaidCart = function (userId) {
-    console.log('getPaidcart function in ORDER MODEL')
+    // console.log('getPaidcart function in ORDER MODEL')
     return this.find(
         { user: userId, isPaid: true },
     )
@@ -138,15 +138,15 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
 
         // console.log(cart.lineItems, 'cart.lineItems ')
         // console.log(cart.lineItems.item, 'CART LINE ITEMS ITEM BEFOR PUSH ')
-        console.log(cart, 'CART CART CART BEFORE PUSH')
+        // console.log(cart, 'CART CART CART BEFORE PUSH')
 
-        console.log(cart.lineItems, 'CART LINE ITEMS BEFORE FIND');
+        // console.log(cart.lineItems, 'CART LINE ITEMS BEFORE FIND');
         const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(menuItem._id));
 
-        console.log(lineItem, 'LINEITEM IF TRUE AFTER FIND')
+        // console.log(lineItem, 'LINEITEM IF TRUE AFTER FIND')
 
         if (lineItem) {
-            console.log(lineItem, 'MADE IT INSIDE IF STATEMENT FOR LINEITEM')
+            // console.log(lineItem, 'MADE IT INSIDE IF STATEMENT FOR LINEITEM')
             lineItem.quantity += 1;
 
         } else {
@@ -158,10 +158,10 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
         }
 
 
-        console.log(cart, 'cart after everything')
+        // console.log(cart, 'cart after everything')
         await cart.save();
-        console.log(cart, 'cart after saving')
-        console.log(cart.lineItems, 'cart.lineItems after saving')
+        // console.log(cart, 'cart after saving')
+        // console.log(cart.lineItems, 'cart.lineItems after saving')
         return cart;
     }
 };
@@ -175,17 +175,17 @@ orderSchema.methods.setItemQty = function (itemId, newQty) {
    
     // define the cart
     const cart = this;
-    console.log(cart, 'cart & made it inside setItemQty METHOD')
-    console.log(cart.lineItems, 'cart.lineItems in setItemQty')
-    console.log(cart.lineItems.length, 'cart.lineItems length in setItemQty')
+    // console.log(cart, 'cart & made it inside setItemQty METHOD')
+    // console.log(cart.lineItems, 'cart.lineItems in setItemQty')
+    // console.log(cart.lineItems.length, 'cart.lineItems length in setItemQty')
 
     // iterate through the cart to see which itemId matches with what lineItems.item 
     for (let i = 0; i < cart.lineItems.length; i++) {
-        console.log('made it inside for loop')
+        // console.log('made it inside for loop')
     // once we find it, we set the lineItems.quantity to newQty
         if (cart.lineItems[i].item == itemId) {
             cart.lineItems[i].quantity = newQty;
-            console.log('made it inside if statement')
+            // console.log('made it inside if statement')
             // return cart.lineItems[i].quantity;
         }
         
@@ -201,7 +201,7 @@ orderSchema.methods.setItemQty = function (itemId, newQty) {
     // } else if (lineItemIndex !== -1) {
     //     cart.lineItems[lineItemIndex].quantity = newQty;
     // }
-    console.log(cart, 'cart before save in setItemQty')
+    // console.log(cart, 'cart before save in setItemQty')
     return cart.save();
 };
 

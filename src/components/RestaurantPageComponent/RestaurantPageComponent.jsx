@@ -13,9 +13,9 @@ export default function RestaurantPageComponent({}) {
   const navigate = useNavigate();
 
 
-  function toMenuItemPage(menuId) {
+  function toMenuItemPage(id, menuId) {
     console.log(menuId, 'id in toMenuItem function');
-    navigate(`/itempage/${menuId}`)
+    navigate(`/restaurant/${id}/itempage/${menuId}`)
   }
 
   async function getRestaurant(restaurantID) {
@@ -123,7 +123,7 @@ useEffect(() => {
       <ul>
         {restaurant.menu?.map((menuItem, index) => (
           <li key={index}>
-            <strong onClick={()=> {toMenuItemPage(menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>
+            <strong onClick={()=> {toMenuItemPage(id, menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>
             {/* need to destructure my cart object, then map it, and then do a ternary to determine if the menuItem is present in the cart then show the handleChangeQty */}
 
             {/* don't need to the add or remove here. I don't think... */}

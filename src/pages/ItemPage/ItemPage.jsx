@@ -8,12 +8,14 @@ export default function ItemPage() {
 
   const [menuItem, setMenuItem] = useState({})
   const [cart, setCart] = useState({})
-  const { id } = useParams();
+  const { id, menuId } = useParams();
   const navigate = useNavigate();
 
-  async function getMenuitem(id) {
+  async function getMenuitem() {
+    console.log(id, 'id in getMenuItem function')
+    console.log(menuId, 'menuId in getMenuItem function')
     try {
-      const menuItemData = await restaurantsAPI.getMenuItem(id);
+      const menuItemData = await restaurantsAPI.getMenuItem(id, menuId);
       console.log(menuItemData, 'menuItemData')
       setMenuItem((prevState) => {
         console.log(menuItemData, 'menuitemData inside setFunction');
@@ -52,6 +54,20 @@ export default function ItemPage() {
     setCart(updatedCart)
   }
 
+  async function handleAddToOrder(itemId, index, restaurant) {
+    try {
+      const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant);
+      setCart((prevCart) => {
+        console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
+        console.log(prevCart, 'PREVIOUS CART STATE');
+        return updatedCart;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   useEffect(() => {
     getMenuitem(id);
     getCart();
@@ -61,6 +77,17 @@ export default function ItemPage() {
     <div>
         <h1>Still Under Construction</h1>
         <h1>Item Page</h1>
+        <div>{menuItem.dishName}</div>
+        {/* need to add the add to order button, can create a new function that takes ids and then uses that to find and populate the card...there was an issue with what the current functions were expecting and what I was giving them in this page, so may just need to do it differently  */}
+        <div>{menuItem.description}</div>
+        <div>{menuItem.price}</div>
+        <div><strong>Ingredients:</strong>
+      <ul>
+        {menuItem.ingredients?.map((ingredient, index) => (
+          <li key={index}>{ingredient}</li>
+        ))}
+      </ul>
+    </div>
     </div>
   )
 }

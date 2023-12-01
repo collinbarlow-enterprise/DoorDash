@@ -11,22 +11,22 @@ module.exports = {
 
 async function cart(req, res) {
     const cart = await Order.getCart(req.user._id);
-    console.log(cart, 'CART IN CART CONTROLLER AFTER GETCART STATIC IS CALLED')
+    // console.log(cart, 'CART IN CART CONTROLLER AFTER GETCART STATIC IS CALLED')
     res.json(cart)
 }
 
 async function addToCart(req, res) {
-    console.log(req.body, 'req.body in addtocart controller')
+    // console.log(req.body, 'req.body in addtocart controller')
     // item id, restaurant, and index are in req.body
 
     const cart = await Order.getCart(req.user._id, req.body);
     // item is set to null in this console.log
-    console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER BEFORE TRIGGERING ADDITEM TO CART')
+    // console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER BEFORE TRIGGERING ADDITEM TO CART')
 
     // await cart.addItemToCart(req.params.id);
     await cart.addItemToCart(req.body.itemId, req.body.index, req.body.restaurant);
-    console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER')
-    console.log(cart.lineItems, 'CART LINEITEM IN ADDTOCART ORDER CONTROLLER')
+    // console.log(cart, 'CART IN ADDTOCART ORDER CONTROLLER')
+    // console.log(cart.lineItems, 'CART LINEITEM IN ADDTOCART ORDER CONTROLLER')
     res.json(cart);
 }
 
@@ -34,9 +34,9 @@ async function setItem(req, res) {
     // console.log(req, 'req in setItem CONTROLLER')
     // req.body has itemId and newQty
     const cart = await Order.getCart(req.user._id);
-    console.log(cart, 'cart in setItem CONTROLLER')
+    // console.log(cart, 'cart in setItem CONTROLLER')
     await cart.setItemQty(req.body.itemId, req.body.newQty);
-    console.log(cart, 'cart before sending back in setItem')
+    // console.log(cart, 'cart before sending back in setItem')
     res.json(cart);
 }
 
