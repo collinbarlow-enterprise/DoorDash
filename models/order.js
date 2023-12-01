@@ -210,6 +210,7 @@ orderSchema.methods.addItemToCartFromItemPage = async function (itemId, restaura
 
 
 orderSchema.methods.setItemQty = function (itemId, newQty) {
+    console.log(newQty, 'newQty in setItem MODEL')
     // add some sort of check to see if newQty is 0 or lower and then remove the item from the array
    
     // define the cart
@@ -223,7 +224,7 @@ orderSchema.methods.setItemQty = function (itemId, newQty) {
         // console.log('made it inside for loop')
     // once we find it, we set the lineItems.quantity to newQty
         if (cart.lineItems[i].item == itemId) {
-            cart.lineItems[i].quantity = newQty;
+            cart.lineItems[i].quantity = cart.lineItems[i].quantity + newQty;
             // console.log('made it inside if statement')
             // return cart.lineItems[i].quantity;
         }
@@ -240,7 +241,7 @@ orderSchema.methods.setItemQty = function (itemId, newQty) {
     // } else if (lineItemIndex !== -1) {
     //     cart.lineItems[lineItemIndex].quantity = newQty;
     // }
-    // console.log(cart, 'cart before save in setItemQty')
+    console.log(cart, 'cart before save in setItemQty')
     return cart.save();
 };
 

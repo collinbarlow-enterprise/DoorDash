@@ -32,13 +32,18 @@ export default function ItemPage() {
     console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
 
-  async function handleChangeQty(itemId, newQty) {
+  async function handleChangeQty(menuId, newQty) {
     console.log(cart, 'cart in handleChangeQty')
-    console.log(itemId, 'item id in handleChangeQty on Cart Component')
+    console.log(menuId, 'menuId in handleChangeQty on Cart Component')
     console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
-    const updatedCart = await ordersAPI.setItem(itemId, newQty);
+    const updatedCart = await ordersAPI.setItem(menuId, newQty);
     console.log(updatedCart, 'updatedCart in handleChangeQty')
-    setCart(updatedCart)
+    // setCart(updatedCart)
+    setCart((prevCart) => {
+      console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
+      console.log(prevCart, 'PREVIOUS CART STATE');
+      return updatedCart;
+    });
   }
 
   async function handleAddToOrderFromItemPage() {
@@ -78,8 +83,8 @@ export default function ItemPage() {
           {/* Render buttons based on whether item is in the cart */}
       {isItemInCart ? (
         <div>
-          <button onClick={() => handleChangeQty(menuItem._id, 1)}>+</button>
-          <button onClick={() => handleChangeQty(menuItem._id, -1)}>-</button>
+          <button onClick={() => handleChangeQty(menuId, 1)}>+</button>
+          <button onClick={() => handleChangeQty(menuId, -1)}>-</button>
         </div>
       ) : (
         <div>
