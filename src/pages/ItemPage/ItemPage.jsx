@@ -12,13 +12,13 @@ export default function ItemPage() {
   const navigate = useNavigate();
 
   async function getMenuitem() {
-    console.log(id, 'id in getMenuItem function')
-    console.log(menuId, 'menuId in getMenuItem function')
+    // console.log(id, 'id in getMenuItem function')
+    // console.log(menuId, 'menuId in getMenuItem function')
     try {
       const menuItemData = await restaurantsAPI.getMenuItem(id, menuId);
-      console.log(menuItemData, 'menuItemData')
+      // console.log(menuItemData, 'menuItemData')
       setMenuItem((prevState) => {
-        console.log(menuItemData, 'menuitemData inside setFunction');
+        // console.log(menuItemData, 'menuitemData inside setFunction');
         return menuItemData;
       });
     } catch(error) {
@@ -27,7 +27,7 @@ export default function ItemPage() {
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
-    console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
+    // console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
     setCart(cart);
     console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
@@ -42,8 +42,8 @@ export default function ItemPage() {
   }
 
   async function handleAddToOrderFromItemPage() {
-    console.log(id, 'restaurantId in add to order')
-    console.log(menuId, 'menuId in add to order')
+    // console.log(id, 'restaurantId in add to order')
+    // console.log(menuId, 'menuId in add to order')
 
     const itemId = menuId;
     const restaurantId = id;
@@ -60,6 +60,8 @@ export default function ItemPage() {
     }
   }
 
+  const isItemInCart = cart?.lineItems?.some((item) => item.item === menuId) || false;
+
 
   useEffect(() => {
     getMenuitem(id);
@@ -72,7 +74,21 @@ export default function ItemPage() {
         <h1>Item Page</h1>
         <div>{menuItem.dishName}</div>
         {/* need to add the add to order button, can create a new function that takes ids and then uses that to find and populate the card...there was an issue with what the current functions were expecting and what I was giving them in this page, so may just need to do it differently  */}
-        <div><button onClick = {() => handleAddToOrderFromItemPage()}> Add to Order </button></div>
+
+          {/* Render buttons based on whether item is in the cart */}
+      {isItemInCart ? (
+        <div>
+          <button onClick={() => handleChangeQty(menuItem._id, 1)}>+</button>
+          <button onClick={() => handleChangeQty(menuItem._id, -1)}>-</button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={() => handleAddToOrderFromItemPage()}>Add to Order</button>
+        </div>
+      )}
+
+        
+        {/* <div><button onClick = {() => handleAddToOrderFromItemPage()}> Add to Order </button></div> */}
         <div>{menuItem.description}</div>
         <div>{menuItem.price}</div>
         <div><strong>Ingredients:</strong>

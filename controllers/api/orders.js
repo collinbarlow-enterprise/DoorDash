@@ -32,13 +32,13 @@ async function addToCart(req, res) {
 }
 
 async function addToCartFromItemPage(req, res) {
-    console.log(req.body, 'req.body in addToCART CONTROLLER FROM ITEMPAGE')
+    // console.log(req.body, 'req.body in addToCART CONTROLLER FROM ITEMPAGE')
     const cart = await Order.getCart(req.user._id, req.body);
-    console.log(cart, 'cart in add to order from item page')
+    // console.log(cart, 'cart in add to order from item page')
 
     await cart.addItemToCartFromItemPage(req.body.itemId, req.body.restaurantId);
 
-    console.log(cart, 'cart after addItem');
+    // console.log(cart, 'cart after addItem');
     res.json(cart);
 }
 

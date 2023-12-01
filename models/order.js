@@ -168,16 +168,16 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
 
 orderSchema.methods.addItemToCartFromItemPage = async function (itemId, restaurantId) {
     const cart = this;
-    console.log(itemId, 'itemId in MODELS')
-    console.log(restaurantId, 'restaurantId in MODELS')
+    // console.log(itemId, 'itemId in MODELS')
+    // console.log(restaurantId, 'restaurantId in MODELS')
 
     const specificRestaurant = await mongoose.model('Restaurant').findById(restaurantId);
-    console.log(specificRestaurant, 'SpecificRestaurant ')
+    // console.log(specificRestaurant, 'SpecificRestaurant ')
 
     if (specificRestaurant) {
         const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
 
-        console.log(menuItem, 'menuItem if specific restaurant is found')
+        // console.log(menuItem, 'menuItem if specific restaurant is found')
 
         cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
         // cart.lineItems = cart.lineItems.filter((entry) => entry.item && entry.item !== null);
