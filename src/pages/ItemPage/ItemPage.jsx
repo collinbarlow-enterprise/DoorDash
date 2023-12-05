@@ -12,7 +12,7 @@ export default function ItemPage() {
   const { id, menuId } = useParams();
   const navigate = useNavigate();
 
-  function navigateBack() {
+  function navigateBackToRestaurant() {
     // navigate back to the restaurant page
     // console.log(id, 'id in navigateBack')
     navigate(`/restaurant/${id}`)
@@ -108,7 +108,7 @@ export default function ItemPage() {
          menuItem = {menuItem}
           cart = {cart} 
           handleChangeQty={handleChangeQty} handleAddToOrderFromItemPage = {handleAddToOrderFromItemPage}
-          navigateBack = {navigateBack}
+          navigateBackToRestaurant = {navigateBackToRestaurant}
           id = {id}
           menuId = {menuId}
           itemQty = {itemQty}

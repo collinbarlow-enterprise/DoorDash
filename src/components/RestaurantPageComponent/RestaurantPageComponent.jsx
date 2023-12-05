@@ -6,7 +6,7 @@ import CartComponent from '../CartComponent/CartComponent'
 
 export default function RestaurantPageComponent({}) {
   
-  const [restaurant, setRestaurant] = useState([])
+  const [restaurant, setRestaurant] = useState(null)
   const [cart, setCart] = useState({})
   const [showQty, setShowQty] = useState(null)
   const { id } = useParams();
@@ -21,6 +21,10 @@ export default function RestaurantPageComponent({}) {
   } catch (error) {
     console.error('Navgiation error:', error)
   }}
+
+  function navigateBackToHome() {
+    navigate(`/home`)
+  }
 
   async function getRestaurant(restaurantID) {
     // console.log(restaurantID, 'getRestaurant in Restaurant Page Component')
@@ -107,8 +111,13 @@ useEffect(() => {
   // console.log(restaurant, 'restaurant in useEffect')
 },[])
 
+if (restaurant === null) {
+  return <div>Loading...</div>
+}
+
   return (
     <div className="container">
+      <div><button onClick = {() => navigateBackToHome() }>X</button></div>
       <h6 className="text-center">Restaurant Page Component</h6>
       <div>{restaurant.name}</div>
       <div>{restaurant.cuisineType}</div>

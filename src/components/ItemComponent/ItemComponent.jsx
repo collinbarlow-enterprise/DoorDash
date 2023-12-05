@@ -5,7 +5,7 @@ export default function ItemComponent({
   cart,
   handleChangeQty,
   handleAddToOrderFromItemPage,
-  navigateBack,
+  navigateBackToRestaurant,
   id,
   menuId,
   itemQty }) {
@@ -21,7 +21,7 @@ export default function ItemComponent({
 
   return (
     <div className="container">
-      <div><button onClick={() => navigateBack(id)}>X</button></div>
+      <div><button onClick={() => navigateBackToRestaurant(id)}>X</button></div>
 
       <h6 className="text-center">Item Component Component</h6>
       <div>{itemQty ? (itemQty) : ("Not in Cart")}</div>
