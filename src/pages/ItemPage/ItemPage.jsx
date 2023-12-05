@@ -14,6 +14,8 @@ export default function ItemPage() {
 
   function navigateBack() {
     // navigate back to the restaurant page
+    // console.log(id, 'id in navigateBack')
+    navigate(`/restaurant/${id}`)
   }
 
   async function getMenuitem() {

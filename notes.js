@@ -79,6 +79,7 @@ export default function ItemPage() {
 
   function navigateBack() {
     // navigate back to the path with the id set as the restaurant id
+    return console.log('id in navigateBack')
   };
 
   const isItemInCart = cart?.lineItems?.some((item) => item.item === menuId) || false;
