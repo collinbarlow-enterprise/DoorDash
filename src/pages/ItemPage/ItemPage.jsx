@@ -80,7 +80,7 @@ export default function ItemPage() {
     }
   }
 
-  const isItemInCart = cart?.lineItems?.some((item) => item.item === menuId) || false;
+  // const isItemInCart = cart?.lineItems?.some((item) => item.item === menuId) || false;
 
 
   useEffect(() => {
@@ -108,6 +108,7 @@ export default function ItemPage() {
           handleChangeQty={handleChangeQty} handleAddToOrderFromItemPage = {handleAddToOrderFromItemPage}
           navigateBack = {navigateBack}
           id = {id}
+          menuId = {menuId}
           itemQty = {itemQty}
           /> </div>
 
