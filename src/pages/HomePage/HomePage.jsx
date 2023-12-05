@@ -7,7 +7,7 @@ import RestaurantHomePageComponent from '../../components/RestaurantHomePageComp
 
 
 export default function HomePage() {
-    const [restaurants, setRestaurants] = useState([]);
+    const [restaurants, setRestaurants] = useState(null);
     const [cart, setCart] = useState()
 // the way i had showCheckout working in fish-market was through a useState turning on and off
 // I didn't like that before, and I think it would be better if I use a navigate to the either the cart page or the checkout page
@@ -60,6 +60,11 @@ useEffect(() => {
     // getCart();
 }, [])
 
+
+if (restaurants === null) {
+    return <div>Loading...</div>
+}
+
 const restaurantMap = restaurants.map((r, index) =>
    <RestaurantHomePageComponent
    key = {index}
@@ -69,6 +74,7 @@ const restaurantMap = restaurants.map((r, index) =>
    menu = {r.menu}   
    />
 );
+
 
   return (
     <div>
