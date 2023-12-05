@@ -14,9 +14,13 @@ export default function RestaurantPageComponent({}) {
 
 
   function toMenuItemPage(id, menuId) {
-    console.log(menuId, 'id in toMenuItem function');
+    try {
+    console.log(id, 'restaurant ID in toMenuItem function');
+    console.log(menuId, 'menuId in toMenuItem function');
     navigate(`/restaurant/${id}/itempage/${menuId}`)
-  }
+  } catch (error) {
+    console.error('Navgiation error:', error)
+  }}
 
   async function getRestaurant(restaurantID) {
     // console.log(restaurantID, 'getRestaurant in Restaurant Page Component')
