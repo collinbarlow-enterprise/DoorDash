@@ -118,6 +118,7 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
   
 
     if (specificRestaurant) {
+        cart.restaurant = specificRestaurant;
         const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
 
         // const populatedLineItems = specificRestaurant.menu.find(item => item._id.equals(itemId)).populate('lineItems.item').exec();
