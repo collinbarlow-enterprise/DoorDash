@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import CartPageComponent from '../../components/CartPageComponent/CartPageComponent'
+import CartMapComponent from '../../components/CartMapComponent/CartMapComponent'
 
 
 export default function CartPage() {
@@ -70,6 +71,8 @@ function navigateBackToHome() {
   navigate(`/home`)
 }
 
+
+
 useEffect(() => {
   getCart();
   // getRestaurant();
@@ -81,9 +84,20 @@ useEffect(() => {
   console.log(restaurant, 'restaurant in cart page')
 },[cart])
 
-if (restaurant === null) {
+if (restaurant === null || cart === null) {
   return <div>Loading...</div>
 }
+
+// const cartMap = restaurant && cart && cart.lineItems ? cart.lineItems.map((item) => 
+// <CartLineItemComponent
+// key = {item._id}
+// cartItem = {item}
+// itemQty = {item.quantity}
+// cart = {cart}
+// // handleChangeQty = {handleChangeQty}
+
+// />
+// ) : [cart && restaurant];
 
   return (
     <div>
@@ -93,7 +107,7 @@ if (restaurant === null) {
         {/* its not the CartComponent, that cart component is already in use on the Restaurant and Item Page */}
         <div><CartPageComponent cart ={cart} restaurant = {restaurant}/></div>
         <div>Complement You Cart Below</div>
-        <div>{}</div>
+        <div><CartMapComponent cart ={cart} setCart = {setCart}/></div>
         <div>Summary Section Below</div>
         <div>{}</div>
         <div>Chase Saphire Section Below</div>

@@ -11,14 +11,14 @@ export default function CartPageComponent({cart, restaurant}) {
     navigate(`/restaurant/${restaurant._id}`)
   }
 
-  if (restaurant === null) {
+  if (restaurant === null || cart === null) {
     return <div>Loading...</div>
   }
 
   return (
     <div className="container">
       <h6 className="text-center">Cart Page Component</h6>
-    <div>{restaurant.name} <strong><button onClick={() => { toRestaurant() }}>Forward</button></strong></div>
+    <div>{restaurant.name} <strong><button onClick={() => { toRestaurant() }}>Back To {restaurant.name}</button></strong></div>
     
     
     </div>

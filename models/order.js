@@ -8,7 +8,8 @@ const { ObjectId } = require('mongodb');
 const lineItemSchema = new Schema({
     // does this need a default value? 
     quantity: { type: Number },
-    item: { type: Schema.Types.ObjectId, ref: 'MenuItem' }
+    item: { type: Schema.Types.ObjectId, ref: 'MenuItem' },
+    price: {type: Number }
 }, {
     timestamps: true,
     toJSON: { virtuals: true }
@@ -120,6 +121,9 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
     if (specificRestaurant) {
         cart.restaurant = specificRestaurant;
         const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
+        console.log(menuItem, 'MENUITEM IN ADD TO ORDER')
+        itemPrice = menuItem.price;
+        console.log(itemPrice, 'PRICE PRICE PRICE PRICE')
 
         // const populatedLineItems = specificRestaurant.menu.find(item => item._id.equals(itemId)).populate('lineItems.item').exec();
         // const populatedLineItems = await mongoose.model('Restaurant').findById({restaurantId }).populate().exec();
@@ -155,13 +159,13 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
             // cart.lineItems.push({ quantity: 1, item: { ...menuItem } });
             const newMenuItem = { ...menuItem };
             // cart.lineItems.push({ quantity: 1, item: { menuItem: newMenuItem } });
-            cart.lineItems.push({ quantity: 1, item: newMenuItem } );
+            cart.lineItems.push({ quantity: 1, item: newMenuItem, price : itemPrice } );
         }
 
 
         // console.log(cart, 'cart after everything')
         await cart.save();
-        // console.log(cart, 'cart after saving')
+        console.log(cart, 'cart after saving')
         // console.log(cart.lineItems, 'cart.lineItems after saving')
         return cart;
     }
