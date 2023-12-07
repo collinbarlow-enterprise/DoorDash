@@ -5,6 +5,7 @@ import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import CartPageComponent from '../../components/CartPageComponent/CartPageComponent'
 import CartMapComponent from '../../components/CartMapComponent/CartMapComponent'
+import CartRestaurantMenuMap from '../../components/CartRestaurantMenuMap/CartRestaurantMenuMap'
 
 
 export default function CartPage() {
@@ -70,6 +71,9 @@ function toCheckOutPage() {
 function navigateBackToHome() {
   navigate(`/home`)
 }
+function toRestaurant() {
+  navigate(`/restaurant/${restaurant._id}`)
+}
 
 
 
@@ -105,9 +109,25 @@ if (restaurant === null || cart === null) {
         <div><button onClick = {() => navigateBackToHome() }>X</button></div>
         <h1>Cart Page</h1>
         {/* its not the CartComponent, that cart component is already in use on the Restaurant and Item Page */}
-        <div><CartPageComponent cart ={cart} restaurant = {restaurant}/></div>
+        <div>
+          <div>
+          <CartPageComponent cart ={cart} restaurant = {restaurant} toRestaurant= {toRestaurant}/>
+          </div>
+
+        </div>
+        
+        <div>
+          <div>
+          <CartMapComponent cart ={cart} setCart = {setCart}/>
+          </div>
+          <div>
+            <button onClick={() => { toRestaurant() }}>+ Add More Items</button>
+          </div>
+        </div>
+
         <div>Complement You Cart Below</div>
-        <div><CartMapComponent cart ={cart} setCart = {setCart}/></div>
+        {/* going to need an intermediary for the restaurant mapping  */}
+        <div><CartRestaurantMenuMap cart ={cart} setCart = {setCart} restaurant = {restaurant}/></div>
         <div>Summary Section Below</div>
         <div>{}</div>
         <div>Chase Saphire Section Below</div>

@@ -1,15 +1,13 @@
 import React, { useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function CartPageComponent({cart, restaurant}) {
+export default function CartPageComponent({cart, restaurant, toRestaurant}) {
 
     const navigate = useNavigate();
   console.log(cart, 'cart in CARTPAGECOMPONENT ')
   console.log(restaurant, 'restaurant in CARTPAGECOMPONENT ')
   
-  function toRestaurant() {
-    navigate(`/restaurant/${restaurant._id}`)
-  }
+
 
   if (restaurant === null || cart === null) {
     return <div>Loading...</div>

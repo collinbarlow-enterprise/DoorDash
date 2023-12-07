@@ -1,23 +1,23 @@
 import React from 'react'
 import * as ordersAPI from '../../utilities/orders-api'
 
-export default function CartLineItemComponent({cartItem, itemQty, cart, key, setCart}) {
-    console.log(cartItem, 'cartItem in cartlineitem component')
-    console.log(cart, 'cart in cartlineitem component')
+export default function CartLineItemComponent({cartItem, itemQty, cart, setCart}) {
+    // console.log(cartItem, 'cartItem in cartlineitem component')
+    // console.log(cart, 'cart in cartlineitem component')
 
     const itemId = cartItem.item
-    console.log(itemId, 'itemId in cartlineItemComponent')
+    // console.log(itemId, 'itemId in cartlineItemComponent')
 
     async function handleChangeQty(itemId, newQty) {
         // console.log(cart, 'cart in handleChangeQty')
         // console.log(menuId, 'menuId in handleChangeQty on Cart Component')
-        console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
+        // console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
         const updatedCart = await ordersAPI.setItem(itemId, newQty);
-        console.log(updatedCart, 'updatedCart in handleChangeQty')
+        // console.log(updatedCart, 'updatedCart in handleChangeQty')
         // setCart(updatedCart)
         setCart((prevCart) => {
-          console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
-          console.log(prevCart, 'PREVIOUS CART STATE');
+        //   console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json');
+        //   console.log(prevCart, 'PREVIOUS CART STATE');
           return updatedCart;
         });
       }
