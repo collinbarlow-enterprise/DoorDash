@@ -17,22 +17,12 @@ const lineItemSchema = new Schema({
 
 // this.item.price doesnt work, and price is null. item i sreferring to my restaurants.object.id
 lineItemSchema.virtual('extPrice').get(function() {
-    console.log(this, 'this in lineItem virtual')
-    console.log(this.quantity, this.item, this.price, 'properties in lineItem virtual')
-    console.log(this.quantity*this.price, 'extPrice in lineItem virtual')
+    // console.log(this, 'this in lineItem virtual')
+    // console.log(this.quantity, this.item, this.price, 'properties in lineItem virtual')
+    // console.log(this.quantity*this.price, 'extPrice in lineItem virtual')
     return this.quantity*this.price
 })
 
-// lineItemSchema.virtual('extPrice').get(async function() {
-//     // Populate the 'item' field to access the menu
-//     const populatedLineItem = await this.populate('item').execPopulate();
-
-//     if (populatedLineItem.item && populatedLineItem.item.menu.length > 0) {
-//       return this.quantity * populatedLineItem.item.menu[0].price;
-//     } else {
-//       return 0; // or handle the case where the item or menu is missing
-//     }
-//   });
 
 
 const orderSchema = new Schema({
@@ -48,6 +38,7 @@ const orderSchema = new Schema({
     totalPrice: { type: Number },
     // this is a property that is going to be updated as part of the delivery workflow (just a series of time delays before moving through 3 stages)
     status: { type: String },
+    feesAndTaxes: {type: Number, default: 0},
 
     lineItems: [lineItemSchema],
     isPaid: { type: Boolean, default: false }
@@ -60,7 +51,7 @@ const orderSchema = new Schema({
 
 //grabs the value of  all the line items times their multiply of whats in the cart 
 
-orderSchema.virtual('orderTotal').get(function () {
+orderSchema.virtual('subTotal').get(function () {
     return this.lineItems.reduce((total, item) => total + item.extPrice, 0);
 });
 
@@ -73,6 +64,15 @@ orderSchema.virtual('orderId').get(function () {
     return this.id.slice(-6).toUpperCase();
 });
 
+orderSchema.virtual('taxesAndFees').get(function () {
+    const taxesAndFees = this.orderTotal * (10/100)
+    return (taxesAndFees);
+})
+
+orderSchema.virtual('deliveryFee').get(function () {
+    const deliveryFee = 7/100
+    return (this.orderTotal * deliveryFee)
+})
 
 orderSchema.statics.getCart = async function (userId, reqBody) {
     // console.log(reqBody, 'reqBody in getCart Static')
@@ -123,9 +123,9 @@ orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
     if (specificRestaurant) {
         cart.restaurant = specificRestaurant;
         const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
-        console.log(menuItem, 'MENUITEM IN ADD TO ORDER')
+        // console.log(menuItem, 'MENUITEM IN ADD TO ORDER')
         itemPrice = menuItem.price;
-        console.log(itemPrice, 'PRICE PRICE PRICE PRICE')
+        // console.log(itemPrice, 'PRICE PRICE PRICE PRICE')
 
         // const populatedLineItems = specificRestaurant.menu.find(item => item._id.equals(itemId)).populate('lineItems.item').exec();
         // const populatedLineItems = await mongoose.model('Restaurant').findById({restaurantId }).populate().exec();
