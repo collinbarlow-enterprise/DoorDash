@@ -5,7 +5,10 @@ export default class SignUpForm extends Component {
 
   // state is always an object with a property for each "piece" of state
   state = {
-    name: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    chaseMember: false,
     email: '',
     password: '',
     confirm: '',
@@ -31,6 +34,11 @@ export default class SignUpForm extends Component {
     this.setState({ [evt.target.name]: evt.target.value, error: '' })
   }
 
+  handleChangeCheckbox = (event) => {
+    const { name, checked } = event.target;
+    this.setState({ [name]: checked });
+  };
+
 
 
   render() {
@@ -39,8 +47,14 @@ export default class SignUpForm extends Component {
       <div>
         <div className="form-container">
           <form autoComplete="off" onSubmit={this.handleSubmit}>
-            <label>Name</label>
-            <input type="text" name="name" value={this.state.name} onChange={this.handleChange} required />
+            <label>First Name</label>
+            <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange} required />
+            <label>Last Name</label>
+            <input type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange} required />
+            <label>Address</label>
+            <input type="text" name="address" value={this.state.address} onChange={this.handleChange} />
+            <label>Chase Member?</label>
+            <input type="checkbox" name="chaseMember" checked={this.state.chaseMember} onChange={this.handleChangeCheckbox} />
             <label>Email</label>
             <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
             <label>Password</label>

@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt')
 const userSchema = new Schema({
   firstName: {type: String, required: false},
   lastName: {type: String, required: false},
-  address: { type: String, required: false},
+  address: [{ type: String, required: false, default: '303 2nd Street San Francisco, CA 94107'}],
   creditCard: [{type: Number, required: false, length: 9, default: '111222333'}],
   chaseMember: {type: Boolean, required: true},
   favoriteRestaurant: [{type: Schema.Types.ObjectId, ref: 'Restaurant'}],

@@ -3,18 +3,32 @@ import { useNavigate } from 'react-router-dom'
 
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
+import * as usersAPI from '../../utilities/users-service'
 import CartPageComponent from '../../components/CartPageComponent/CartPageComponent'
 import CartMapComponent from '../../components/CartMapComponent/CartMapComponent'
 import CartRestaurantMenuMap from '../../components/CartRestaurantMenuMap/CartRestaurantMenuMap'
 import CartPageSummaryComponent from '../../components/CartPageSummaryComponent/CartPageSummaryComponent'
+import ChaseSapphireComponent from '../../components/ChaseSapphireComponent/ChaseSapphireComponent'
+
 
 
 export default function CartPage() {
+  const [user, setUser] = useState(null)
   const [cart, setCart] = useState(null)
   const [restaurant, setRestaurant] = useState(null)
   const [order, setOrder] = useState(null)
   const navigate = useNavigate();
 
+  // console.log(user 'user in cart page')
+
+  async function getUser() {
+    const user = await usersAPI.getUser();
+    setUser((prevState) => {
+      console.log(prevState, 'prevState for user')
+      console.log(user, 'user in setUser function on getUser')
+      return user;
+    })
+  }
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
@@ -79,6 +93,7 @@ function toRestaurant() {
 
 
 useEffect(() => {
+  getUser();
   getCart();
   // getRestaurant();
 
@@ -132,6 +147,7 @@ if (restaurant === null || cart === null) {
         <div>Summary Section Below</div>
         <div><CartPageSummaryComponent cart = {cart}/></div>
         <div>Chase Saphire Section Below</div>
+      {user.chaseMember ? (<ChaseSapphireComponent /> ) : (<div>Not a Chase Member</div>)}
         <div>{}</div>
         <div>Continue Button Below</div>
         <div><button onClick={() => { toCheckOutPage() }}>Continue</button></div>
