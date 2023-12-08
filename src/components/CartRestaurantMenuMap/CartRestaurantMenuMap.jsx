@@ -3,13 +3,13 @@ import CartComplementItems from '../CartComplementItems/CartComplementItems'
 
 export default function CartRestaurantMenuMap({cart, restaurant, setCart}) {
 
-console.log(cart, 'cart in CartMENUMAP')
-console.log(restaurant, 'restaurant in cart map')
+// console.log(cart, 'cart in CartMENUMAP')
+// console.log(restaurant, 'restaurant in cart map')
 
 const restaurantId = restaurant._id
 
 const restaurantMenu = restaurant.menu
-console.log(restaurantMenu)
+// console.log(restaurantMenu)
 
 const menuItemsNotInCart = restaurantMenu.filter((menuItem) => !cart.lineItems.some((cartItem) => cartItem.item === menuItem._id))
 

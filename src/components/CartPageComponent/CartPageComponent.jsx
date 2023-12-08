@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 export default function CartPageComponent({cart, restaurant, toRestaurant}) {
 
     const navigate = useNavigate();
-  console.log(cart, 'cart in CARTPAGECOMPONENT ')
-  console.log(restaurant, 'restaurant in CARTPAGECOMPONENT ')
+//   console.log(cart, 'cart in CARTPAGECOMPONENT ')
+//   console.log(restaurant, 'restaurant in CARTPAGECOMPONENT ')
   
 
 

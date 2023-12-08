@@ -16,10 +16,12 @@ const lineItemSchema = new Schema({
 })
 
 // this.item.price doesnt work, and price is null. item i sreferring to my restaurants.object.id
-// lineItemSchema.virtual('extPrice').get(function() {
-//     console.log(this, 'this in lineItem virtual')
-//     return this.quantity*this.item.price
-// })
+lineItemSchema.virtual('extPrice').get(function() {
+    console.log(this, 'this in lineItem virtual')
+    console.log(this.quantity, this.item, this.price, 'properties in lineItem virtual')
+    console.log(this.quantity*this.price, 'extPrice in lineItem virtual')
+    return this.quantity*this.price
+})
 
 // lineItemSchema.virtual('extPrice').get(async function() {
 //     // Populate the 'item' field to access the menu
@@ -183,7 +185,7 @@ orderSchema.methods.addItemToCartFromItemPage = async function (itemId, restaura
         const menuItem = specificRestaurant.menu.find(item => item._id.equals(itemId));
 
         // console.log(menuItem, 'menuItem if specific restaurant is found')
-
+        itemPrice = menuItem.price;
         cart.lineItems = cart.lineItems.filter((entry) => entry.item !== null);
         // cart.lineItems = cart.lineItems.filter((entry) => entry.item && entry.item !== null);
         // console.log(cart.lineItems, 'cart.lineItems ')
@@ -201,7 +203,7 @@ orderSchema.methods.addItemToCartFromItemPage = async function (itemId, restaura
             // cart.lineItems.push({ quantity: 1, item: { ...menuItem } });
             const newMenuItem = { ...menuItem };
             // cart.lineItems.push({ quantity: 1, item: { menuItem: newMenuItem } });
-            cart.lineItems.push({ quantity: 1, item: newMenuItem } );
+            cart.lineItems.push({ quantity: 1, item: newMenuItem, price : itemPrice } );
         }
         // console.log(cart, 'cart after everything')
         await cart.save();
