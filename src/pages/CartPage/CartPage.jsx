@@ -130,7 +130,7 @@ if (restaurant === null || cart === null) {
         {/* going to need an intermediary for the restaurant mapping  */}
         <div><CartRestaurantMenuMap cart ={cart} setCart = {setCart} restaurant = {restaurant}/></div>
         <div>Summary Section Below</div>
-        <div><CartPageSummaryComponent cart ={cart}/></div>
+        <div><CartPageSummaryComponent cart = {cart}/></div>
         <div>Chase Saphire Section Below</div>
         <div>{}</div>
         <div>Continue Button Below</div>

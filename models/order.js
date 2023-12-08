@@ -52,7 +52,9 @@ const orderSchema = new Schema({
 //grabs the value of  all the line items times their multiply of whats in the cart 
 
 orderSchema.virtual('subTotal').get(function () {
-    return this.lineItems.reduce((total, item) => total + item.extPrice, 0);
+    const number = this.lineItems.reduce((total, item) => total + item.extPrice, 0);
+    const roundedUp = Math.ceil(number * 100) / 100
+    return parseFloat(roundedUp.toFixed(2));
 });
 
 orderSchema.virtual('totalQty').get(function () {
@@ -65,17 +67,20 @@ orderSchema.virtual('orderId').get(function () {
 });
 
 orderSchema.virtual('taxesAndFees').get(function () {
-    const taxesAndFees = this.subTotal * (10/100)
-    return (taxesAndFees);
+    const number = this.subTotal * (11/100)
+    const roundedUp = Math.ceil(number * 100) / 100
+    return parseFloat(roundedUp.toFixed(2));
 })
 
 orderSchema.virtual('deliveryFee').get(function () {
     const deliveryFee = 7/100
-    return (this.subTotal * deliveryFee)
+    const number = this.subTotal * deliveryFee
+    const roundedUp = Math.ceil(number * 100) / 100
+    return parseFloat(roundedUp.toFixed(2));
 })
 
 orderSchema.virtual('total').get(function() {
-    return (this.deliveryFee + this.taxesAndFees +this.subTotal)
+    return parseFloat(this.deliveryFee + this.taxesAndFees +this.subTotal).toFixed(2);
 })
 
 orderSchema.statics.getCart = async function (userId, reqBody) {
