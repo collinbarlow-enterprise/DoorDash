@@ -65,13 +65,17 @@ orderSchema.virtual('orderId').get(function () {
 });
 
 orderSchema.virtual('taxesAndFees').get(function () {
-    const taxesAndFees = this.orderTotal * (10/100)
+    const taxesAndFees = this.subTotal * (10/100)
     return (taxesAndFees);
 })
 
 orderSchema.virtual('deliveryFee').get(function () {
     const deliveryFee = 7/100
-    return (this.orderTotal * deliveryFee)
+    return (this.subTotal * deliveryFee)
+})
+
+orderSchema.virtual('total').get(function() {
+    return (this.deliveryFee + this.taxesAndFees +this.subTotal)
 })
 
 orderSchema.statics.getCart = async function (userId, reqBody) {
