@@ -129,28 +129,28 @@ orderSchema.statics.getPaidCart = function (userId) {
 
 orderSchema.methods.calculateTotal = async function (cart) {
     // going to need to update the cart 'total' field at some point via a function, this function seems appropriate, or this function can be nested as part of another string of functions when the order is placed? 
-    console.log(cart, 'cart in CALCULATE TOTAL')
+    // console.log(cart, 'cart in CALCULATE TOTAL')
     // need to get the user and the order 
     const user = await mongoose.model('User').findById(cart.user);
     if (user === true) {console.log(user, 'user in calculate Total')}
 
-    console.log(user, 'user in calculateTotal Method')
+    // console.log(user, 'user in calculateTotal Method')
 
     const total = parseFloat(this.total);
-    console.log(total, 'total in calculateTotal method')
-    console.log(typeof total, 'total in calculateTotal method')
+    // console.log(total, 'total in calculateTotal method')
+    // console.log(typeof total, 'total in calculateTotal method')
     const savings = this.chaseSavings
-    console.log(savings, 'savings in calculateTotal method')
-    console.log(typeof savings, 'savings in calculateTotal method')
+    // console.log(savings, 'savings in calculateTotal method')
+    // console.log(typeof savings, 'savings in calculateTotal method')
 
         // if the user is a chase member we perform one calculattion
     if (user.chaseMember === true) {
         calculatedTotal = total + savings;
-        console.log(calculatedTotal, 'calculated Total in method')
+        // console.log(calculatedTotal, 'calculated Total in method')
         return calculatedTotal;
            // if the user is not a chase member we perform another calculation
     } else {
-        console.log(total, 'total in calculateTotal else block')
+        // console.log(total, 'total in calculateTotal else block')
         return total;
     }
 }

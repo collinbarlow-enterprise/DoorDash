@@ -58,7 +58,8 @@ export default function CartPage() {
 async function getTotal() {
   try {
       const totalData = await ordersAPI.getTotal();
-      console.log(totalData, 'totalData in getRestaurants HomePage')
+      // console.log(totalData, 'totalData in getRestaurants HomePage')
+      // console.log(typeof totalData, 'totalData in getRestaurants HomePage')
       setTotal(totalData);
   } catch(error) {
       console.error(error, 'error for getTotal in Home Page')
@@ -158,7 +159,7 @@ if (restaurant === null || cart === null) {
         <div>Summary Section Below</div>
         <div><CartPageSummaryComponent cart = {cart}/></div>
         <div>Chase Saphire Section Below</div>
-      {user.chaseMember ? (<ChaseSapphireComponent /> ) : (<div>Not a Chase Member</div>)}
+      {user.chaseMember ? (<ChaseSapphireComponent cart = {cart} /> ) : (<div>Not a Chase Member</div>)}
         <div>{}</div>
         <div>Continue Button Below</div>
         <div><button onClick={() => { toCheckOutPage() }}>Continue</button></div>

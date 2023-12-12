@@ -1,8 +1,89 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import * as restaurantAPI from '../../utilities/restaurants-api'
+import * as ordersAPI from '../../utilities/orders-api'
+import * as usersAPI from '../../utilities/users-service'
+
 import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
 
 
 export default function CheckOutPage() {
+    
+// state values:
+// X user
+// X cart
+// X restaurant
+// X total
+// dasher tip
+
+  const navigate = useNavigate();
+  const [ user, setUser ] = useState(null)
+  const [ cart, setCart ] = useState(null)
+  const [ restaurant, setRestaurant ] = useState(null)
+  const [ total, setTotal ] = useState(null)
+  const [ dasherTip, setDasherTip ] = useState(null)
+
+// API functions needed:
+// X getUser, X getCart, X getRestaurant, X getTotal
+
+async function getUser() {
+  const user = await usersAPI.getUser();
+  setUser((prevState) => {
+    // console.log(prevState, 'prevState for user')
+    // console.log(user, 'user in setUser function on getUser')
+    return user;
+  })
+}
+
+async function getCart() {
+  const cart = await ordersAPI.getCart();
+  // console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
+  setCart((prevState) => {
+    // console.log(cart, 'cart in getCart on CartPage')
+    return cart;
+  })
+
+
+  setCart(cart);
+  // console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
+}
+
+// need to find a way to get the Restaurant id...from the cart or order? 
+async function getRestaurant() {
+  try {
+      const restaurantData = await restaurantAPI.getOneRestaurant(cart.restaurant);
+      // console.log(restaurantData, 'restaurantsData in getRestaurants HomePage')
+      setRestaurant(restaurantData);
+  } catch(error) {
+      console.error(error, 'error for getRestaurant in Home Page')
+  }
+}
+
+async function getTotal() {
+  try {
+      const totalData = await ordersAPI.getTotal();
+      // console.log(totalData, 'totalData in getRestaurants HomePage')
+      // console.log(typeof totalData, 'totalData in getRestaurants HomePage')
+      setTotal(totalData);
+  } catch(error) {
+      console.error(error, 'error for getTotal in Home Page')
+  }
+}
+
+// other functions needed
+// an onClick function that updates the setDasherTip 
+// a function to determine the price of the dashertip options - how should the tip be generated? a hard coded value doesn't seem right, so maybe some percentage of the total? 
+
+// a function for the google maps api that will use the user.address as the place
+// does the google maps api give an ETA value? that would make delivery time interesting 
+
+// navigate functions to orders page
+
+function navigateToOrderStatusPage() {
+  navigate(`/orderstatus`)
+}
+
 
 // CheckOut Page
 // restaurant name
@@ -32,12 +113,29 @@ export default function CheckOutPage() {
 // place order 
 
 
+useEffect(() => {
+  getUser();
+  getCart();
+  // getRestaurant();
+
+}, [])
+
+useEffect(() => {
+  getRestaurant();
+  getTotal();
+  console.log(restaurant, 'restaurant in cart page')
+},[cart])
+
+if (restaurant === null || cart === null) {
+  return <div>Loading...</div>
+}
+
 
   return (
     <div>
         <h1>Still Under Construction</h1>
 
-        <div>{CheckOutComponent}</div>
+        <CheckOutComponent />
 
         <h1>Check Out Page</h1>
         <div>Restaurant Name</div>
