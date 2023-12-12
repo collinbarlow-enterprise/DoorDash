@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { Restaurant, MenuItem } = require('./restaurant');
+const {User} = require('./user')
 const { ObjectId } = require('mongodb');
 
 // the orderItems may be wrong. May just need to figure out a way to add the items to the array, maybe its just an empty array that has the restaurant.menu[] objects added to it?
@@ -79,6 +80,14 @@ orderSchema.virtual('deliveryFee').get(function () {
     return parseFloat(roundedUp.toFixed(2));
 })
 
+orderSchema.virtual('chaseSavings').get(function () {
+    const deliveryFee = this.deliveryFee;
+    const taxesAndFees = this.taxesAndFees;
+    const savings = -(deliveryFee + taxesAndFees);
+    // console.log(savings, 'savings in chaseSavings virtual')
+    return savings  
+})
+
 orderSchema.virtual('total').get(function() {
     return parseFloat(this.deliveryFee + this.taxesAndFees +this.subTotal).toFixed(2);
 })
@@ -117,6 +126,34 @@ orderSchema.statics.getPaidCart = function (userId) {
         .populate('lineItems.item')
         .exec();
 };
+
+orderSchema.methods.calculateTotal = async function (cart) {
+    // going to need to update the cart 'total' field at some point via a function, this function seems appropriate, or this function can be nested as part of another string of functions when the order is placed? 
+    console.log(cart, 'cart in CALCULATE TOTAL')
+    // need to get the user and the order 
+    const user = await mongoose.model('User').findById(cart.user);
+    if (user === true) {console.log(user, 'user in calculate Total')}
+
+    console.log(user, 'user in calculateTotal Method')
+
+    const total = parseFloat(this.total);
+    console.log(total, 'total in calculateTotal method')
+    console.log(typeof total, 'total in calculateTotal method')
+    const savings = this.chaseSavings
+    console.log(savings, 'savings in calculateTotal method')
+    console.log(typeof savings, 'savings in calculateTotal method')
+
+        // if the user is a chase member we perform one calculattion
+    if (user.chaseMember === true) {
+        calculatedTotal = total + savings;
+        console.log(calculatedTotal, 'calculated Total in method')
+        return calculatedTotal;
+           // if the user is not a chase member we perform another calculation
+    } else {
+        console.log(total, 'total in calculateTotal else block')
+        return total;
+    }
+}
 
 orderSchema.methods.addItemToCart = async function (itemId, index, restaurant) {
     const cart = this;

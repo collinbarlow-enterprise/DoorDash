@@ -17,6 +17,7 @@ export default function CartPage() {
   const [cart, setCart] = useState(null)
   const [restaurant, setRestaurant] = useState(null)
   const [order, setOrder] = useState(null)
+  const [total, setTotal] = useState(null)
   const navigate = useNavigate();
 
   // console.log(user 'user in cart page')
@@ -54,6 +55,15 @@ export default function CartPage() {
     }
 }
 
+async function getTotal() {
+  try {
+      const totalData = await ordersAPI.getTotal();
+      console.log(totalData, 'totalData in getRestaurants HomePage')
+      setTotal(totalData);
+  } catch(error) {
+      console.error(error, 'error for getTotal in Home Page')
+  }
+}
 
   // what state values do I need?
     // X cart - to see the lineItems and change qtys
@@ -101,6 +111,7 @@ useEffect(() => {
 
 useEffect(() => {
   getRestaurant();
+  getTotal();
   console.log(restaurant, 'restaurant in cart page')
 },[cart])
 

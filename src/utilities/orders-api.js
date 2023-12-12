@@ -22,6 +22,13 @@ export function setItem(itemId, newQty) {
     console.log(newQty, 'newQty in ordersAPI');
     return sendRequest(`${BASE_URL}/cart/quantity`, 'PUT', {itemId, newQty });
 }
+
+export function getTotal() {
+    console.log(`made it inside getTotal API`);
+    // does anything need to be passed into this? 
+    return sendRequest(`${BASE_URL}/cart/total`);
+}
+
 export function checkout() {
     return sendRequest(`${BASE_URL}/cart/checkout`, 'POST');
 }

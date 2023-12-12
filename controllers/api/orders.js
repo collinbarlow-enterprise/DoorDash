@@ -5,6 +5,7 @@ module.exports = {
     addToCart,
     addToCartFromItemPage,
     setItem,
+    getTotal,
     checkout,
     getPaidCartController,
     deleteOrder
@@ -50,6 +51,13 @@ async function setItem(req, res) {
     await cart.setItemQty(req.body.itemId, req.body.newQty);
     // console.log(cart, 'cart before sending back in setItem')
     res.json(cart);
+}
+
+async function getTotal(req, res) {
+    const cart = await Order.getCart(req.user._id);
+    const total = await cart.calculateTotal(cart);
+    console.log(total, 'TOTAL IN GETTOTAL CONTROLLER')
+    res.json(total)
 }
 
 async function checkout(req, res) {
