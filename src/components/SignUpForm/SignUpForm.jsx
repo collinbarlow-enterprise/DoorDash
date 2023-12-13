@@ -7,7 +7,7 @@ export default class SignUpForm extends Component {
   state = {
     firstName: '',
     lastName: '',
-    address: '',
+    address: '303 2nd Street San Francisco, CA 94107',
     chaseMember: false,
     email: '',
     password: '',

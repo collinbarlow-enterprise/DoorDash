@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const SALT_ROUNDS = 6;
 const bcrypt = require('bcrypt');
 const axios = require ('axios');
+require('dotenv').config(); 
 
 // add first name, last name, address, and credit card to sign up form
 // need to reformat entire sign up form, not a big deal just change fields and what data value they map to
@@ -14,8 +15,8 @@ const userSchema = new Schema({
   lastName: {type: String, required: false},
   address: [{ type: String, required: false, default: '303 2nd Street San Francisco, CA 94107'}],
   location: {
-    type: {type: String, default: 'Point',
-    coordinates: {type: [Number], default: [0, 0]},},
+    type: {type: String, default: 'Point'},
+    coordinates: {type: [Number], default: [0, 0]},
   },
   creditCard: [{type: Number, required: false, length: 9, default: '111222333'}],
   chaseMember: {type: Boolean, required: true},
@@ -59,23 +60,45 @@ userSchema.methods.geocodeAddress = async function () {
   console.log(user, 'user in geocodeAddress')
   try {
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(user.address)}&key=YOUR_API_KEY`
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(user.address)}&key=${process.env.GOOGLE_MAPS_API_KEY}`
     );
-
+    // console.log(response, 'response in geocodeAddress')
     const { lat, lng } = response.data.results[0].geometry.location;
+    console.log(lat, lng, 'lat and lng in geocode');
 
     // Update user's location in the database
-    await this.model('User').findByIdAndUpdate(user._id, {
-      location: {
-        type: 'Point',
-        coordinates: [lng, lat],
+    // await this.model('User').findByIdAndUpdate(user._id, {
+      
+    //   location: {
+    //     type: 'Point',
+    //     coordinates: [lng, lat],
+    //   },
+    // });
+
+    const updatedUser = await this.model('User').findOneAndUpdate(
+      { _id: user._id },
+      {
+        $set: {
+          location: {
+            type: 'Point',
+            coordinates: [lng, lat],
+          },
+        },
       },
-    });
+      { new: true } // Return the updated document
+    );
+
+    console.log(updatedUser.location, 'User location updated successfully.');
+ 
 
     console.log(user.location, 'User location updated successfully.');
   } catch (error) {
     console.error('Error updating user location:', error.message);
   }
 };
+
+userSchema.post('save', async function(doc) {
+  await doc.geocodeAddress();
+});
 
 module.exports = mongoose.model('User', userSchema);
