@@ -1,2 +1,0 @@
-# DoorDash
-mock DoorDash application
