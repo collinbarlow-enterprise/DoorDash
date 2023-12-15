@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
+
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import * as usersAPI from '../../utilities/users-service'
@@ -17,45 +18,21 @@ export default function CheckOutPage() {
     height: '400px'
   };
   // this variable should be replaced with my user.location.coordinates value
-  const center = {
-    lat: -3.745,
-    lng: -38.523
-  };
+ 
   
-  function MyComponent() {
-    const { isLoaded } = useJsApiLoader({
-      id: 'google-map-script',
-      // going to need get the key from .env - check user model page for example 
-      googleMapsApiKey: "YOUR_API_KEY"
-    })}
-    // const [map, setMap] = React.useState(null)
-
-    const onLoad = React.useCallback(function callback(map) {
-      // This is just an example of getting and using the map instance!!! don't just blindly copy!
-      // note that the 'center' are the coordinate positions, replace with my own users' values
-      const bounds = new window.google.maps.LatLngBounds(center);
-      map.fitBounds(bounds);
-  
-      setMap(map)
-    }, [])
-  
-    const onUnmount = React.useCallback(function callback(map) {
-      setMap(null)
-    }, [])
-  
-    return isLoaded ? (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-        >
-          { /* Child components, such as markers, info windows, etc. */ }
-          <></>
-        </GoogleMap>
-    ) : <></>
-  }
+  //   return isLoaded ? (
+  //       <GoogleMap
+  //         mapContainerStyle={containerStyle}
+  //         center={center}
+  //         zoom={10}
+  //         onLoad={onLoad}
+  //         onUnmount={onUnmount}
+  //       >
+  //         { /* Child components, such as markers, info windows, etc. */ }
+  //         <></>
+  //       </GoogleMap>
+  //   ) : <></>
+  // }
   
     
 // state values:
@@ -83,7 +60,8 @@ async function getUser() {
     // console.log(prevState, 'prevState for user')
     console.log(user, 'user in setUser function on getUser')
     return user;
-  })
+  });
+  // userLocation();
 }
 
 async function getCart() {
@@ -127,6 +105,32 @@ async function getTotal() {
 
 // a function for the google maps api that will use the user.address as the place
 // does the google maps api give an ETA value? that would make delivery time interesting 
+function userLocation() {
+const center = {
+  lat: user.location.coordinates[1],
+  lng: user.location.coordinates[0]
+};
+
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    // going to need get the key from .env - check user model page for example 
+    googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
+  })
+  // const [map, setMap] = React.useState(null)
+
+  const onLoad = React.useCallback(function callback(map) {
+    // This is just an example of getting and using the map instance!!! don't just blindly copy!
+    // note that the 'center' are the coordinate positions, replace with my own users' values
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map)
+  }, [])
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null)
+  }, [])}
 
 // navigate functions to orders page
 
@@ -173,8 +177,13 @@ useEffect(() => {
 useEffect(() => {
   getRestaurant();
   getTotal();
-  console.log(restaurant, 'restaurant in cart page')
+  console.log(restaurant, 'restaurant in cart page');
+  // userLocation();
 },[cart])
+
+useEffect(() => {
+  userLocation();
+}, [user])
 
 if (restaurant === null || cart === null) {
   return <div>Loading...</div>
@@ -190,6 +199,19 @@ if (restaurant === null || cart === null) {
         <h1>Check Out Page</h1>
         <div>Restaurant Name</div>
         <div>Google Maps API Section</div>
+        {isLoaded ? (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={10}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+        >
+          { /* Child components, such as markers, info windows, etc. */ }
+          <></>
+        </GoogleMap>
+    ) : <>No map to be displayed</>}
+        <div></div>
         <div>Delivery Time Section</div>
         <div>Delivery Options</div>
         <div>User Address</div>
