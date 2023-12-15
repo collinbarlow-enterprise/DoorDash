@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
@@ -9,12 +10,60 @@ import CheckOutComponent from '../../components/CheckOutComponent/CheckOutCompon
 
 
 export default function CheckOutPage() {
+
+  // google maps api code:
+  const containerStyle = {
+    width: '400px',
+    height: '400px'
+  };
+  // this variable should be replaced with my user.location.coordinates value
+  const center = {
+    lat: -3.745,
+    lng: -38.523
+  };
+  
+  function MyComponent() {
+    const { isLoaded } = useJsApiLoader({
+      id: 'google-map-script',
+      // going to need get the key from .env - check user model page for example 
+      googleMapsApiKey: "YOUR_API_KEY"
+    })}
+    // const [map, setMap] = React.useState(null)
+
+    const onLoad = React.useCallback(function callback(map) {
+      // This is just an example of getting and using the map instance!!! don't just blindly copy!
+      // note that the 'center' are the coordinate positions, replace with my own users' values
+      const bounds = new window.google.maps.LatLngBounds(center);
+      map.fitBounds(bounds);
+  
+      setMap(map)
+    }, [])
+  
+    const onUnmount = React.useCallback(function callback(map) {
+      setMap(null)
+    }, [])
+  
+    return isLoaded ? (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={10}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+        >
+          { /* Child components, such as markers, info windows, etc. */ }
+          <></>
+        </GoogleMap>
+    ) : <></>
+  }
+  
     
 // state values:
 // X user
 // X cart
 // X restaurant
 // X total
+// X map
 // dasher tip
 
   const navigate = useNavigate();
@@ -23,6 +72,7 @@ export default function CheckOutPage() {
   const [ restaurant, setRestaurant ] = useState(null)
   const [ total, setTotal ] = useState(null)
   const [ dasherTip, setDasherTip ] = useState(null)
+  const [map, setMap] = useState(null)
 
 // API functions needed:
 // X getUser, X getCart, X getRestaurant, X getTotal
@@ -31,7 +81,7 @@ async function getUser() {
   const user = await usersAPI.getUser();
   setUser((prevState) => {
     // console.log(prevState, 'prevState for user')
-    // console.log(user, 'user in setUser function on getUser')
+    console.log(user, 'user in setUser function on getUser')
     return user;
   })
 }

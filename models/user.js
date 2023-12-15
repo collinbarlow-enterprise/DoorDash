@@ -97,6 +97,7 @@ userSchema.methods.geocodeAddress = async function () {
   }
 };
 
+// if coordinates are not saved, it could be due to the browser cache. Would need to adjust the token (either the expiration time, cause a refresh mechanims, clear cache on logout, or force a token to refesh on certain actions)
 userSchema.post('save', async function(doc) {
   await doc.geocodeAddress();
 });
