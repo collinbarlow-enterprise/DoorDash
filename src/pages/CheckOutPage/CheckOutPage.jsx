@@ -66,7 +66,7 @@ async function getUser() {
 
 async function getCart() {
   const cart = await ordersAPI.getCart();
-  // console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
+  console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
   setCart((prevState) => {
     // console.log(cart, 'cart in getCart on CartPage')
     return cart;
@@ -74,19 +74,47 @@ async function getCart() {
 
 
   setCart(cart);
-  // console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
+  console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
 }
 
 // need to find a way to get the Restaurant id...from the cart or order? 
 async function getRestaurant() {
+  console.log('inside getrestaurant on checkout page')
+  console.log(cart.restaurant, 'cart.restaurant in getrestaurant on checkout page')
+  console.log(cart, 'cart in getrestaurant on checkout page')
   try {
+    
       const restaurantData = await restaurantAPI.getOneRestaurant(cart.restaurant);
-      // console.log(restaurantData, 'restaurantsData in getRestaurants HomePage')
+      console.log(restaurantData, 'restaurantsData in getRestaurants HomePage')
       setRestaurant(restaurantData);
   } catch(error) {
       console.error(error, 'error for getRestaurant in Home Page')
   }
 }
+
+// async function getRestaurant() {
+//   console.log('inside getrestaurant on checkout page');
+
+//   // Check if cart and cart.restaurant are not null
+//   const hasCart = cart !== null;
+//   const hasRestaurant = hasCart ? cart.restaurant !== null : false;
+
+//   if (hasRestaurant) {
+//     console.log(cart.restaurant, 'cart.restaurant in getrestaurant on checkout page');
+//     console.log(cart, 'cart in getrestaurant on checkout page');
+
+//     try {
+//       const restaurantData = await restaurantAPI.getOneRestaurant(cart.restaurant);
+//       console.log(restaurantData, 'restaurantsData in getRestaurants HomePage');
+//       setRestaurant(restaurantData);
+//     } catch (error) {
+//       console.error(error, 'error for getRestaurant in Home Page');
+//     }
+//   } else {
+//     console.log('Cart or cart.restaurant is null');
+//   }
+// }
+
 
 async function getTotal() {
   try {
@@ -126,7 +154,7 @@ const center = {
     map.fitBounds(bounds);
 
     setMap(map)
-  }, [])
+  }, [center])
 
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null)
@@ -167,23 +195,37 @@ function navigateToOrderStatusPage() {
 // place order 
 
 
-useEffect(() => {
-  getUser();
-  getCart();
-  // getRestaurant();
+// useEffect(() => {
+//   getUser();
+//   getCart();
+//   // getRestaurant();
 
-}, [])
+// }, [])
+
+// useEffect(() => {
+//   getRestaurant();
+//   getTotal();
+//   // console.log(restaurant, 'restaurant in cart page');
+//   // userLocation();
+// },[cart])
+
+
 
 useEffect(() => {
-  getRestaurant();
-  getTotal();
-  console.log(restaurant, 'restaurant in cart page');
-  // userLocation();
-},[cart])
+  async function fetchData() {
+    await getUser();
+    await getCart();
+    await getRestaurant();
+    await getTotal();
+    await userLocation();
+  }
 
-useEffect(() => {
-  userLocation();
-}, [user])
+  fetchData();
+}, []);
+
+// useEffect(() => {
+//   userLocation();
+// }, [user])
 
 if (restaurant === null || cart === null) {
   return <div>Loading...</div>
