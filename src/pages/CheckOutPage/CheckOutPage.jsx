@@ -80,8 +80,10 @@ async function getCart() {
 // need to find a way to get the Restaurant id...from the cart or order? 
 async function getRestaurant() {
   console.log('inside getrestaurant on checkout page')
-  console.log(cart.restaurant, 'cart.restaurant in getrestaurant on checkout page')
+  // console.log(cart.restaurant, 'cart.restaurant in getrestaurant on checkout page')
   console.log(cart, 'cart in getrestaurant on checkout page')
+
+  if (cart) {
   try {
     
       const restaurantData = await restaurantAPI.getOneRestaurant(cart.restaurant);
@@ -89,7 +91,7 @@ async function getRestaurant() {
       setRestaurant(restaurantData);
   } catch(error) {
       console.error(error, 'error for getRestaurant in Home Page')
-  }
+  }}
 }
 
 // async function getRestaurant() {
@@ -133,6 +135,9 @@ async function getTotal() {
 
 // a function for the google maps api that will use the user.address as the place
 // does the google maps api give an ETA value? that would make delivery time interesting 
+
+let isLoaded = false; 
+
 function userLocation() {
 const center = {
   lat: user.location.coordinates[1],
@@ -140,11 +145,11 @@ const center = {
 };
 
 
-  const { isLoaded } = useJsApiLoader({
+ ({ isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     // going to need get the key from .env - check user model page for example 
     googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-  })
+  }))
   // const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map) {
@@ -215,13 +220,16 @@ useEffect(() => {
   async function fetchData() {
     await getUser();
     await getCart();
-    await getRestaurant();
     await getTotal();
     await userLocation();
   }
 
   fetchData();
 }, []);
+
+useEffect(() => {
+  getRestaurant();
+}, [cart])
 
 // useEffect(() => {
 //   userLocation();

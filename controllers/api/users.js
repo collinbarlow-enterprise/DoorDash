@@ -9,7 +9,7 @@ module.exports = {
 
 async function create(req, res){
   try {
-    console.log('made it to create controller')
+    // console.log('made it to create controller')
     const user = await User.create(req.body)
     // await user.geocodeAddress();
     const token = createJWT(user)
