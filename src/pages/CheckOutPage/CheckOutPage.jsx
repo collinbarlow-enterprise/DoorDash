@@ -44,12 +44,17 @@ export default function CheckOutPage() {
   // dasher tip
 
   const navigate = useNavigate();
-  const [user, setUser] = useState(null)
-  const [cart, setCart] = useState(null)
-  const [restaurant, setRestaurant] = useState(null)
-  const [total, setTotal] = useState(null)
-  const [dasherTip, setDasherTip] = useState(null)
-  const [map, setMap] = useState(null)
+  const [user, setUser] = useState(null);
+  const [cart, setCart] = useState(null);
+  const [restaurant, setRestaurant] = useState(null);
+  const [total, setTotal] = useState(null);
+  const [dasherTip, setDasherTip] = useState(null);
+  const [map, setMap] = useState(null);
+  const [center, setCenter] = React.useState(null);
+  // const [containerStyle, setContainerStyle] = React.useState(null);
+  const [onLoad, setOnLoad] = React.useState(null);
+  const [isLoaded, setIsLoaded] = React.useState(null);
+  const [onUnmount, setOnUnmount] = React.useState(null);
 
   // API functions needed:
   // X getUser, X getCart, X getRestaurant, X getTotal
@@ -137,47 +142,53 @@ export default function CheckOutPage() {
   // a function for the google maps api that will use the user.address as the place
   // does the google maps api give an ETA value? that would make delivery time interesting 
 
-  let isLoaded = false;
+  // let isLoaded = false;
 
-  ({ isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    // going to need get the key from .env - check user model page for example 
-    googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-  }))
+  // ({ isLoaded } = useJsApiLoader({
+  //   id: 'google-map-script',
+  //   // going to need get the key from .env - check user model page for example 
+  //   googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
+  // }))
   // const [map, setMap] = React.useState(null)
 
-let center = null;
-let onLoad = null;
+// let center = null;
+// let onLoad = null;
 
   async function userLocation() {
     console.log(user, 'user in userLocation')
     if(user) {
       console.log(user, 'user in userLocation if user is true');
-    ({center} = {
+    userCenter = {
       lat: user.location.coordinates[1],
       lng: user.location.coordinates[0]
-    });
+    };
 
 
-    // ({ isLoaded } = useJsApiLoader({
-    //   id: 'google-map-script',
-    //   // going to need get the key from .env - check user model page for example 
-    //   googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-    // }))
+    userIsLoaded = useJsApiLoader({
+      id: 'google-map-script',
+      // going to need get the key from .env - check user model page for example 
+      googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
+    })
     // // const [map, setMap] = React.useState(null)
 
-     ({onLoad} = React.useCallback(function callback(map) {
+     userOnLoad = React.useCallback(function callback(map) {
       // This is just an example of getting and using the map instance!!! don't just blindly copy!
       // note that the 'center' are the coordinate positions, replace with my own users' values
       const bounds = new window.google.maps.LatLngBounds(center);
       map.fitBounds(bounds);
 
       setMap(map)
-    }, [center]))
+    }, [center])
 
-    const onUnmount = React.useCallback(function callback(map) {
+    const userOnUnmount = React.useCallback(function callback(map) {
       setMap(null)
     }, [])
+
+    setCenter(userCenter);
+    setContainerStyle(userContainerStyle);
+    setOnLoad(userOnLoad);
+    setIsLoaded(userIsLoaded);
+    setOnUnmount(userOnUnmount)
   }}
 
   // navigate functions to orders page
