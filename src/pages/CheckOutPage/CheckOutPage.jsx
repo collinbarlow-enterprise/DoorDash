@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
@@ -13,10 +13,10 @@ import CheckOutComponent from '../../components/CheckOutComponent/CheckOutCompon
 export default function CheckOutPage() {
 
   // google maps api code:
-  const containerStyle = {
-    width: '400px',
-    height: '400px'
-  };
+  // const containerStyle = {
+  //   width: '400px',
+  //   height: '400px'
+  // };
   // this variable should be replaced with my user.location.coordinates value
 
 
@@ -55,6 +55,12 @@ export default function CheckOutPage() {
   const [onLoad, setOnLoad] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(null);
   const [onUnmount, setOnUnmount] = React.useState(null);
+
+  const [userCenter, setUserCenter] = useState(null);
+  const [userContainerStyle, setUserContainerStyle] = useState(null);
+  const [userOnLoad, setUserOnLoad] = useState(null);
+  const [userIsLoaded, setUserIsLoaded] = useState(null);
+  const [userOnUnmount, setUserOnUnmount] = useState(null);
 
   // API functions needed:
   // X getUser, X getCart, X getRestaurant, X getTotal
@@ -144,52 +150,85 @@ export default function CheckOutPage() {
 
   // let isLoaded = false;
 
-  // ({ isLoaded } = useJsApiLoader({
-  //   id: 'google-map-script',
-  //   // going to need get the key from .env - check user model page for example 
-  //   googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-  // }))
+  const {isLoadedData} = useJsApiLoader({
+    id: 'google-map-script',
+    // going to need get the key from .env - check user model page for example 
+    googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
+  })
   // const [map, setMap] = React.useState(null)
 
 // let center = null;
 // let onLoad = null;
 
-  async function userLocation() {
-    console.log(user, 'user in userLocation')
-    if(user) {
-      console.log(user, 'user in userLocation if user is true');
-    userCenter = {
-      lat: user.location.coordinates[1],
-      lng: user.location.coordinates[0]
-    };
+  // async function userLocation() {
+  //   console.log(user, 'user in userLocation')
+  //   if(user) {
+  //     console.log(user, 'user in userLocation if user is true');
+  //   const userCenter = {
+  //     lat: user.location.coordinates[1],
+  //     lng: user.location.coordinates[0]
+  //   };
 
 
-    userIsLoaded = useJsApiLoader({
-      id: 'google-map-script',
-      // going to need get the key from .env - check user model page for example 
-      googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-    })
-    // // const [map, setMap] = React.useState(null)
+  //   // userIsLoaded = useJsApiLoader({
+  //   //   id: 'google-map-script',
+  //   //   // going to need get the key from .env - check user model page for example 
+  //   //   googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
+  //   // })
+  //   // // const [map, setMap] = React.useState(null)
 
-     userOnLoad = React.useCallback(function callback(map) {
-      // This is just an example of getting and using the map instance!!! don't just blindly copy!
-      // note that the 'center' are the coordinate positions, replace with my own users' values
-      const bounds = new window.google.maps.LatLngBounds(center);
-      map.fitBounds(bounds);
+  //   // i keep getting an error saying i cant use hooks inside the body of a function and that it has to be higher up on the chain, so maybe i need to break the userLocation function into smaller more global pieces and then I can string them together in some fashion using promises? 
 
-      setMap(map)
-    }, [center])
+  //    userOnLoad = React.useCallback(function callback(map) {
+  //     // This is just an example of getting and using the map instance!!! don't just blindly copy!
+  //     // note that the 'center' are the coordinate positions, replace with my own users' values
+  //     const bounds = new window.google.maps.LatLngBounds(center);
+  //     map.fitBounds(bounds);
 
-    const userOnUnmount = React.useCallback(function callback(map) {
-      setMap(null)
-    }, [])
+  //     setMap(map)
+  //   }, [center])
 
-    setCenter(userCenter);
-    setContainerStyle(userContainerStyle);
-    setOnLoad(userOnLoad);
-    setIsLoaded(userIsLoaded);
-    setOnUnmount(userOnUnmount)
-  }}
+  //   const userOnUnmount = React.useCallback(function callback(map) {
+  //     setMap(null)
+  //   }, [])
+
+  //   setCenter(userCenter);
+  //   setContainerStyle(userContainerStyle);
+  //   setOnLoad(userOnLoad);
+  //   setIsLoaded(userIsLoaded);
+  //   setOnUnmount(userOnUnmount)
+  // }}
+
+  useEffect(() => {
+    if (user) {
+      const center = {
+        lat: user.location.coordinates[1],
+        lng: user.location.coordinates[0]
+      };
+
+      const containerStyle = {
+        width: '400px',
+        height: '400px'
+      };
+
+      const onLoad = useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds(center);
+        map.fitBounds(bounds);
+      }, [center]);
+
+      const onUnmount = useCallback(function callback(map) {
+        
+              setMap(null)
+          //   }, [])
+      }, []);
+
+      setUserCenter(center);
+      // setUserContainerStyle(containerStyle);
+      setUserOnLoad(onLoad);
+      setUserIsLoaded(isLoadedData);
+      setUserOnUnmount(onUnmount);
+    }
+  }, [isLoaded, user]);
 
   // navigate functions to orders page
 
@@ -258,9 +297,9 @@ export default function CheckOutPage() {
     // userLocation();
   }, [cart])
 
-  useEffect(() => {
-    userLocation();
-  }, [user])
+  // useEffect(() => {
+  //   userLocation();
+  // }, [user])
 
   if (restaurant === null || cart === null) {
     return <div>Loading...</div>
@@ -275,10 +314,12 @@ export default function CheckOutPage() {
 
       <h1>Check Out Page</h1>
       <div>Restaurant Name</div>
+      <div>{restaurant.name}</div>
+      <br/>
       <div>Google Maps API Section</div>
       {isLoaded ? (
         <GoogleMap
-          mapContainerStyle={containerStyle}
+          mapContainerStyle={userContainerStyle}
           center={center}
           zoom={10}
           onLoad={onLoad}
