@@ -8,7 +8,7 @@ import * as ordersAPI from '../../utilities/orders-api'
 import * as usersAPI from '../../utilities/users-service'
 
 import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
-
+import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
 
 export default function CheckOutPage() {
 
@@ -150,11 +150,11 @@ export default function CheckOutPage() {
 
   // let isLoaded = false;
 
-  const {isLoadedData} = useJsApiLoader({
-    id: 'google-map-script',
-    // going to need get the key from .env - check user model page for example 
-    googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-  })
+  // const {isLoadedData} = useJsApiLoader({
+  //   id: 'google-map-script',
+  //   // going to need get the key from .env - check user model page for example 
+  //   googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
+  // })
   // const [map, setMap] = React.useState(null)
 
 // let center = null;
@@ -199,36 +199,36 @@ export default function CheckOutPage() {
   //   setOnUnmount(userOnUnmount)
   // }}
 
-  useEffect(() => {
-    if (user) {
-      const center = {
-        lat: user.location.coordinates[1],
-        lng: user.location.coordinates[0]
-      };
+  // useEffect(() => {
+  //   if (user) {
+  //     const center = {
+  //       lat: user.location.coordinates[1],
+  //       lng: user.location.coordinates[0]
+  //     };
 
-      const containerStyle = {
-        width: '400px',
-        height: '400px'
-      };
+  //     const containerStyle = {
+  //       width: '400px',
+  //       height: '400px'
+  //     };
 
-      const onLoad = useCallback(function callback(map) {
-        const bounds = new window.google.maps.LatLngBounds(center);
-        map.fitBounds(bounds);
-      }, [center]);
+  //     const onLoad = useCallback(function callback(map) {
+  //       const bounds = new window.google.maps.LatLngBounds(center);
+  //       map.fitBounds(bounds);
+  //     }, [center]);
 
-      const onUnmount = useCallback(function callback(map) {
+  //     const onUnmount = useCallback(function callback(map) {
         
-              setMap(null)
-          //   }, [])
-      }, []);
+  //             setMap(null)
+  //         //   }, [])
+  //     }, []);
 
-      setUserCenter(center);
-      // setUserContainerStyle(containerStyle);
-      setUserOnLoad(onLoad);
-      setUserIsLoaded(isLoadedData);
-      setUserOnUnmount(onUnmount);
-    }
-  }, [isLoaded, user]);
+  //     setUserCenter(center);
+  //     // setUserContainerStyle(containerStyle);
+  //     setUserOnLoad(onLoad);
+  //     setUserIsLoaded(isLoadedData);
+  //     setUserOnUnmount(onUnmount);
+  //   }
+  // }, [isLoaded, user]);
 
   // navigate functions to orders page
 
@@ -297,9 +297,6 @@ export default function CheckOutPage() {
     // userLocation();
   }, [cart])
 
-  // useEffect(() => {
-  //   userLocation();
-  // }, [user])
 
   if (restaurant === null || cart === null) {
     return <div>Loading...</div>
@@ -317,18 +314,21 @@ export default function CheckOutPage() {
       <div>{restaurant.name}</div>
       <br/>
       <div>Google Maps API Section</div>
-      {isLoaded ? (
+      <GoogleMapsContainerComponenet user = {user} />
+    
+      {/* {isLoaded ? (
         <GoogleMap
           mapContainerStyle={userContainerStyle}
           center={center}
           zoom={10}
           onLoad={onLoad}
           onUnmount={onUnmount}
-        >
+        > */}
           { /* Child components, such as markers, info windows, etc. */}
           <></>
-        </GoogleMap>
-      ) : <>No map to be displayed</>}
+        {/* </GoogleMap>
+      ) : <>No map to be displayed</>} */}
+
       <div></div>
       <div>Delivery Time Section</div>
       <div>Delivery Options</div>
@@ -352,7 +352,6 @@ export default function CheckOutPage() {
       <div>Payment</div>
       <div>Conditional Rendering based on Chase Sapphire</div>
       <div>Place Order Button</div>
-
     </div>
   )
 }
