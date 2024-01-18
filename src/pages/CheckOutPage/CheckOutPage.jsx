@@ -9,31 +9,9 @@ import * as usersAPI from '../../utilities/users-service'
 
 import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
 import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
+// import order from '../../../models/order';
 
 export default function CheckOutPage() {
-
-  // google maps api code:
-  // const containerStyle = {
-  //   width: '400px',
-  //   height: '400px'
-  // };
-  // this variable should be replaced with my user.location.coordinates value
-
-
-  //   return isLoaded ? (
-  //       <GoogleMap
-  //         mapContainerStyle={containerStyle}
-  //         center={center}
-  //         zoom={10}
-  //         onLoad={onLoad}
-  //         onUnmount={onUnmount}
-  //       >
-  //         { /* Child components, such as markers, info windows, etc. */ }
-  //         <></>
-  //       </GoogleMap>
-  //   ) : <></>
-  // }
-
 
   // state values:
   // X user
@@ -49,22 +27,7 @@ export default function CheckOutPage() {
   const [restaurant, setRestaurant] = useState(null);
   const [total, setTotal] = useState(null);
   const [dasherTip, setDasherTip] = useState(null);
-  const [map, setMap] = useState(null);
-  const [center, setCenter] = React.useState(null);
-  // const [containerStyle, setContainerStyle] = React.useState(null);
-  const [onLoad, setOnLoad] = React.useState(null);
-  const [isLoaded, setIsLoaded] = React.useState(null);
-  const [onUnmount, setOnUnmount] = React.useState(null);
-
-  const [userCenter, setUserCenter] = useState(null);
-  const [userContainerStyle, setUserContainerStyle] = useState(null);
-  const [userOnLoad, setUserOnLoad] = useState(null);
-  const [userIsLoaded, setUserIsLoaded] = useState(null);
-  const [userOnUnmount, setUserOnUnmount] = useState(null);
-
-  // API functions needed:
-  // X getUser, X getCart, X getRestaurant, X getTotal
-
+  
   async function getUser() {
     const user = await usersAPI.getUser();
     setUser((prevState) => {
@@ -82,8 +45,6 @@ export default function CheckOutPage() {
       // console.log(cart, 'cart in getCart on CartPage')
       return cart;
     })
-
-
     setCart(cart);
     console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
@@ -96,7 +57,6 @@ export default function CheckOutPage() {
 
     if (cart) {
       try {
-
         const restaurantData = await restaurantAPI.getOneRestaurant(cart.restaurant);
         console.log(restaurantData, 'restaurantsData in getRestaurants HomePage')
         setRestaurant(restaurantData);
@@ -105,30 +65,6 @@ export default function CheckOutPage() {
       }
     }
   }
-
-  // async function getRestaurant() {
-  //   console.log('inside getrestaurant on checkout page');
-
-  //   // Check if cart and cart.restaurant are not null
-  //   const hasCart = cart !== null;
-  //   const hasRestaurant = hasCart ? cart.restaurant !== null : false;
-
-  //   if (hasRestaurant) {
-  //     console.log(cart.restaurant, 'cart.restaurant in getrestaurant on checkout page');
-  //     console.log(cart, 'cart in getrestaurant on checkout page');
-
-  //     try {
-  //       const restaurantData = await restaurantAPI.getOneRestaurant(cart.restaurant);
-  //       console.log(restaurantData, 'restaurantsData in getRestaurants HomePage');
-  //       setRestaurant(restaurantData);
-  //     } catch (error) {
-  //       console.error(error, 'error for getRestaurant in Home Page');
-  //     }
-  //   } else {
-  //     console.log('Cart or cart.restaurant is null');
-  //   }
-  // }
-
 
   async function getTotal() {
     try {
@@ -147,161 +83,38 @@ export default function CheckOutPage() {
 
   // a function for the google maps api that will use the user.address as the place
   // does the google maps api give an ETA value? that would make delivery time interesting 
-
-  // let isLoaded = false;
-
-  // const {isLoadedData} = useJsApiLoader({
-  //   id: 'google-map-script',
-  //   // going to need get the key from .env - check user model page for example 
-  //   googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-  // })
-  // const [map, setMap] = React.useState(null)
-
-// let center = null;
-// let onLoad = null;
-
-  // async function userLocation() {
-  //   console.log(user, 'user in userLocation')
-  //   if(user) {
-  //     console.log(user, 'user in userLocation if user is true');
-  //   const userCenter = {
-  //     lat: user.location.coordinates[1],
-  //     lng: user.location.coordinates[0]
-  //   };
-
-
-  //   // userIsLoaded = useJsApiLoader({
-  //   //   id: 'google-map-script',
-  //   //   // going to need get the key from .env - check user model page for example 
-  //   //   googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
-  //   // })
-  //   // // const [map, setMap] = React.useState(null)
-
-  //   // i keep getting an error saying i cant use hooks inside the body of a function and that it has to be higher up on the chain, so maybe i need to break the userLocation function into smaller more global pieces and then I can string them together in some fashion using promises? 
-
-  //    userOnLoad = React.useCallback(function callback(map) {
-  //     // This is just an example of getting and using the map instance!!! don't just blindly copy!
-  //     // note that the 'center' are the coordinate positions, replace with my own users' values
-  //     const bounds = new window.google.maps.LatLngBounds(center);
-  //     map.fitBounds(bounds);
-
-  //     setMap(map)
-  //   }, [center])
-
-  //   const userOnUnmount = React.useCallback(function callback(map) {
-  //     setMap(null)
-  //   }, [])
-
-  //   setCenter(userCenter);
-  //   setContainerStyle(userContainerStyle);
-  //   setOnLoad(userOnLoad);
-  //   setIsLoaded(userIsLoaded);
-  //   setOnUnmount(userOnUnmount)
-  // }}
-
-  // useEffect(() => {
-  //   if (user) {
-  //     const center = {
-  //       lat: user.location.coordinates[1],
-  //       lng: user.location.coordinates[0]
-  //     };
-
-  //     const containerStyle = {
-  //       width: '400px',
-  //       height: '400px'
-  //     };
-
-  //     const onLoad = useCallback(function callback(map) {
-  //       const bounds = new window.google.maps.LatLngBounds(center);
-  //       map.fitBounds(bounds);
-  //     }, [center]);
-
-  //     const onUnmount = useCallback(function callback(map) {
-        
-  //             setMap(null)
-  //         //   }, [])
-  //     }, []);
-
-  //     setUserCenter(center);
-  //     // setUserContainerStyle(containerStyle);
-  //     setUserOnLoad(onLoad);
-  //     setUserIsLoaded(isLoadedData);
-  //     setUserOnUnmount(onUnmount);
-  //   }
-  // }, [isLoaded, user]);
-
+ 
   // navigate functions to orders page
-
   function navigateToOrderStatusPage() {
     navigate(`/orderstatus`)
   }
-
 
   // CheckOut Page
   // restaurant name
   // google maps api that shows the user's address
   // delivery time 
-  // delivery options which will be 3, the premier one will add to the total(how would I accomplish that?), the middle will be the normal one which will just be a set time (should do a RNG with a specific range), and then third will be a scheduled order (goes to another page that has a time wheel, need to look into that more)
-
-  // a field for the address (if I want to get ambitious I can swap to a list of addresses that a user can add and delete in a drop down menu)
-  // a field for drop off instructions (looks like it has its own page, which would have two options and a form field, guess drop off instructions would be a field on the order?)
-  // phone number
-  // send as a gift (goes to a page that has a few fields, but actually I don't think this would be that hard, it would just need to change something about the order indicating it was for someone else? maybe another optional field on the order model which would be default to null, but would be orderRecipient, and then on the order summary I could conditionally render based on that value
-
-
-  // Cart Summary
-  // lists all menu items and ingredients
-
-  // Summary Field
-  // lot of reusable components in both the summary and cart summary - wonder how I could accomplish some sort of reusability, slight UI differences, and really wouldn't be a massive pain to code, but would be cool if I could do it
-
-  // total
-
-  // payment - going to store this information via the user credit card field 
 
   // conditional rendering for being a chase sapphire member
 
   // conditional rendering for if the order is being scheduled ahead of time, show that time selected 
   // place order 
 
-
-  // useEffect(() => {
-  //   getUser();
-  //   getCart();
-  //   // getRestaurant();
-
-  // }, [])
-
-  // useEffect(() => {
-  //   getRestaurant();
-  //   getTotal();
-  //   // console.log(restaurant, 'restaurant in cart page');
-  //   // userLocation();
-  // },[cart])
-
-
-
   useEffect(() => {
     async function fetchData() {
       await getUser();
       await getCart();
       await getTotal();
-      // await userLocation();
     }
-
     fetchData();
   }, []);
 
   useEffect(() => {
     getRestaurant();
-    // userLocation();
   }, [cart])
-
 
   if (restaurant === null || cart === null) {
     return <div>Loading...</div>
   }
-
 
   return (
     <div>
@@ -316,42 +129,59 @@ export default function CheckOutPage() {
       <div>Google Maps API Section</div>
       <GoogleMapsContainerComponenet user = {user} />
     
-      {/* {isLoaded ? (
-        <GoogleMap
-          mapContainerStyle={userContainerStyle}
-          center={center}
-          zoom={10}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-        > */}
-          { /* Child components, such as markers, info windows, etc. */}
-          <></>
-        {/* </GoogleMap>
-      ) : <>No map to be displayed</>} */}
-
       <div></div>
       <div>Delivery Time Section</div>
+
+      {/* // delivery options which will be 3, the premier one will add to the total(how would I accomplish that?), the middle will be the normal one which will just be a set time (should do a RNG with a specific range), and then third will be a scheduled order (goes to another page that has a time wheel, need to look into that more) */}
+
       <div>Delivery Options</div>
-      <div>User Address</div>
-      <div>Drop Off Instructions </div>
-      <div>User Phone Number</div>
+      {/* // a field for drop off instructions (looks like it has its own page, which would have two options and a form field, guess drop off instructions would be a field on the order?) */}
+
+      <div>User Address: {user.address}</div>
+  {/* // a field for the address (if I want to get ambitious I can swap to a list of addresses that a user can add and delete in a drop down menu) */}
+    <div></div>
+      <div>Drop Off Instructions: is a field on the order model, not sure if its already there, should be added to the model upon the order being placed </div>
+
+      <div>User Phone Number: will be - user.phoneNumber - but don't have that set up in my model yet </div>
+
       <div>Send as a gift</div>
 
+      {/* // send as a gift (goes to a page that has a few fields, but actually I don't think this would be that hard, it would just need to change something about the order indicating it was for someone else? maybe another optional field on the order model which would be default to null, but would be orderRecipient, and then on the order summary I could conditionally render based on that value */}
+
       <div>Cart Summary Section</div>
+
+      {/* // Cart Summary
+  // lists all menu items and ingredients */}
       {/* seems to be a 3 div container (Quantity x Item, Ingredients, Price), with bootstrap to align things correctly */}
-      <div>cart items with price and ingredients </div>
+
+      <div>cart items with price and ingredients - another jsx component that maps over the array of the cart with something like this:  </div>
+      <div>Item: {} | Quantity {} | Ingredients{} | Price{} </div>
 
       <div>Order Summary</div>
-      <div>Add a Promo Field</div>
-      <div>Subtotal (which would be order.price)</div>
-      <div>Delivery Fee</div>
-      <div>Fees and Estimated Tax</div>
+      {/* // Summary Field
+  // lot of reusable components in both the summary and cart summary - wonder how I could accomplish some sort of reusability, slight UI differences, and really wouldn't be a massive pain to code, but would be cool if I could do it */}
+
+      <div>Add a Promo Field: if the promo field matches a hard coded list somewhere in the model? or database? then a discount is applied, but only one discount should be able to be applied at one time...is it a form with a field? Are there several fields for a single form that could be created here?</div>
+      
+      <div>Subtotal: {cart.subTotal} (which would be order.price)</div>
+
+      <div>Delivery Fee : {cart.deliveryFee}</div>
+
+      <div>Fees and Estimated Tax : {cart.taxesAndFees} which field is the right part of the model? There needs to be a clearer labeling for the difference between taxesAndFees and feesAndTaxes</div>
+
       <div>Dasher Tip</div>
-      <div>3 recommended options, and one which is 'other' that leads to another page and would update the order</div>
-      <div>Total</div>
-      <div>Payment</div>
+
+      <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>
+
+      <div>Total: {cart.total} </div>
+
+      <div>Payment : {user.creditCart}</div>
+      {/* // payment - going to store this information via the user credit card field  */}
+
       <div>Conditional Rendering based on Chase Sapphire</div>
+
       <div>Place Order Button</div>
+
     </div>
   )
 }
