@@ -9,6 +9,7 @@ import * as usersAPI from '../../utilities/users-service'
 
 import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
 import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
+import CheckOutPageCreditCard from '../../components/CheckOutPageCreditCardComponent/CheckOutPageCreditCard';
 // import order from '../../../models/order';
 
 export default function CheckOutPage() {
@@ -27,7 +28,7 @@ export default function CheckOutPage() {
   const [restaurant, setRestaurant] = useState(null);
   const [total, setTotal] = useState(null);
   const [dasherTip, setDasherTip] = useState(null);
-  
+
   async function getUser() {
     const user = await usersAPI.getUser();
     setUser((prevState) => {
@@ -78,18 +79,16 @@ export default function CheckOutPage() {
   }
 
 
-  function dasherTipAdjustment(x){
-    let dasherTipTotal = cart.total * (x /100)
+  function dasherTipAdjustment(x) {
+    let dasherTipTotal = cart.total * (x / 100)
     dasherTipTotal = parseFloat(dasherTipTotal.toFixed(2));
     setDasherTip(dasherTipTotal)
   }
   // other functions needed
-  // an onClick function that updates the setDasherTip 
-  // a function to determine the price of the dashertip options - how should the tip be generated? a hard coded value doesn't seem right, so maybe some percentage of the total? 
 
   // a function for the google maps api that will use the user.address as the place
   // does the google maps api give an ETA value? that would make delivery time interesting 
- 
+
   // navigate functions to orders page
   function navigateToOrderStatusPage() {
     navigate(`/orderstatus`)
@@ -131,10 +130,10 @@ export default function CheckOutPage() {
       <h1>Check Out Page</h1>
       <div>Restaurant Name</div>
       <div>{restaurant.name}</div>
-      <br/>
+      <br />
       <div>Google Maps API Section</div>
-      <GoogleMapsContainerComponenet user = {user} />
-    
+      <GoogleMapsContainerComponenet user={user} />
+
       <div></div>
       <div>Delivery Time Section</div>
 
@@ -144,8 +143,8 @@ export default function CheckOutPage() {
       {/* // a field for drop off instructions (looks like it has its own page, which would have two options and a form field, guess drop off instructions would be a field on the order?) */}
 
       <div>User Address: {user.address}</div>
-  {/* // a field for the address (if I want to get ambitious I can swap to a list of addresses that a user can add and delete in a drop down menu) */}
-    <div></div>
+      {/* // a field for the address (if I want to get ambitious I can swap to a list of addresses that a user can add and delete in a drop down menu) */}
+      <div></div>
       <div>Drop Off Instructions: is a field on the order model, not sure if its already there, should be added to the model upon the order being placed </div>
 
       <div>User Phone Number: will be - user.phoneNumber - but don't have that set up in my model yet </div>
@@ -161,14 +160,14 @@ export default function CheckOutPage() {
       {/* seems to be a 3 div container (Quantity x Item, Ingredients, Price), with bootstrap to align things correctly */}
 
       <div>cart items with price and ingredients - another jsx component that maps over the array of the cart with something like this:  </div>
-      <div>Item: {} | Quantity {} | Ingredients{} | Price{} </div>
+      <div>Item: { } | Quantity { } | Ingredients{ } | Price{ } </div>
 
       <div>Order Summary</div>
       {/* // Summary Field
   // lot of reusable components in both the summary and cart summary - wonder how I could accomplish some sort of reusability, slight UI differences, and really wouldn't be a massive pain to code, but would be cool if I could do it */}
 
       <div>Add a Promo Field: if the promo field matches a hard coded list somewhere in the model? or database? then a discount is applied, but only one discount should be able to be applied at one time...is it a form with a field? Are there several fields for a single form that could be created here?</div>
-      
+
       <div>Subtotal: {cart.subTotal} (which would be order.price)</div>
 
       <div>Delivery Fee : {cart.deliveryFee}</div>
@@ -177,24 +176,28 @@ export default function CheckOutPage() {
 
       <div>Dasher Tip : {dasherTip}</div>
       <div>
-          <div><button onClick = {() => dasherTipAdjustment(10) }> 10%</button></div>
-          <div><button onClick = {() => dasherTipAdjustment(15) }> 15%</button></div>
-          <div><button onClick = {() => dasherTipAdjustment(20) }> 20%</button></div>
-          <div><button> Other</button></div>
+        <div><button onClick={() => dasherTipAdjustment(10)}> 10%</button></div>
+        <div><button onClick={() => dasherTipAdjustment(15)}> 15%</button></div>
+        <div><button onClick={() => dasherTipAdjustment(20)}> 20%</button></div>
+        <div><button> Other</button></div>
 
       </div>
 
       <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>
 
       <div>Total: {cart.total} </div>
+{/* right now the creditcard is set up as an array which makes sense if you have multiple credit cards, if there are more multiple credit cards you need to be able to select which one you want to use */}
+{/* if that is the case I need to map over the creditcards, and then select have that been a state value that is selected via a parent component where the child component has the user data passed down via props */}
 
-      <div>Payment : {user.creditCart}</div>
-      {/* // payment - going to store this information via the user credit card field  */}
+      <CheckOutPageCreditCard user={user} />
 
-      <div>Conditional Rendering based on Chase Sapphire</div>
+        <div>Conditional Rendering based on Chase Sapphire</div>
+        {user.chaseMember ? (<div>You're a chase member!</div>) : (<div>Not a Chase Member</div>)}
 
-      <div>Place Order Button</div>
+        <div>Place Order Button</div>
+        <div onClick={() => somesortofFunction} ><button>PLACE THE ORDER</button></div>
 
-    </div>
-  )
+      </div>
+   
+      )
 }
