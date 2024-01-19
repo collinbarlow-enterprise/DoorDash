@@ -77,6 +77,12 @@ export default function CheckOutPage() {
     }
   }
 
+
+  function dasherTipAdjustment(x){
+    let dasherTipTotal = cart.total * (x /100)
+    dasherTipTotal = parseFloat(dasherTipTotal.toFixed(2));
+    setDasherTip(dasherTipTotal)
+  }
   // other functions needed
   // an onClick function that updates the setDasherTip 
   // a function to determine the price of the dashertip options - how should the tip be generated? a hard coded value doesn't seem right, so maybe some percentage of the total? 
@@ -169,7 +175,14 @@ export default function CheckOutPage() {
 
       <div>Fees and Estimated Tax : {cart.taxesAndFees} which field is the right part of the model? There needs to be a clearer labeling for the difference between taxesAndFees and feesAndTaxes</div>
 
-      <div>Dasher Tip</div>
+      <div>Dasher Tip : {dasherTip}</div>
+      <div>
+          <div><button onClick = {() => dasherTipAdjustment(10) }> 10%</button></div>
+          <div><button onClick = {() => dasherTipAdjustment(15) }> 15%</button></div>
+          <div><button onClick = {() => dasherTipAdjustment(20) }> 20%</button></div>
+          <div><button> Other</button></div>
+
+      </div>
 
       <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>
 
