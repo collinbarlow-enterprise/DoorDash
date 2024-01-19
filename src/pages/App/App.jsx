@@ -17,6 +17,7 @@ import CartPage from '../CartPage/CartPage'
 import AccountPage from '../AccountPage/AccountPage'
 import CheckOutPage from '../CheckOutPage/CheckOutPage'
 import OrderStatusPage from '../OrderStatusPage/OrderStatusPage'
+import OtherTipPage from '../OtherTipPage/OtherTipPage'
 
 export default function App() {
 
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="/account" element={<AccountPage />} />
             <Route path="/checkout" element={<CheckOutPage />} />
             <Route path="/orderstatus" element={<OrderStatusPage />} />
+            <Route path="/otherTipPage" element={<OtherTipPage />} />
           </Routes>
         </>
         :

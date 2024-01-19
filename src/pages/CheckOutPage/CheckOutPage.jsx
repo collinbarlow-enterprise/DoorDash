@@ -93,6 +93,9 @@ export default function CheckOutPage() {
   function navigateToOrderStatusPage() {
     navigate(`/orderstatus`)
   }
+  function navigateToOtherTipPage() {
+    navigate(`/otherTipPage`)
+  }
 
   // CheckOut Page
   // restaurant name
@@ -179,8 +182,8 @@ export default function CheckOutPage() {
         <div><button onClick={() => dasherTipAdjustment(10)}> 10%</button></div>
         <div><button onClick={() => dasherTipAdjustment(15)}> 15%</button></div>
         <div><button onClick={() => dasherTipAdjustment(20)}> 20%</button></div>
-        <div><button> Other</button></div>
-
+        <div><button onClick={() => navigateToOtherTipPage()}> Other</button></div>
+{/* if the tip is going to be accessed from more than one page than there needs to be a field in the model that will allow me to grab, and update the field, the state value can be defaulted to 0, grabbed and updated on the otherTipPage, updated on this field, and then when the place order button is clicked the value will be finalized  */}
       </div>
 
       <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>

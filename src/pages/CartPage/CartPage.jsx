@@ -38,8 +38,6 @@ export default function CartPage() {
       console.log(cart, 'cart in getCart on CartPage')
       return cart;
     })
-
-
     setCart(cart);
     // console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
@@ -101,13 +99,10 @@ function toRestaurant() {
   navigate(`/restaurant/${restaurant._id}`)
 }
 
-
-
 useEffect(() => {
   getUser();
   getCart();
   // getRestaurant();
-
 }, [])
 
 useEffect(() => {
