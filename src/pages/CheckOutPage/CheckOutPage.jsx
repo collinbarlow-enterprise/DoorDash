@@ -10,6 +10,7 @@ import * as usersAPI from '../../utilities/users-service'
 import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
 import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
 import CheckOutPageCreditCard from '../../components/CheckOutPageCreditCardComponent/CheckOutPageCreditCard';
+import CheckOutPageCartComponent from '../../components/CheckOutPageCartComponent/CheckOutPageCartComponent';
 // import order from '../../../models/order';
 
 export default function CheckOutPage() {
@@ -164,6 +165,8 @@ export default function CheckOutPage() {
 
       <div>cart items with price and ingredients - another jsx component that maps over the array of the cart with something like this:  </div>
       <div>Item: { } | Quantity { } | Ingredients{ } | Price{ } </div>
+
+      <CheckOutPageCartComponent cart={cart} restaurant = {restaurant}/>
 
       <div>Order Summary</div>
       {/* // Summary Field
