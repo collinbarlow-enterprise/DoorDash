@@ -92,6 +92,7 @@ export default function CheckOutPage() {
 
   // navigate functions to orders page
   function navigateToOrderStatusPage() {
+    console.log('made it inside order status navigation')
     navigate(`/orderstatus`)
   }
   function navigateToOtherTipPage() {
@@ -201,7 +202,8 @@ export default function CheckOutPage() {
         {user.chaseMember ? (<div>You're a chase member!</div>) : (<div>Not a Chase Member</div>)}
 
         <div>Place Order Button</div>
-        <div onClick={() => somesortofFunction} ><button>PLACE THE ORDER</button></div>
+        <div onClick={() => navigateToOrderStatusPage()} ><button>PLACE THE ORDER</button></div>
+        {/* the navigateToOrderStatusPage should be nested inside another function that flips the order status from cart to placed order */}
 
       </div>
    
