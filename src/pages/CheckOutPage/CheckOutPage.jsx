@@ -29,6 +29,8 @@ export default function CheckOutPage() {
   const [restaurant, setRestaurant] = useState(null);
   const [total, setTotal] = useState(null);
   const [dasherTip, setDasherTip] = useState(null);
+  const [promoCode, setPromoCode] = useState('');
+  const [discount, setDiscount] = useState(0);
 
   async function getUser() {
     const user = await usersAPI.getUser();
@@ -79,6 +81,22 @@ export default function CheckOutPage() {
     }
   }
 
+  async function applyPromoCode() {
+    try {
+      const promoCodeResponse = await ordersAPI.getPromoCode();
+      const promoCodeResponse.data = { isValid, discount: promoDiscount }
+
+      if (isValid) {
+        setDiscount(promoDiscount)
+      } else {
+        console.log(isValid, 'isValid is not corrct in promoCode')
+      }
+    }
+    catch (error) {
+      console.log(error, 'error for promoCode')
+
+    }
+  }
 
   function dasherTipAdjustment(x) {
     let dasherTipTotal = cart.total * (x / 100)
@@ -174,6 +192,16 @@ export default function CheckOutPage() {
   // lot of reusable components in both the summary and cart summary - wonder how I could accomplish some sort of reusability, slight UI differences, and really wouldn't be a massive pain to code, but would be cool if I could do it */}
 
       <div>Add a Promo Field: if the promo field matches a hard coded list somewhere in the model? or database? then a discount is applied, but only one discount should be able to be applied at one time...is it a form with a field? Are there several fields for a single form that could be created here?</div>
+
+      <div>
+        <input 
+        type = 'text'
+        placeholder = 'Enter Promo Code - try SAVE10'
+        value = {promoCode}
+        onChange = {(e) => setPromoCode(e.target.value)}
+        />
+        <button onClick={applyPromoCode}> Apply Promo </button>
+      </div>
 
       <div>Subtotal: {cart.subTotal} (which would be order.price)</div>
 
