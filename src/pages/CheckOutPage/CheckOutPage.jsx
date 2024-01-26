@@ -192,7 +192,7 @@ export default function CheckOutPage() {
 
       <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>
 
-      <div>Total: {cart.total} </div>
+      <div>Total: {parseInt(cart.total) + dasherTip} </div>
 {/* right now the creditcard is set up as an array which makes sense if you have multiple credit cards, if there are more multiple credit cards you need to be able to select which one you want to use */}
 {/* if that is the case I need to map over the creditcards, and then select have that been a state value that is selected via a parent component where the child component has the user data passed down via props */}
 
