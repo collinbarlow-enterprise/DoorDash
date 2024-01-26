@@ -28,4 +28,7 @@ router.get('/previousOrders', ordersCtrl.getPaidCartController);
 
 router.delete('/deleteOrder', ordersCtrl.deleteOrder)
 
+// check for promoCode
+router.post('/checkPromoCode', ordersCtrl.checkPromoCode);
+
 module.exports = router

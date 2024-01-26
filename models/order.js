@@ -40,6 +40,10 @@ const orderSchema = new Schema({
     // this is a property that is going to be updated as part of the delivery workflow (just a series of time delays before moving through 3 stages)
     status: { type: String },
     feesAndTaxes: {type: Number, default: 0},
+    
+    promoCode: {type: Boolean, default: false },
+    promoCodeApplied: {type: String, default: 'none'},
+    promoCodeDiscount: {type: Number, default: 0},
 
     lineItems: [lineItemSchema],
     isPaid: { type: Boolean, default: false }

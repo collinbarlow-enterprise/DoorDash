@@ -40,3 +40,8 @@ export function getPaidOrder() {
 export function deleteOrder(order) {
     return sendRequest(`${BASE_URL}/deleteOrder`, 'DELETE', order );
 }
+
+export function checkPromoCode(promoCode) {
+    console.log(promoCode, 'promoCode in utilities')
+    return sendRequest(`${BASE_URL}/checkPromoCode`, 'POST', {promoCode})
+}

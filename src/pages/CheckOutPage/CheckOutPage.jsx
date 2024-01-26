@@ -82,12 +82,18 @@ export default function CheckOutPage() {
   }
 
   async function applyPromoCode() {
+    console.log(promoCode, 'promoCode in applyPromoCode')
     try {
-      const promoCodeResponse = await ordersAPI.getPromoCode();
-      const promoCodeResponse.data = { isValid, discount: promoDiscount }
-
-      if (isValid) {
-        setDiscount(promoDiscount)
+      const promoCodeResponse = await ordersAPI.checkPromoCode(promoCode);
+      // const promoCodeResponse.data = { isValid, discount: promoDiscount }
+      console.log(promoCodeResponse, 'promoCodeResponse')
+      if (promoCodeResponse.success) {
+        // setDiscount(promoDiscount)
+        setDiscount((prevState) => {
+          console.log(promoCodeResponse, 'promoCodeResponse in applyPromoCode')
+          console.log(promoCodeResponse.promoCodeInfo.discount, 'promoCodeResponse in applyPromoCode')
+          return promoCodeResponse.promoCodeInfo.discount;
+        })
       } else {
         console.log(isValid, 'isValid is not corrct in promoCode')
       }
@@ -185,25 +191,26 @@ export default function CheckOutPage() {
       <div>cart items with price and ingredients - another jsx component that maps over the array of the cart with something like this:  </div>
       <div>Item: { } | Quantity { } | Ingredients{ } | Price{ } </div>
 
-      <CheckOutPageCartComponent cart={cart} restaurant = {restaurant}/>
+      <CheckOutPageCartComponent cart={cart} restaurant={restaurant} />
 
       <div>Order Summary</div>
       {/* // Summary Field
   // lot of reusable components in both the summary and cart summary - wonder how I could accomplish some sort of reusability, slight UI differences, and really wouldn't be a massive pain to code, but would be cool if I could do it */}
 
+      <div>Subtotal: {cart.subTotal} (which would be order.price)</div>
+
       <div>Add a Promo Field: if the promo field matches a hard coded list somewhere in the model? or database? then a discount is applied, but only one discount should be able to be applied at one time...is it a form with a field? Are there several fields for a single form that could be created here?</div>
 
       <div>
-        <input 
-        type = 'text'
-        placeholder = 'Enter Promo Code - try SAVE10'
-        value = {promoCode}
-        onChange = {(e) => setPromoCode(e.target.value)}
+        <input
+          type='text'
+          placeholder='Enter Promo Code - try SAVE10'
+          value={promoCode}
+          onChange={(e) => setPromoCode(e.target.value)}
         />
         <button onClick={applyPromoCode}> Apply Promo </button>
       </div>
-
-      <div>Subtotal: {cart.subTotal} (which would be order.price)</div>
+      {discount ? (<div>Discount: ${discount}</div>) : (<div>No discount applied</div>)}
 
       <div>Delivery Fee : {cart.deliveryFee}</div>
 
@@ -215,25 +222,25 @@ export default function CheckOutPage() {
         <div><button onClick={() => dasherTipAdjustment(15)}> 15%</button></div>
         <div><button onClick={() => dasherTipAdjustment(20)}> 20%</button></div>
         <div><button onClick={() => navigateToOtherTipPage()}> Other</button></div>
-{/* if the tip is going to be accessed from more than one page than there needs to be a field in the model that will allow me to grab, and update the field, the state value can be defaulted to 0, grabbed and updated on the otherTipPage, updated on this field, and then when the place order button is clicked the value will be finalized  */}
+        {/* if the tip is going to be accessed from more than one page than there needs to be a field in the model that will allow me to grab, and update the field, the state value can be defaulted to 0, grabbed and updated on the otherTipPage, updated on this field, and then when the place order button is clicked the value will be finalized  */}
       </div>
 
       <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>
 
-      <div>Total: {parseInt(cart.total) + dasherTip} </div>
-{/* right now the creditcard is set up as an array which makes sense if you have multiple credit cards, if there are more multiple credit cards you need to be able to select which one you want to use */}
-{/* if that is the case I need to map over the creditcards, and then select have that been a state value that is selected via a parent component where the child component has the user data passed down via props */}
+      <div>Total: {parseInt(cart.total) + dasherTip - discount} </div>
+      {/* right now the creditcard is set up as an array which makes sense if you have multiple credit cards, if there are more multiple credit cards you need to be able to select which one you want to use */}
+      {/* if that is the case I need to map over the creditcards, and then select have that been a state value that is selected via a parent component where the child component has the user data passed down via props */}
 
       <CheckOutPageCreditCard user={user} />
 
-        <div>Conditional Rendering based on Chase Sapphire</div>
-        {user.chaseMember ? (<div>You're a chase member!</div>) : (<div>Not a Chase Member</div>)}
+      <div>Conditional Rendering based on Chase Sapphire</div>
+      {user.chaseMember ? (<div>You're a chase member!</div>) : (<div>Not a Chase Member</div>)}
 
-        <div>Place Order Button</div>
-        <div onClick={() => navigateToOrderStatusPage()} ><button>PLACE THE ORDER</button></div>
-        {/* the navigateToOrderStatusPage should be nested inside another function that flips the order status from cart to placed order */}
+      <div>Place Order Button</div>
+      <div onClick={() => navigateToOrderStatusPage()} ><button>PLACE THE ORDER</button></div>
+      {/* the navigateToOrderStatusPage should be nested inside another function that flips the order status from cart to placed order */}
 
-      </div>
-   
-      )
+    </div>
+
+  )
 }

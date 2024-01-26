@@ -1,4 +1,5 @@
 const Order = require('../../models/order')
+const PromoCode = require('../../models/promoCode')
 
 module.exports = {
     cart,
@@ -8,7 +9,8 @@ module.exports = {
     getTotal,
     checkout,
     getPaidCartController,
-    deleteOrder
+    deleteOrder,
+    checkPromoCode,
 }
 
 async function cart(req, res) {
@@ -69,12 +71,13 @@ async function checkout(req, res) {
 
 async function deleteOrder(req, res) {
     try {
-    const order = await Order.findByIdAndDelete(req.body._id);
-    res.json({success: true, order});
-} catch (error) {
-    console.log(error);
-    res.status(500)
-}}
+        const order = await Order.findByIdAndDelete(req.body._id);
+        res.json({ success: true, order });
+    } catch (error) {
+        console.log(error);
+        res.status(500)
+    }
+}
 
 //when using this.find instead of this.findOne in the static method I am returning an array of documents instead of a single document
 // thus when I try to access the lineItems property in the controller function(or after) the lineItems property doesn't actually exist
@@ -92,4 +95,22 @@ async function getPaidCartController(req, res) {
         orderTotal: cart.orderTotal
     }));
     res.json(paidCartsWithTotal);
+}
+
+async function checkPromoCode(req, res) {
+    console.log(req.body, 'promoCode in backend')
+    const promoCode = req.body.promoCode;
+
+    try {
+        const promoCodeInfo = await PromoCode.findOne({ code: promoCode });
+
+        if (promoCodeInfo) {
+            res.json({ success: true, promoCodeInfo });
+        } else {
+            res.json({ success: false, message: 'Invalid Promo Code' })
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
 }
