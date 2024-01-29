@@ -53,7 +53,17 @@ const orderSchema = new Schema({
           enum: ['standard', 'schedule ahead'],
           default: 'standard',
         },
-        data: { type: Date },
+        data: { 
+            type: Date, 
+            default: null,
+            validate: {
+                validator: function (date) {
+                  // For example, checking if the date is in the future
+                  return date === null || date > new Date();
+                },
+                message: 'Invalid date. Date must be in the future.',
+              },
+        },
       },
     
     dropOffInstructions: {type: String, default: 'none'},

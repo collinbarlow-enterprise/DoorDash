@@ -2,7 +2,7 @@ import React from 'react'
 import CheckOutPageLineItemComponent from '../CheckOutPageCartLineItemComponent/CheckOutPageCartLineItemComponent'
 
 export default function CheckOutPageCartComponent({cart, restaurant}) {
-    console.log(cart, 'cart in cart component')
+    // console.log(cart, 'cart in cart component')
 
     const cartMap =cart.lineItems ? cart.lineItems.map((item) => 
     <CheckOutPageLineItemComponent

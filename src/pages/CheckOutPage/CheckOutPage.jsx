@@ -27,8 +27,12 @@ export default function CheckOutPage() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState(null);
   const [restaurant, setRestaurant] = useState(null);
+
+  const [deliveryOption, setDeliveryOption] = useState(null)
+
   const [total, setTotal] = useState(null);
   const [dasherTip, setDasherTip] = useState(null);
+
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
 
@@ -46,18 +50,23 @@ export default function CheckOutPage() {
     const cart = await ordersAPI.getCart();
     console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
     setCart((prevState) => {
-      // console.log(cart, 'cart in getCart on CartPage')
+      console.log(cart, 'cart in getCart on CartPage')
       return cart;
     })
     setCart(cart);
+
+    if (cart.deliveryOption) {
+      console.log(cart.deliveryOption, 'cart.deliveryOption in getCart')
+      setDeliveryOption(cart.deliveryOption)
+    }
     console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
 
   // need to find a way to get the Restaurant id...from the cart or order? 
   async function getRestaurant() {
-    console.log('inside getrestaurant on checkout page')
+    // console.log('inside getrestaurant on checkout page')
     // console.log(cart.restaurant, 'cart.restaurant in getrestaurant on checkout page')
-    console.log(cart, 'cart in getrestaurant on checkout page')
+    // console.log(cart, 'cart in getrestaurant on checkout page')
 
     if (cart) {
       try {
