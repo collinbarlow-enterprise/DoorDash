@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
+
 import { useNavigate } from 'react-router-dom'
+
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
@@ -11,6 +15,8 @@ import CheckOutComponent from '../../components/CheckOutComponent/CheckOutCompon
 import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
 import CheckOutPageCreditCard from '../../components/CheckOutPageCreditCardComponent/CheckOutPageCreditCard';
 import CheckOutPageCartComponent from '../../components/CheckOutPageCartComponent/CheckOutPageCartComponent';
+import CheckOutPageDeliveryOptionsComponent from '../../components/CheckOutPageDeliveryOptionsComponent/CheckOutPageDeliveryOptionsComponent';
+
 // import order from '../../../models/order';
 
 export default function CheckOutPage() {
@@ -29,6 +35,7 @@ export default function CheckOutPage() {
   const [restaurant, setRestaurant] = useState(null);
 
   const [deliveryOption, setDeliveryOption] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [total, setTotal] = useState(null);
   const [dasherTip, setDasherTip] = useState(null);
@@ -178,6 +185,22 @@ export default function CheckOutPage() {
       {/* // delivery options which will be 3, the premier one will add to the total(how would I accomplish that?), the middle will be the normal one which will just be a set time (should do a RNG with a specific range), and then third will be a scheduled order (goes to another page that has a time wheel, need to look into that more) */}
 
       <div>Delivery Options</div>
+      <CheckOutPageDeliveryOptionsComponent deliveryOption = {deliveryOption} setDeliveryOption = {setDeliveryOption} selectedDate = {selectedDate} setSelectedDate = {setSelectedDate} />
+
+      {/* {deliveryOption === 'schedule' && (
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          showTimeSelect
+          timeFormat="HH:mm"
+          dateFormat="MMMM d, yyyy h:mm aa"
+        />
+      )} */}
+
+      {/* <button onClick={() => console.log('Place Order', deliveryOption, selectedDate)}>
+        Set Delivery Time
+      </button> */}
+
       {/* // a field for drop off instructions (looks like it has its own page, which would have two options and a form field, guess drop off instructions would be a field on the order?) */}
 
       <div>User Address: {user.address}</div>
