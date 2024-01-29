@@ -98,13 +98,23 @@ async function getPaidCartController(req, res) {
 }
 
 async function checkPromoCode(req, res) {
-    console.log(req.body, 'promoCode in backend')
+    // console.log(req.body, 'promoCode in backend')
+    // console.log(req.user, 'req.user in checkPromoCode')
     const promoCode = req.body.promoCode;
+    
 
     try {
         const promoCodeInfo = await PromoCode.findOne({ code: promoCode });
+        
 
         if (promoCodeInfo) {
+            console.log(promoCodeInfo, 'promoCodeInfo in checkPromoCode')
+            const cart = await Order.getCart(req.user._id);
+            cart.promoCode = true;
+            cart.promoCodeApplied = promoCodeInfo.code;
+            cart.promoCodeDiscount = promoCodeInfo.discount;
+
+            await cart.save();
             res.json({ success: true, promoCodeInfo });
         } else {
             res.json({ success: false, message: 'Invalid Promo Code' })
