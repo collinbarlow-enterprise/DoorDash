@@ -27,6 +27,7 @@ export default function CheckOutPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [giftStatus, setGiftStatus] = useState(null)
+  const [dropOffInstructions, setDropOffInstructions] = useState('')
 
   const [total, setTotal] = useState(null);
   const [dasherTip, setDasherTip] = useState(null);
@@ -62,7 +63,11 @@ export default function CheckOutPage() {
       // console.log(cart.isGift, 'cart.isGift in setGiftStatus in getCart')
       setGiftStatus(cart.isGift)
     })
-    console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
+
+    setDropOffInstructions((prevState) => {
+      setDropOffInstructions(cart.dropOffInstructions)
+    })
+    console.log(cart.dropOffInstructions, 'drop off instructions')
   }
 
   // need to find a way to get the Restaurant id...from the cart or order? 
@@ -127,7 +132,21 @@ export default function CheckOutPage() {
     setGiftStatus(!giftStatus);
     console.log(giftStatus, 'giftstatus after boolean switch')
   }
- 
+
+  let temporaryInstructions = '';
+
+  function changeDropOffInstructions(e) {
+    console.log(e, 'e')
+    inputValue = e.target.value;
+    setDropOffInstructions(inputValue)
+    // console.log(inputValue, 'input value in changeDropOff')
+    // return temporaryInstructions = inputValue;
+  }
+
+  function handleSetInstructions() {
+    setDropOffInstructions(temporaryInstructions);
+  }
+
   // navigate functions to orders page
   function navigateToOrderStatusPage() {
     console.log('made it inside order status navigation')
@@ -183,7 +202,7 @@ export default function CheckOutPage() {
       {/* // delivery options which will be 3, the premier one will add to the total(how would I accomplish that?), the middle will be the normal one which will just be a set time (should do a RNG with a specific range), and then third will be a scheduled order (goes to another page that has a time wheel, need to look into that more) */}
 
       <div>Delivery Options</div>
-      <CheckOutPageDeliveryOptionsComponent deliveryOption = {deliveryOption} setDeliveryOption = {setDeliveryOption} selectedDate = {selectedDate} setSelectedDate = {setSelectedDate} />
+      <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 
       {/* {deliveryOption === 'schedule' && (
         <DatePicker
@@ -206,10 +225,26 @@ export default function CheckOutPage() {
       <div></div>
       <div>Drop Off Instructions: is a field on the order model, not sure if its already there, should be added to the model upon the order being placed </div>
 
+      <div>
+        <form>
+          <label>Enter Drop Off Notes:
+            <input
+              type='text'
+              placeholder='Drop Off Instructions'
+              value={dropOffInstructions}
+              onChange={(e) => setDropOffInstructions(e.target.value)}
+            />
+          </label>
+          <input type="submit" />
+
+          {/* <button onClick={handleSetInstructions}> Set Drop Off Instructions </button> */}
+        </form>
+      </div>
+
       <div>User Phone Number: will be - user.phoneNumber - but don't have that set up in my model yet </div>
 
       <div>
-        <button onClick={() => changeGiftStatus()} > Send as a gift</button>       
+        <button onClick={() => changeGiftStatus()} > Send as a gift</button>
       </div>
 
       {giftStatus ? <div>Sending this as a gift!</div> : <div></div>}
