@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react'
-
 import { useNavigate } from 'react-router-dom'
 
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
@@ -17,17 +16,7 @@ import CheckOutPageCreditCard from '../../components/CheckOutPageCreditCardCompo
 import CheckOutPageCartComponent from '../../components/CheckOutPageCartComponent/CheckOutPageCartComponent';
 import CheckOutPageDeliveryOptionsComponent from '../../components/CheckOutPageDeliveryOptionsComponent/CheckOutPageDeliveryOptionsComponent';
 
-// import order from '../../../models/order';
-
 export default function CheckOutPage() {
-
-  // state values:
-  // X user
-  // X cart
-  // X restaurant
-  // X total
-  // X map
-  // dasher tip
 
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -36,6 +25,8 @@ export default function CheckOutPage() {
 
   const [deliveryOption, setDeliveryOption] = useState(null)
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const [giftStatus, setGiftStatus] = useState(null)
 
   const [total, setTotal] = useState(null);
   const [dasherTip, setDasherTip] = useState(null);
@@ -47,7 +38,7 @@ export default function CheckOutPage() {
     const user = await usersAPI.getUser();
     setUser((prevState) => {
       // console.log(prevState, 'prevState for user')
-      console.log(user, 'user in setUser function on getUser')
+      // console.log(user, 'user in setUser function on getUser')
       return user;
     });
     // userLocation();
@@ -55,17 +46,22 @@ export default function CheckOutPage() {
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
-    console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
+    // console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
     setCart((prevState) => {
-      console.log(cart, 'cart in getCart on CartPage')
+      // console.log(cart, 'cart in getCart on CartPage')
       return cart;
     })
     setCart(cart);
 
     if (cart.deliveryOption) {
-      console.log(cart.deliveryOption, 'cart.deliveryOption in getCart')
+      // console.log(cart.deliveryOption, 'cart.deliveryOption in getCart')
       setDeliveryOption(cart.deliveryOption)
     }
+
+    setGiftStatus((prevState) => {
+      // console.log(cart.isGift, 'cart.isGift in setGiftStatus in getCart')
+      setGiftStatus(cart.isGift)
+    })
     console.log(cart, 'CART AFTER SETCART IS RAN IN GETCART')
   }
 
@@ -78,7 +74,7 @@ export default function CheckOutPage() {
     if (cart) {
       try {
         const restaurantData = await restaurantAPI.getOneRestaurant(cart.restaurant);
-        console.log(restaurantData, 'restaurantsData in getRestaurants HomePage')
+        // console.log(restaurantData, 'restaurantsData in getRestaurants HomePage')
         setRestaurant(restaurantData);
       } catch (error) {
         console.error(error, 'error for getRestaurant in Home Page')
@@ -98,16 +94,16 @@ export default function CheckOutPage() {
   }
 
   async function applyPromoCode() {
-    console.log(promoCode, 'promoCode in applyPromoCode')
+    // console.log(promoCode, 'promoCode in applyPromoCode')
     try {
       const promoCodeResponse = await ordersAPI.checkPromoCode(promoCode);
       // const promoCodeResponse.data = { isValid, discount: promoDiscount }
-      console.log(promoCodeResponse, 'promoCodeResponse')
+      // console.log(promoCodeResponse, 'promoCodeResponse')
       if (promoCodeResponse.success) {
         // setDiscount(promoDiscount)
         setDiscount((prevState) => {
-          console.log(promoCodeResponse, 'promoCodeResponse in applyPromoCode')
-          console.log(promoCodeResponse.promoCodeInfo.discount, 'promoCodeResponse in applyPromoCode')
+          // console.log(promoCodeResponse, 'promoCodeResponse in applyPromoCode')
+          // console.log(promoCodeResponse.promoCodeInfo.discount, 'promoCodeResponse in applyPromoCode')
           return promoCodeResponse.promoCodeInfo.discount;
         })
       } else {
@@ -125,11 +121,13 @@ export default function CheckOutPage() {
     dasherTipTotal = parseFloat(dasherTipTotal.toFixed(2));
     setDasherTip(dasherTipTotal)
   }
-  // other functions needed
 
-  // a function for the google maps api that will use the user.address as the place
-  // does the google maps api give an ETA value? that would make delivery time interesting 
-
+  function changeGiftStatus() {
+    console.log(giftStatus, 'giftStatus in changeGiftStatus');
+    setGiftStatus(!giftStatus);
+    console.log(giftStatus, 'giftstatus after boolean switch')
+  }
+ 
   // navigate functions to orders page
   function navigateToOrderStatusPage() {
     console.log('made it inside order status navigation')
@@ -210,7 +208,11 @@ export default function CheckOutPage() {
 
       <div>User Phone Number: will be - user.phoneNumber - but don't have that set up in my model yet </div>
 
-      <div>Send as a gift</div>
+      <div>
+        <button onClick={() => changeGiftStatus()} > Send as a gift</button>       
+      </div>
+
+      {giftStatus ? <div>Sending this as a gift!</div> : <div></div>}
 
       {/* // send as a gift (goes to a page that has a few fields, but actually I don't think this would be that hard, it would just need to change something about the order indicating it was for someone else? maybe another optional field on the order model which would be default to null, but would be orderRecipient, and then on the order summary I could conditionally render based on that value */}
 

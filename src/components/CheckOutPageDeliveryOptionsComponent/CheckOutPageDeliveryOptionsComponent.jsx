@@ -16,14 +16,14 @@ export default function CheckOutPageDeliveryOptionsComponent( {deliveryOption, s
     <div className="container">
       <h6 className="text-center">CheckOut Page Delivery Options Component</h6>
       <div>
-      <button onClick={() => handleDeliveryOptionChange('asap')} disabled={deliveryOption === 'asap'}>
+      <button onClick={() => handleDeliveryOptionChange('standard')} disabled={deliveryOption === 'asap'}>
         ASAP
       </button>
-      <button onClick={() => handleDeliveryOptionChange('schedule')} disabled={deliveryOption === 'schedule'}>
+      <button onClick={() => handleDeliveryOptionChange('schedule ahead')} disabled={deliveryOption === 'schedule'}>
         Schedule Ahead
       </button>
 
-      {deliveryOption === 'schedule' && (
+      {deliveryOption === 'schedule ahead' && (
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
@@ -33,9 +33,13 @@ export default function CheckOutPageDeliveryOptionsComponent( {deliveryOption, s
         />
       )}
 
-      <button onClick={() => console.log('Place Order', deliveryOption, selectedDate)}>
-        Set Delivery Time
-      </button>
+      {deliveryOption === 'schedule ahead' && (
+              <button onClick={() => console.log('Place Order', deliveryOption, selectedDate)}>
+              Set Delivery Time
+            </button>
+      )}
+
+
     </div>
     </div>
   )
