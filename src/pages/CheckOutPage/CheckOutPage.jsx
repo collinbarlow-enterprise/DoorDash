@@ -151,9 +151,16 @@ export default function CheckOutPage() {
   async function handleDropOffInstructionsSubmit(event) {
     event.preventDefault();
     console.log('handle submit', dropOffInstructions);
-    const newDropOffInstructions = await usersAPI2.changeDropOffInstructions(dropOffInstructions);
+    const updatedUser = await usersAPI2.changeDropOffInstructions(dropOffInstructions);
+    console.log(updatedUser, 'updatedUser')
+    const newDropOffInstructions = updatedUser.updatedUser.dropOffInstructions;
     console.log(newDropOffInstructions, 'newDropOffInstructions')
-    // setDropOffInstructions()
+    setDropOffInstructions((prevState) => {
+      console.log(newDropOffInstructions, 'newDropOff in setDropOff in handleDrop')
+      console.log(user, 'user in setDropOff in handleDrop')
+      return newDropOffInstructions;
+    })
+    getUser();
   }
 
   // navigate functions to orders page
@@ -241,7 +248,7 @@ export default function CheckOutPage() {
           <label>Enter Drop Off Notes:
             <input
               type='text'
-              placeholder='Drop Off Instructions'
+              placeholder={dropOffInstructions}
               value={dropOffInstructions}
               onChange={(e) => setDropOffInstructions(e.target.value)}
             />
@@ -253,7 +260,7 @@ export default function CheckOutPage() {
         </form>
       </div>
 
-      <div>User Phone Number: will be - user.phoneNumber - but don't have that set up in my model yet </div>
+      <div>Phone Number: {user.phoneNumber}</div>
 
       <div>
         <button onClick={() => changeGiftStatus()} > Send as a gift</button>
