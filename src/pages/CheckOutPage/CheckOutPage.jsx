@@ -44,12 +44,13 @@ export default function CheckOutPage() {
       return user;
     }
     );
+    if (user.dropOffInstructions != 'none') {
     setDropOffInstructions((prevState) => {
       setDropOffInstructions(user.dropOffInstructions)
     })
     console.log(user.dropOffInstructions, 'drop off instructions')
     // userLocation();
-  }
+  }};
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
@@ -160,7 +161,7 @@ export default function CheckOutPage() {
       console.log(user, 'user in setDropOff in handleDrop')
       return newDropOffInstructions;
     })
-    getUser();
+    // getUser();
   }
 
   // navigate functions to orders page
@@ -196,6 +197,10 @@ export default function CheckOutPage() {
   useEffect(() => {
     getRestaurant();
   }, [cart])
+
+  // useEffect(() => {
+  //   getUser();
+  // // }, [newDropOffInstructions, user])
 
   if (restaurant === null || cart === null) {
     return <div>Loading...</div>
@@ -241,7 +246,7 @@ export default function CheckOutPage() {
       <div>User Address: {user.address}</div>
       {/* // a field for the address (if I want to get ambitious I can swap to a list of addresses that a user can add and delete in a drop down menu) */}
       <div></div>
-      <div>Drop Off Instructions: is a field on the order model, not sure if its already there, should be added to the model upon the order being placed </div>
+      <div>Drop Off Instructions: {dropOffInstructions} </div>
 
       <div>
         <form onSubmit={handleDropOffInstructionsSubmit}>

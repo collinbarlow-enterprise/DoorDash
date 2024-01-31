@@ -19,7 +19,7 @@ const userSchema = new Schema({
     type: {type: String, default: 'Point'},
     coordinates: {type: [Number], default: [0, 0]},
   },
-  creditCard: [{type: Number, required: false, length: 9, default: 111222333}],
+  creditCard: {type: Number, required: false, length: 9, default: 111222333},
   phoneNumber: {type: Number, required: false, length: 10, default: 1234567890},
   chaseMember: {type: Boolean, required: true},
   favoriteRestaurant: [{type: Schema.Types.ObjectId, ref: 'Restaurant'}],
