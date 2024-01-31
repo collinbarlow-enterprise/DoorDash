@@ -14,6 +14,7 @@ const userSchema = new Schema({
   firstName: {type: String, required: false},
   lastName: {type: String, required: false},
   address: [{ type: String, required: false, default: '303 2nd Street San Francisco, CA 94107'}],
+  dropOffInstructions: {type:String, required: false, default: 'none'},
   location: {
     type: {type: String, default: 'Point'},
     coordinates: {type: [Number], default: [0, 0]},

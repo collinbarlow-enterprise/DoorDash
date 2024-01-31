@@ -32,3 +32,9 @@ export function login(credentials) {
 export function checkToken() {
   return sendRequest(`${BASE_URL}/check-token`);
 }
+
+export function changeDropOffInstructions(instructions){
+  console.log(instructions, 'instructions in changeInstructiosn in users-api')
+  return sendRequest(`${BASE_URL}/changeDropOffInstructions`, 'POST', {instructions} )
+}
+

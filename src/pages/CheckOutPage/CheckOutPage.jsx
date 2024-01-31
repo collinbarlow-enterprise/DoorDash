@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import * as usersAPI from '../../utilities/users-service'
+import * as usersAPI2 from '../../utilities/users-api'
 
 import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
 import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
@@ -39,9 +40,14 @@ export default function CheckOutPage() {
     const user = await usersAPI.getUser();
     setUser((prevState) => {
       // console.log(prevState, 'prevState for user')
-      // console.log(user, 'user in setUser function on getUser')
+      console.log(user, 'user in setUser function on getUser')
       return user;
-    });
+    }
+    );
+    setDropOffInstructions((prevState) => {
+      setDropOffInstructions(user.dropOffInstructions)
+    })
+    console.log(user.dropOffInstructions, 'drop off instructions')
     // userLocation();
   }
 
@@ -63,11 +69,6 @@ export default function CheckOutPage() {
       // console.log(cart.isGift, 'cart.isGift in setGiftStatus in getCart')
       setGiftStatus(cart.isGift)
     })
-
-    setDropOffInstructions((prevState) => {
-      setDropOffInstructions(cart.dropOffInstructions)
-    })
-    console.log(cart.dropOffInstructions, 'drop off instructions')
   }
 
   // need to find a way to get the Restaurant id...from the cart or order? 
@@ -147,6 +148,14 @@ export default function CheckOutPage() {
     setDropOffInstructions(temporaryInstructions);
   }
 
+  async function handleDropOffInstructionsSubmit(event) {
+    event.preventDefault();
+    console.log('handle submit', dropOffInstructions);
+    const newDropOffInstructions = await usersAPI2.changeDropOffInstructions(dropOffInstructions);
+    console.log(newDropOffInstructions, 'newDropOffInstructions')
+    // setDropOffInstructions()
+  }
+
   // navigate functions to orders page
   function navigateToOrderStatusPage() {
     console.log('made it inside order status navigation')
@@ -155,6 +164,8 @@ export default function CheckOutPage() {
   function navigateToOtherTipPage() {
     navigate(`/otherTipPage`)
   }
+
+
 
   // CheckOut Page
   // restaurant name
@@ -226,7 +237,7 @@ export default function CheckOutPage() {
       <div>Drop Off Instructions: is a field on the order model, not sure if its already there, should be added to the model upon the order being placed </div>
 
       <div>
-        <form>
+        <form onSubmit={handleDropOffInstructionsSubmit}>
           <label>Enter Drop Off Notes:
             <input
               type='text'
@@ -235,6 +246,7 @@ export default function CheckOutPage() {
               onChange={(e) => setDropOffInstructions(e.target.value)}
             />
           </label>
+          {/* with the type submit a refresh is caused, and b/c the state value doesn't persist we just start over at square one....so submit is not the way to go */}
           <input type="submit" />
 
           {/* <button onClick={handleSetInstructions}> Set Drop Off Instructions </button> */}

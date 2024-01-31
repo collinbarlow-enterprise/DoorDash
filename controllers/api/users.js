@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
   create,
-  login
+  login,
+  changeInstructions
 }
 
 async function create(req, res){
@@ -37,5 +38,21 @@ async function login(req, res) {
     res.json( createJWT(user) );
   } catch {
     res.status(400).json('Bad Credentials');
+  }
+}
+
+async function changeInstructions(req, res) {
+console.log(req.body, 'req.body in CHANGE INSTRUCTIONS CONTROLLER')
+  try{
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      {dropOffInstructions: req.body.instructions },
+      {new: true }
+      );
+    console.log(updatedUser, 'instructions in changeInstructions CONTROLLER');
+    res.json({success: true, updatedUser });
+  } catch (error) {
+    console.log(error);
+    res.status(500)
   }
 }
