@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom'
 
 import * as paidOrdersAPI from '../../utilities/paidOrders-api'
 
+import OrdersInProgressListComponent from '../../components/OrdersInProgressListComponent/OrdersInProgressListComponent'
+
+import OrdersDeliveredListComponent from '../../components/OrdersDeliveredListComponent/OrdersDeliveredListComponent'
+
 
 export default function OrderStatusPage() {
 // i'm going to have two main jsx components one that shows the current delivery status of a non-delivery order, and the second will show the order history
@@ -18,20 +22,51 @@ export default function OrderStatusPage() {
 // paidOrders
 // deliveredOrders
 // ordersInProgress
-
 // orderStatus
 
+const [ paidOrders, setPaidOrders] = useState([]);
+const [ deliveredOrders, setDeliveredOrders] = useState([]);
+const [ ordersInProgress, setOrdersInProgress ] = useState([]);
+const [orderStatus, setOrderStatus ] = useState('');
+
+
 async function getPaidOrders() {
-  console.log('hello')
+  // console.log('hello')
   const orders = await paidOrdersAPI.getPaidOrders();
   console.log(orders, 'orders in getPaid orders')
+  setPaidOrders((prevState) => {
+    return orders;
+  })
   // going to grab the orders from the database and then set the paidOrders value
 }
 
 function filterPaidOrders(){
   console.log('goodbye')
+  console.log(paidOrders, 'paidOrders in filter orders function')
+
+  const paidOrdersArray = [...paidOrders];
+  console.log(paidOrdersArray, 'paidOrdersArray')
+
+  const completedOrdersArray = []
+
+  for (let i = 0; i<paidOrdersArray.length; i++) {
+    if (paidOrdersArray[i].deliveryStatus === 'order delivered') {
+      paidOrdersArray.splice(i, 1);
+      i--;
+    } else if (paidOrdersArray[i].deliveryStatus === 'completed') {
+        completedOrdersArray.push(paidOrdersArray[i])
+      }
+    }
+    console.log(paidOrdersArray, 'paidOrdersArray after for loop')
+    setOrdersInProgress((prevState) => {
+      return paidOrdersArray;
+    });
+    setDeliveredOrders((prevState) => {
+      return completedOrdersArray;
+    });
+  }
   // going to look at the paidOrders and separate them out into two groups - one that is not completed and another that is completed
-}
+
 
 function updateOrderStatus(){
   console.log('bon voyage')
@@ -40,17 +75,30 @@ function updateOrderStatus(){
   // could probably do a while loop
 }
 
+useEffect(() => {
+  getPaidOrders();
+}, [])
+
+useEffect(() => {
+  filterPaidOrders();
+}, [paidOrders]);
 
   return (
     <div>
         <h1>Still Under Construction</h1>
         <h1>Order Status Page</h1>
         <div>First Component is going to be undelivered orders</div>
+        <OrdersInProgressListComponent orders = {ordersInProgress}
+        />
+        
 
-      <div onClick={() => getPaidOrders()} ><button>get paid orders</button></div>
+      <div onClick={() => filterPaidOrders()} ><button>filterPaidOrders</button></div>
 
         <div>Second Component is going to be delivered orders </div>
         <div>Completed</div>
+
+        <OrdersDeliveredListComponent orders = {deliveredOrders}
+        />
         {/* some sort of map */}
         <div>Restaurant Name | a button that takes you back to the restaurant page</div>
         <div>Order Date | Order Amount | # of Items</div>

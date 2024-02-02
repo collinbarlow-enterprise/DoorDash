@@ -10,6 +10,20 @@ module.exports = {
 async function getPaidOrders(req, res) {
     console.log(req.body, 'get paid orders function')
     console.log(req.body.user, 'req.body.user')
+    console.log(req, 'req')
+    console.log(req.user._id, 'user id')
+
+    const id = req.user._id
+    const user = await User.findById(id)
+
+    const userOrders = user.orders
+    // console.log(userOrders, 'user orders')
+
+    const orders = await PaidOrder.find({ _id: { $in: userOrders } } )
+    // console.log(orders, 'orders')
+
+    // console.log(user, 'order')
+    res.json(orders)
 }
 
 async function convertToPaidOrder(req, res) {
@@ -44,6 +58,7 @@ async function convertToPaidOrder(req, res) {
             promoCodeApplied: updatedCart.promoCodeApplied,
             promoCodeDiscount: updatedCart.promoCodeDiscount,
             isGift: updatedCart.isGift,
+            deliveryStatus: 'order received',
             deliveryOption: updatedCart.deliveryOption,
             dropOffInstructions: updatedCart.dropOffInstructions,
             lineItems: updatedCart.lineItems.map(lineItem => ({
