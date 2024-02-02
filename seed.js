@@ -3,7 +3,7 @@ require('./config/database');
 
 const Restaurant = require('./models/restaurant');
 
-const data = require('./data');
+const data = require('./restaurantData');
 
 const p1 = Restaurant.deleteMany({});
 
