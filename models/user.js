@@ -23,7 +23,7 @@ const userSchema = new Schema({
   phoneNumber: {type: Number, required: false, length: 10, default: 1234567890},
   chaseMember: {type: Boolean, required: true},
   favoriteRestaurant: [{type: Schema.Types.ObjectId, ref: 'Restaurant'}],
-  orders: [{type: Schema.Types.ObjectId, ref: 'Order'}],
+  orders: [{type: Schema.Types.ObjectId, ref: 'PaidOrder'}],
   email: {
     type: String,
     unique: true,

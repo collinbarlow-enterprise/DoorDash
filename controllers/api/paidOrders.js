@@ -1,5 +1,6 @@
 const Order = require('../../models/order');
 const PaidOrder = require('../../models/paidOrder');
+const User = require('../../models/user')
 
 module.exports = {
     getPaidOrders,
@@ -8,6 +9,7 @@ module.exports = {
 
 async function getPaidOrders(req, res) {
     console.log(req.body, 'get paid orders function')
+    console.log(req.body.user, 'req.body.user')
 }
 
 async function convertToPaidOrder(req, res) {
@@ -57,6 +59,14 @@ async function convertToPaidOrder(req, res) {
 
         console.log('PaidOrder created:', paidOrder);
 
+        const userFilter = {_id: req.body.cart.user}
+        const userUpdate = { $push: {orders: paidOrder._id}}
+
+        const addOrderToUser = await User.findByIdAndUpdate(userFilter,userUpdate, {
+            new: true
+        });
+
+        console.log(addOrderToUser, 'addOrderToUser')
         // Respond with success or any other necessary information
         return res.status(200).json({ success: true, message: 'PaidOrder created successfully' });
     } catch (error) {
