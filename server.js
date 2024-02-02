@@ -23,7 +23,7 @@ app.use('/api/users/login', require('./routes/api/users'));
 app.use('/api/restaurants', require ('./routes/api/restaurants'));
 app.use('/api/orders', require('./routes/api/orders'));
 
-
+app.use('/api/paidOrders', require('./routes/api/paidOrders'))
 
 //catch all
 app.get('/*', function (req, res) {

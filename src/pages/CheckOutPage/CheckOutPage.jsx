@@ -10,6 +10,7 @@ import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import * as usersAPI from '../../utilities/users-service'
 import * as usersAPI2 from '../../utilities/users-api'
+import * as paidOrdersAPI from '../../utilities/paidOrders-api'
 
 import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
 import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
@@ -173,6 +174,16 @@ export default function CheckOutPage() {
     navigate(`/otherTipPage`)
   }
 
+  async function convertCartToPaidOrder() {
+    console.log(cart, 'cart in convert function frontend');
+    try {
+      const submittedOrder = await paidOrdersAPI.convertOrderToPaidOrder(cart)
+
+    }
+    catch(error) {
+      console.log(error, 'error')
+    }
+  }
 
 
   // CheckOut Page
@@ -330,7 +341,7 @@ export default function CheckOutPage() {
       {user.chaseMember ? (<div>You're a chase member!</div>) : (<div>Not a Chase Member</div>)}
 
       <div>Place Order Button</div>
-      <div onClick={() => navigateToOrderStatusPage()} ><button>PLACE THE ORDER</button></div>
+      <div onClick={() => convertCartToPaidOrder()} ><button>PLACE THE ORDER</button></div>
       {/* the navigateToOrderStatusPage should be nested inside another function that flips the order status from cart to placed order */}
 
     </div>
