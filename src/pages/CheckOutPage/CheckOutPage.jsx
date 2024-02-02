@@ -179,6 +179,11 @@ export default function CheckOutPage() {
     try {
       const submittedOrder = await paidOrdersAPI.convertOrderToPaidOrder(cart)
 
+      if (submittedOrder.success) {
+        navigateToOrderStatusPage();
+      } else {
+        console.log('didnt work')
+      }
     }
     catch(error) {
       console.log(error, 'error')
