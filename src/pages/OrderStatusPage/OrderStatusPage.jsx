@@ -28,6 +28,7 @@ const [ paidOrders, setPaidOrders] = useState([]);
 const [ deliveredOrders, setDeliveredOrders] = useState([]);
 const [ ordersInProgress, setOrdersInProgress ] = useState([]);
 const [orderStatus, setOrderStatus ] = useState('');
+const [allOrdersDelivered, setAllOrdersDelivered] = useState(false);
 
 
 async function getPaidOrders() {
@@ -77,9 +78,18 @@ async function updateOrderStatus(){
   const updatedOrders = ordersToBeUpated.updatedOrders;
 
   console.log(updatedOrders, 'updatedOrderson front end ')
+
+  const nonDeliveredOrders = updatedOrders.filter(order => order.deliveryStatus !== 'order delivered');
+
   setOrdersInProgress((prevState) => {
-    return updatedOrders;
-  });
+    return nonDeliveredOrders;
+  })
+  
+  const deliveredOrders = updatedOrders.filter(order => order.deliveryStatus === 'order delivered');
+
+  setDeliveredOrders(prevState => [...prevState, ...deliveredOrders]);
+
+;
 
   // need some sort of timing functionality that looks at the non completed paid orders, grab their order delivery status, if the order delivery status is not complete, we wait for X amount of time, and then update the status to the next step, once its been updated we change the state value and continue forward until the state value is equal to 'completed' 
 
@@ -93,6 +103,22 @@ useEffect(() => {
 useEffect(() => {
   filterPaidOrders();
 }, [paidOrders]);
+
+useEffect(() => {
+  // Set up an interval to call updateOrderStatus every 8 seconds
+  const intervalId = setInterval(() => {
+    updateOrderStatus();
+
+    // Check if all orders are delivered and update the state
+    if (ordersInProgress.length === 0) {
+      setAllOrdersDelivered(true);
+      clearInterval(intervalId); // Stop the interval
+    }
+  }, 8000);
+
+  // Clear the interval when the component is unmounted or if needed
+  return () => clearInterval(intervalId);
+}, [ordersInProgress]);
 
   return (
     <div>
