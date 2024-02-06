@@ -8,5 +8,7 @@ router.get('/getPaidOrders', paidOrdersCtrl.getPaidOrders)
 
 router.put('/convertToPaidOrder', paidOrdersCtrl.convertToPaidOrder)
 
+router.put('/updateOrderStatus', paidOrdersCtrl.updateOrderStatusCtrl)
+
 
 module.exports = router

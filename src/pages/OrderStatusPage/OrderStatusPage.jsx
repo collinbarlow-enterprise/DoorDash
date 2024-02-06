@@ -68,8 +68,19 @@ function filterPaidOrders(){
   // going to look at the paidOrders and separate them out into two groups - one that is not completed and another that is completed
 
 
-function updateOrderStatus(){
+async function updateOrderStatus(){
   console.log('bon voyage')
+  console.log(ordersInProgress, 'orders in porgress in update order status page')
+  const ordersToBeUpated = await paidOrdersAPI.updateOrderStatusAPI(ordersInProgress)
+  console.log(ordersToBeUpated, 'ordersToBeUpdated')
+
+  const updatedOrders = ordersToBeUpated.updatedOrders;
+
+  console.log(updatedOrders, 'updatedOrderson front end ')
+  setOrdersInProgress((prevState) => {
+    return updatedOrders;
+  });
+
   // need some sort of timing functionality that looks at the non completed paid orders, grab their order delivery status, if the order delivery status is not complete, we wait for X amount of time, and then update the status to the next step, once its been updated we change the state value and continue forward until the state value is equal to 'completed' 
 
   // could probably do a while loop
@@ -87,6 +98,7 @@ useEffect(() => {
     <div>
         <h1>Still Under Construction</h1>
         <h1>Order Status Page</h1>
+        <button onClick={() => updateOrderStatus()}> update order status button</button>
         <div>First Component is going to be undelivered orders</div>
         <OrdersInProgressListComponent orders = {ordersInProgress}
         />

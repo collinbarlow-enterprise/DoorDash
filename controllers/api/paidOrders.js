@@ -5,6 +5,7 @@ const User = require('../../models/user')
 module.exports = {
     getPaidOrders,
     convertToPaidOrder,
+    updateOrderStatusCtrl,
 }
 
 async function getPaidOrders(req, res) {
@@ -19,7 +20,7 @@ async function getPaidOrders(req, res) {
     const userOrders = user.orders
     // console.log(userOrders, 'user orders')
 
-    const orders = await PaidOrder.find({ _id: { $in: userOrders } } )
+    const orders = await PaidOrder.find({ _id: { $in: userOrders } })
     // console.log(orders, 'orders')
 
     // console.log(user, 'order')
@@ -74,10 +75,10 @@ async function convertToPaidOrder(req, res) {
 
         console.log('PaidOrder created:', paidOrder);
 
-        const userFilter = {_id: req.body.cart.user}
-        const userUpdate = { $push: {orders: paidOrder._id}}
+        const userFilter = { _id: req.body.cart.user }
+        const userUpdate = { $push: { orders: paidOrder._id } }
 
-        const addOrderToUser = await User.findByIdAndUpdate(userFilter,userUpdate, {
+        const addOrderToUser = await User.findByIdAndUpdate(userFilter, userUpdate, {
             new: true
         });
 
@@ -89,3 +90,60 @@ async function convertToPaidOrder(req, res) {
         res.status(500)
     }
 }
+
+async function updateOrderStatusCtrl(req, res) {
+    console.log(req.body, 'req.body in updateStatusCtrl');
+
+    const statusArray = ['order received', 'order in progress', 'waiting on driver', 'driver on route', 'order delivered'];
+
+
+    try {
+        const orderArray = req.body.ordersInProgress;
+        console.log(orderArray, 'orderArray in updateCTRL');
+
+        const updatedOrders = [];
+
+        // i need to iterate through the array
+        for (let i = 0; i < orderArray.length; i++) {
+            const filter = { _id: orderArray[i]._id};
+            console.log(filter, 'filter in updateStatusCtrl')
+
+            const currentStatus = orderArray[i].deliveryStatus;
+            console.log(currentStatus, 'currentStatus in updateCtrl')
+
+            let nextStatus = '';
+
+            if (currentStatus != 'order delivered') {
+                for (let s = 0; s < statusArray.length; s++) {
+                    if (statusArray[s] === currentStatus) {
+                        nextStatus = statusArray[s + 1]
+                    }
+                }
+                console.log(nextStatus, 'nextStatus in for loop ')
+            };
+
+
+            const update = { deliveryStatus: nextStatus }
+
+            const thisOrder = await PaidOrder.findOneAndUpdate(filter, update, { new: true })
+
+            console.log(thisOrder, 'thisOrder after update')
+        
+            updatedOrders.push(thisOrder);
+        }
+
+        return res.status(200).json({ success: true, message: 'order status updated successfully', updatedOrders });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: 'Failed to update order status' });
+    }
+}
+// grab each document
+
+//  then determine the order delivery status
+
+// if the order delivery status isn't complete, we wait 5 seconds and then change the value, and save the document
+
+// then we return the object
+
+// do i need to create the array of order delivery stages in this? probably wouldn't hurt, then I could iterate through that array and increment +1 to set the new stage 
