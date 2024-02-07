@@ -52,23 +52,8 @@ export default function RestaurantPageComponent({}) {
  
   async function handleCheckout() {
     await ordersAPI.checkout();
-    // navigate to where?
     navigate('/home');
   }
-
-  // async function handleAddToOrder(itemId, index, restaurant) {
-  //   console.log(itemId, 'itemID in restaurantPageComponent')
-  //   console.log(restaurant, 'restaurant in restaurantPageComponent')
-  //   console.log(index, 'index in restaurantPageComponent')
-  //   try {
-  //     const updatedCart = await ordersAPI.addToCart(itemId, index, restaurant)
-  //     console.log(updatedCart, 'UPDATED CART IN ADDTO ORDER, should be cart that returns from json')
-  //     setCart(updatedCart)
-  //     console.log(cart, 'cart in HANDLEADD TOO ORDER AFTER IT RETURNS')
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
 
   async function handleAddToOrder(itemId, index, restaurant) {
     try {
@@ -87,8 +72,8 @@ export default function RestaurantPageComponent({}) {
 
   async function handleChangeQty(itemId, newQty) {
     // console.log(cart, 'cart in handleChangeQty')
-    // console.log(itemId, 'item id in handleChangeQty on Cart Component')
-    // console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
+    console.log(itemId, 'item id in handleChangeQty on Cart Component')
+    console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
     const updatedCart = await ordersAPI.setItem(itemId, newQty);
     // console.log(updatedCart, 'updatedCart in handleChangeQty')
     setCart(updatedCart)
