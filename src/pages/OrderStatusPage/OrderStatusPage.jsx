@@ -29,25 +29,18 @@ const [ deliveredOrders, setDeliveredOrders] = useState([]);
 const [ ordersInProgress, setOrdersInProgress ] = useState([]);
 const [orderStatus, setOrderStatus ] = useState('');
 const [allOrdersDelivered, setAllOrdersDelivered] = useState(false);
+const [updateOrderStatusTrigger, setUpdateOrderStatusTrigger] = useState(true);
 
 
 async function getPaidOrders() {
-  // console.log('hello')
   const orders = await paidOrdersAPI.getPaidOrders();
   console.log(orders, 'orders in getPaid orders')
   setPaidOrders((prevState) => {
     return orders;
-  })
-  // going to grab the orders from the database and then set the paidOrders value
-}
+  })}
 
 function filterPaidOrders(){
-  console.log('goodbye')
-  console.log(paidOrders, 'paidOrders in filter orders function')
-
   const paidOrdersArray = [...paidOrders];
-  console.log(paidOrdersArray, 'paidOrdersArray')
-
   const completedOrdersArray = []
 
   for (let i = 0; i<paidOrdersArray.length; i++) {
@@ -58,7 +51,6 @@ function filterPaidOrders(){
         completedOrdersArray.push(paidOrdersArray[i])
       }
     }
-    console.log(paidOrdersArray, 'paidOrdersArray after for loop')
     setOrdersInProgress((prevState) => {
       return paidOrdersArray;
     });
@@ -70,15 +62,9 @@ function filterPaidOrders(){
 
 
 async function updateOrderStatus(){
-  console.log('bon voyage')
-  console.log(ordersInProgress, 'orders in porgress in update order status page')
   const ordersToBeUpated = await paidOrdersAPI.updateOrderStatusAPI(ordersInProgress)
-  console.log(ordersToBeUpated, 'ordersToBeUpdated')
-
   const updatedOrders = ordersToBeUpated.updatedOrders;
-
   console.log(updatedOrders, 'updatedOrderson front end ')
-
   const nonDeliveredOrders = updatedOrders.filter(order => order.deliveryStatus !== 'order delivered');
 
   setOrdersInProgress((prevState) => {
@@ -86,15 +72,12 @@ async function updateOrderStatus(){
   })
   
   const deliveredOrders = updatedOrders.filter(order => order.deliveryStatus === 'order delivered');
-
   setDeliveredOrders(prevState => [...prevState, ...deliveredOrders]);
+  if (nonDeliveredOrders.length<1) {
+    setUpdateOrderStatusTrigger(false)
+  }
 
-;
-
-  // need some sort of timing functionality that looks at the non completed paid orders, grab their order delivery status, if the order delivery status is not complete, we wait for X amount of time, and then update the status to the next step, once its been updated we change the state value and continue forward until the state value is equal to 'completed' 
-
-  // could probably do a while loop
-}
+;}
 
 useEffect(() => {
   getPaidOrders();
@@ -105,11 +88,13 @@ useEffect(() => {
 }, [paidOrders]);
 
 useEffect(() => {
+  if (updateOrderStatusTrigger){
   // Set up an interval to call updateOrderStatus every 8 seconds
   const intervalId = setInterval(() => {
     updateOrderStatus();
 
     // Check if all orders are delivered and update the state
+    console.log(ordersInProgress, 'ordersInProgress in useEffect')
     if (ordersInProgress.length === 0) {
       setAllOrdersDelivered(true);
       clearInterval(intervalId); // Stop the interval
@@ -118,7 +103,7 @@ useEffect(() => {
 
   // Clear the interval when the component is unmounted or if needed
   return () => clearInterval(intervalId);
-}, [ordersInProgress]);
+}}, [ordersInProgress]);
 
   return (
     <div>
