@@ -62,7 +62,9 @@ useEffect(() => {
 
 
 if (restaurants === null) {
-    return <div>Loading...</div>
+    getRestaurants();
+    return <div>Loading...</div>;
+
 }
 
 const restaurantMap = restaurants.map((r, index) =>

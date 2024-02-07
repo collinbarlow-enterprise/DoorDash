@@ -15,6 +15,8 @@ async function getPaidOrders(req, res) {
     console.log(req.user._id, 'user id')
 
     const id = req.user._id
+
+    try {
     const user = await User.findById(id)
 
     const userOrders = user.orders
@@ -25,7 +27,16 @@ async function getPaidOrders(req, res) {
 
     // console.log(user, 'order')
     res.json(orders)
-}
+} catch (error) {
+    console.error(error);
+
+    // Handle different types of errors and return appropriate status codes
+    if (error.name === 'ValidationError') {
+        return res.status(400).json({ error: 'Validation error' });
+    }
+
+    res.status(500).json({ error: 'Internal Server Error' });
+}}
 
 async function convertToPaidOrder(req, res) {
     console.log(req.body, 'req.body in convert to paid order CONTROLLER')
@@ -138,12 +149,4 @@ async function updateOrderStatusCtrl(req, res) {
         res.status(500).json({ success: false, message: 'Failed to update order status' });
     }
 }
-// grab each document
 
-//  then determine the order delivery status
-
-// if the order delivery status isn't complete, we wait 5 seconds and then change the value, and save the document
-
-// then we return the object
-
-// do i need to create the array of order delivery stages in this? probably wouldn't hurt, then I could iterate through that array and increment +1 to set the new stage 

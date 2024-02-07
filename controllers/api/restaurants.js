@@ -29,9 +29,19 @@ async function getRestaurant(req, res) {
 
 async function findSpecificRestaurant(req, res) {
     // console.log('made it inside findSpecificRestaurant CONTROLLER')
+    try {
     const restaurant = await Restaurant.findById(req.params.id);
     res.json(restaurant);
-}
+} catch (error) {
+    console.error(error);
+
+    // Handle different types of errors and return appropriate status codes
+    if (error.name === 'ValidationError') {
+        return res.status(400).json({ error: 'Validation error' });
+    }
+
+    res.status(500).json({ error: 'Internal Server Error' });
+}};
 
 async function findSpecificMenuItem(req, res) {
     console.log('MADE IT INSIDE FIND SPECIFIC MENUITEM ')
