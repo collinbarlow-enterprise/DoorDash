@@ -307,7 +307,7 @@ orderSchema.methods.setItemQty = function (itemId, newQty) {
             cart.lineItems[i].quantity = newQty;
 
             if (cart.lineItems[i].quantity <= 0) {
-                cart.lineItems.splice(cart.lineItems[i], 1)
+                cart.lineItems.splice(i, 1)
             }
             // console.log('made it inside if statement')
             // return cart.lineItems[i].quantity;

@@ -115,21 +115,10 @@ if (restaurant === null) {
       <div>
         
       <h6>Menu:</h6>
-      {/* right now I have the name, description, price, and add to order...I think I really just want the name, image, price, and add to order...the description can be saved for the item page itself */}
-      {/* the list item is underneath the map function, so I can include a onClick for the 'li' that would link to the item details page */}
-      {/* if the li has the onClick, how do I organize it so the addToOrder button doesn't also send you to the page? maybe use a seperate div or inline block that would house the name and image, then another div for the add to order button...wouldn't be in the 'li' tag then */}
       <ul>
         {restaurant.menu?.map((menuItem, index) => (
           <li key={index}>
-            <strong onClick={()=> {toMenuItemPage(id, menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>
-            {/* need to destructure my cart object, then map it, and then do a ternary to determine if the menuItem is present in the cart then show the handleChangeQty */}
-
-            {/* don't need to the add or remove here. I don't think... */}
-            {/* another question is how would I select the cartItem.item in this instance where my cartItems are still in an array? They need to be mapped over, and maybe that's the answer, just a quick map? */}
-
-            {/* <button onClick={() => handleChangeQty(cartItem.item, itemQty +1)}> Add </button>
-            <button onClick={() => handleChangeQty(lineItem.item._id, lineItem.quantity -1)}> Remove </button> */}
-         
+            <strong onClick={()=> {toMenuItemPage(id, menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>         
           </li>
         ))}
       </ul>
