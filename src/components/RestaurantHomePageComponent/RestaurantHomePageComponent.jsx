@@ -17,15 +17,16 @@ const menuMap = menu.map((item, index) =>
   menuItem = {item}
 />);
 
+const defaultImage = '/no-image.svg';
+
+
   return (
-    <div className="container">
-      <h2>{name}</h2>
-      <h6 className="text-center">Restaurant Component</h6>
-      <div>Image Place Holder</div>
-      <button onClick={() => { toRestaurantPage(id) }}> Go to {name} </button>
-      {/* <h6>{cuisine}</h6> */}
-      {/* <h6>{menuMap}</h6> */}
-      
+    <div className="restaurant-card" onClick={() => toRestaurantPage(id)} style={{ cursor: 'pointer' }}>
+      <img src={defaultImage} alt={name} style={{ width: '25%', height: '25%', objectFit: 'cover' }} />
+      <div style={{ padding: '10px' }}>
+        <h2>{name}</h2>
+        {/* Any additional information you want to display can go here */}
+      </div>
     </div>
-  )
+  );
 }
