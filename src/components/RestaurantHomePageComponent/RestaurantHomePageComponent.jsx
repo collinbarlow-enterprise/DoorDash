@@ -22,7 +22,7 @@ const defaultImage = '/no-image.svg';
 
   return (
     <div className="restaurant-card" onClick={() => toRestaurantPage(id)} style={{ cursor: 'pointer' }}>
-      <img src={defaultImage} alt={name} style={{ width: '25%', height: '25%', objectFit: 'cover' }} />
+      <img src={defaultImage} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       <div style={{ padding: '10px' }}>
         <h2>{name}</h2>
         {/* Any additional information you want to display can go here */}

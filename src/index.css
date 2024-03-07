@@ -23,9 +23,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--tan-4);
+  background-color: whitesmoke;
   padding: 2vmin;
   height: 100vh;
+  
 }
 
 code {
@@ -123,15 +124,16 @@ input:focus {
 button,
 a.button {
   margin: 1vmin;
-  padding: 1vmin;
+  padding: 2vmin;
   color: var(--white);
-  background-color: var(--orange);
-  font-size: 2vmin;
+  background-color: lightgray;
+  font-size: 3vmin;
+  color: black;
   font-weight: bold;
   text-decoration: none;
   text-align: center;
   border: .1vmin solid var(--tan-2);
-  border-radius: .5vmin;
+  border-radius: 50vmin;
   outline: none;
   cursor: pointer;
 }

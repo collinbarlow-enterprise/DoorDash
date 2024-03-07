@@ -88,50 +88,45 @@ export default function HomePage() {
 
     return (
         <div>
-            <h1>Still Under Construction</h1>
-            <h1>Home Page</h1>
+            <h5 className="home-page">Home Page</h5>
+            <br/>
+            <div className="cuisine-buttons-parent">
             <div className="cuisine-buttons">
                 {cuisines.map(cuisine => (
                     <button key={cuisine} onClick={() => handleCuisineSelect(cuisine)}>
                         {cuisine}
                     </button>
                 ))}
+                </div>
+                </div>
                 <div>
                     {Object.keys(restaurants).map((cuisine) => (
                         <div key={cuisine} className="cuisine-group">
-                            <div> <h2 className="cuisine-title">{cuisine}</h2> </div>
-                            <br />
-                            {restaurants[cuisine].length > 4 ? (
-                                <Slider dots={false} infinite={false} slidesToShow={4} slidesToScroll={4}>
-                                    {restaurants[cuisine].map((restaurant, index) => (
-                                        <div key={index}>
-                                            <RestaurantHomePageComponent
-                                                id={restaurant._id}
-                                                name={restaurant.name}
-                                                cuisine={restaurant.cuisineType}
-                                                menu={restaurant.menu}
-                                            />
-                                        </div>
-                                    ))}
-                                </Slider>
-                            ) : (
-                                <div className="restaurants-container">
-                                    {restaurants[cuisine].map((restaurant, index) => (
+                            <h2 className="cuisine-title">{cuisine}</h2>
+                            <br/>
+                            <Slider
+                                dots={false}
+                                infinite={false}
+                                slidesToShow={Math.min(4, restaurants[cuisine].length)} // Adjust based on available restaurants
+                                slidesToScroll={4}
+                                swipeToSlide={true} // Allow swipe for all, better UX
+                                arrows={restaurants[cuisine].length > 4} // Show arrows only if more than 4 restaurants
+                            >
+                                {restaurants[cuisine].map((restaurant, index) => (
+                                    <div key={index} className="restaurant-container">
                                         <RestaurantHomePageComponent
-                                            key={index}
                                             id={restaurant._id}
                                             name={restaurant.name}
                                             cuisine={restaurant.cuisineType}
                                             menu={restaurant.menu}
                                         />
-                                    ))}
-                                </div>
-                            )}
-
+                                    </div>
+                                ))}
+                            </Slider>
                         </div>
                     ))}
                 </div>
             </div>
-        </div>
-    )
-};
+ 
+    );
+}

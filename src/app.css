@@ -1,13 +1,29 @@
+.home-page {
+  text-align: left;
+}
+
 .cuisine-group {
     margin-bottom: 2rem;
   }
-  
+
+.cuisine-buttons-parent {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.cuisine-buttons {
+  padding: 2vmin;
+  border-radius: 50vmin; 
+}
+
   /* Title for each cuisine */
   .cuisine-title {
     font-size: 24px;
     margin-bottom: 1rem;
     font-weight: bold;
     float: left;
+    
   }
   
   /* Container for restaurant cards within a cuisine */
@@ -15,6 +31,7 @@
     display: flex;
     overflow-x: hidden;
     flex-wrap: wrap;
+    justify-content: start; /* Align items to the start of the container */
     gap: 20px; /* Adjust the gap between cards */
   }
   
@@ -50,3 +67,26 @@
 .slick-prev {
   left: -40px;
 }
+
+.restaurant-card {
+  flex: 1;
+  width: 250px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  padding: 10px; /* Adjust padding as needed */
+  /* Further styling to ensure consistent appearance */
+  font-size: 10px;
+  display: flex;
+  flex-direction: column; /* Stack child elements vertically */
+}
+
+.restaurant-card img {
+  width: 100%; /* Image takes up 100% width of its container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image covers the entire container */
+}
+
+.restaurant-card h2 {
+  font-size: medium;
+  margin-top: -10px; /* Add spacing between the image and the restaurant name */
+}
+
