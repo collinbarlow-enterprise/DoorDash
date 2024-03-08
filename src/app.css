@@ -1,4 +1,15 @@
-.home-page {
+.navbar-parent {
+  width: 100%;
+  padding: 0; /* Remove any padding */
+  margin: 0; /* Remove any margin */
+  margin-top: 50px;
+}
+
+.home-page-container {
+  padding: 5rem;
+}
+
+.home-page-title {
   text-align: left;
 }
 

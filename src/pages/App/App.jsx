@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import './app.css'
 import NewOrderPage from '../NewOrderPage/NewOrderPage'
 import OrderHistoryPage from '../OrderHistoryPage/OrderHistoryPage'
 import AuthPage from '../AuthPage/AuthPage'
@@ -32,7 +33,7 @@ export default function App() {
 
       {user ?
         <>
-          <NavBar user={user} updateUser={updateUser}/>
+          <NavBar user={user} updateUser={updateUser} />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/restaurant/:id" element={<RestaurantPage />} />

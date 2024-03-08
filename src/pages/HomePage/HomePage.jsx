@@ -87,8 +87,8 @@ export default function HomePage() {
     }
 
     return (
-        <div>
-            <h5 className="home-page">Home Page</h5>
+        <div className="home-page-container">
+            <h5 className="home-page-title">Home Page</h5>
             <br/>
             <div className="cuisine-buttons-parent">
             <div className="cuisine-buttons">
