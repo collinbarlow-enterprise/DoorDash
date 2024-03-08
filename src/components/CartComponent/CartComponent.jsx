@@ -18,7 +18,7 @@ export default function CartComponent({cartItem, itemQty, cart, handleChangeQty}
       console.error(error);
     }
   }
-
+// need to get it so that the cartItem.item 's name is found and not just the id number
   return (
     <div className="container">
       <h6 className="text-center">Cart Component</h6>

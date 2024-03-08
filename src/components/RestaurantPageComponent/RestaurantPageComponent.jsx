@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import * as restaurantsAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import CartComponent from '../CartComponent/CartComponent'
+import '../../../src/app.css/'
+
 
 export default function RestaurantPageComponent({}) {
   
@@ -96,20 +98,22 @@ useEffect(() => {
   // console.log(restaurant, 'restaurant in useEffect')
 },[])
 
+const defaultImage = '/no-image.svg';
+
 if (restaurant === null) {
   return <div>Loading...</div>
 }
 
   return (
     <div className="container">
-      <div><button onClick = {() => navigateBackToHome() }>X</button></div>
-      <h6 className="text-center">Restaurant Page Component</h6>
-      <div>{restaurant.name}</div>
-      <div>{restaurant.cuisineType}</div>
+      <div><button onClick = {() => navigateBackToHome() }>Back To Home</button></div>
+      {/* <h6 className="text-center">Restaurant Page Component</h6> */}
+      <img src={defaultImage}></img>
+      <div><h2>{restaurant.name}</h2>
+      </div>
 
       <div>
         {cartMap}
-      
       </div>
 
       <div>
@@ -117,9 +121,9 @@ if (restaurant === null) {
       <h6>Menu:</h6>
       <ul>
         {restaurant.menu?.map((menuItem, index) => (
-          <li key={index}>
-            <strong onClick={()=> {toMenuItemPage(id, menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> Add to Order</button>         
-          </li>
+          <ul key={index}>
+            <strong onClick={()=> {toMenuItemPage(id, menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> +</button>         
+          </ul>
         ))}
       </ul>
     </div>
