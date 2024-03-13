@@ -1,7 +1,13 @@
 import React, { useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom'
 import * as ordersAPI from '../../utilities/orders-api'
 
+import * as restaurantsAPI from '../../utilities/restaurants-api'
+
 export default function CartComponent({cartItem, itemQty, cart, handleChangeQty}) {
+
+  const [itemName, setItemName] = useState(null)
+  const { id } = useParams();
 
   async function handleCheckout() {
     await ordersAPI.checkout();
@@ -18,6 +24,22 @@ export default function CartComponent({cartItem, itemQty, cart, handleChangeQty}
       console.error(error);
     }
   }
+
+  async function findCartItem(cartItem, id) {
+    console.log(cartItem, 'item')
+    console.log(id, 'id')
+    try {
+      const dishName = await restaurantsAPI.getMenuItem(id, cartItem)
+      console.log(dishName, 'dishName')
+      // setItemName()
+    } catch (error) {
+      console.error(error, 'error for findCartItem in CartComponent')
+    }
+  }
+
+  useEffect(() => {
+    findCartItem(cartItem);
+  }, [])
 // need to get it so that the cartItem.item 's name is found and not just the id number
   return (
     <div className="container">
