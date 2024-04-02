@@ -25,9 +25,13 @@ export default function CartComponent({cartItem, itemQty, cart, handleChangeQty}
     }
   }
 
-  async function findCartItem(cartItem, id) {
-    console.log(cartItem, 'item')
-    console.log(id, 'id')
+  async function findCartItem(cartItem) {
+    console.log(cartItem, 'item in findCartItem function')
+    console.log(id, 'id in findCartItem function')
+    // need to align the objects being sent to the cart
+    // and what the api is expecting
+    // the controller doesn't have access to req.body or params
+    // and part of it console.logs to [object object]
     try {
       const dishName = await restaurantsAPI.getMenuItem(id, cartItem)
       console.log(dishName, 'dishName')

@@ -44,16 +44,21 @@ async function findSpecificRestaurant(req, res) {
 }};
 
 async function findSpecificMenuItem(req, res) {
-    console.log('MADE IT INSIDE FIND SPECIFIC MENUITEM ')
+    // console.log('MADE IT INSIDE FIND SPECIFIC MENUITEM ')
     console.log(req.body, 'req.body in findSpecificMenuItem')
     console.log(req.params, 'req.params in findSpecificMenu CONTROLLER')
-    console.log('made it inside findSpecific Menu Item CONTROLLER')
+    // console.log('made it inside findSpecific Menu Item CONTROLLER')
 
     try{
         const restaurant = await Restaurant.findById(req.params.id);
         console.log(restaurant, 'restaurant in SpecificMENU ITEM')
 
         const menuItemId = req.params.menuId;
+        console.log(JSON.stringify(menuItemId));
+        console.log(menuItemId, 'menuItemId in try block')
+        // think its broken here if 
+        // menuItem returns undefined
+        // menuItemId is grabbed by params.menuId what is menuId
         const menuItem = restaurant.menu.find(item => item._id == menuItemId);
         console.log(menuItem, 'menuItem in CONTROLLER')
 
