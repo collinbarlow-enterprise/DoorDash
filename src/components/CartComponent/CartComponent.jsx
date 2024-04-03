@@ -4,6 +4,8 @@ import * as ordersAPI from '../../utilities/orders-api'
 
 import * as restaurantsAPI from '../../utilities/restaurants-api'
 
+import '../../../src/menuItemStyle.css'
+
 export default function CartComponent({ cartItem, itemQty, cart, handleChangeQty }) {
 
   const [itemName, setItemName] = useState(null)
@@ -46,21 +48,24 @@ export default function CartComponent({ cartItem, itemQty, cart, handleChangeQty
     }
   }
 
+  const maxLength = 120;
+
   useEffect(() => {
     findCartItem(cartItem);
   }, [])
   // need to get it so that the cartItem.item 's name is found and not just the id number
   return (
-    <div className="container">
+    <div className="menu-item-container">
       {/* <h6 className="text-center">Cart Component</h6> */}
       {/* need to have a get menuItem function that takes the cartItem.item value and returns the menuItem */}
       {/* need to add a remove and add button to the qty?  */}
 
       {/* need to debug the handleChangeQty - add and remove are multiplying the amount by 2 */}
-      <div>
-      <div>{itemName} </div>
-      <div>{itemDescription}</div>
-      <div>${itemPrice * itemQty}</div>
+      {/* {menuItem.description.length > maxLength ? menuItem.description.substring(0, maxLength): menuItem.description} */}
+      <div className='item-name'>{itemName} </div>
+      <div className='item-description'>{itemDescription.length > maxLength ? itemDescription.substring(0, maxLength) + '...' : itemDescription} </div>
+      {/* <div className='item-description'>{itemDescription}</div> */}
+      <div className='item-price'>${itemPrice * itemQty}</div>
           
           {/* Quantity: {itemQty} */}
         <div className='addRemoveButtonContainer'>
@@ -68,6 +73,6 @@ export default function CartComponent({ cartItem, itemQty, cart, handleChangeQty
         {itemQty}x
         <button onClick={() => handleChangeQty(cartItem.item, itemQty + 1)}> + </button></div>
         </div>
-    </div>
+ 
   )
 }

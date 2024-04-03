@@ -3,3 +3,11 @@
     padding: 10px;
     margin-bottom: 10px;
   }
+  
+.menu-container h6 {
+    text-align: left;
+}
+
+.restaurant-name {
+    text-align: left;
+}

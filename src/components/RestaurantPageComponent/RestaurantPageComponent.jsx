@@ -1,14 +1,14 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import * as restaurantsAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import CartComponent from '../CartComponent/CartComponent'
 import '../../../src/app.css/'
-import '../../../src/menuStyles.css'
+import '../../../src/menuStyle.css'
 
 
-export default function RestaurantPageComponent({}) {
-  
+export default function RestaurantPageComponent({ }) {
+
   const [restaurant, setRestaurant] = useState(null)
   const [cart, setCart] = useState({})
   const [showQty, setShowQty] = useState(null)
@@ -18,12 +18,13 @@ export default function RestaurantPageComponent({}) {
 
   function toMenuItemPage(id, menuId) {
     try {
-    console.log(id, 'restaurant ID in toMenuItem function');
-    console.log(menuId, 'menuId in toMenuItem function');
-    navigate(`/restaurant/${id}/itempage/${menuId}`)
-  } catch (error) {
-    console.error('Navgiation error:', error)
-  }}
+      console.log(id, 'restaurant ID in toMenuItem function');
+      console.log(menuId, 'menuId in toMenuItem function');
+      navigate(`/restaurant/${id}/itempage/${menuId}`)
+    } catch (error) {
+      console.error('Navgiation error:', error)
+    }
+  }
 
   function navigateBackToHome() {
     navigate(`/`)
@@ -51,8 +52,8 @@ export default function RestaurantPageComponent({}) {
     if (showQty == null) {
       setShowQty == true;
     }
-  } ;
- 
+  };
+
   async function handleCheckout() {
     await ordersAPI.checkout();
     navigate('/home');
@@ -82,52 +83,55 @@ export default function RestaurantPageComponent({}) {
     setCart(updatedCart)
   }
 
-  const cartMap = cart.lineItems ? cart.lineItems.map((item) => 
-  <CartComponent
-  key = {item._id}
-  cartItem = {item}
-  itemQty = {item.quantity}
-  cart = {cart}
-  handleChangeQty = {handleChangeQty}
-  
-  />
+  const cartMap = cart.lineItems ? cart.lineItems.map((item) =>
+    <CartComponent
+      key={item._id}
+      cartItem={item}
+      itemQty={item.quantity}
+      cart={cart}
+      handleChangeQty={handleChangeQty}
+
+    />
   ) : [];
 
-useEffect(() => {
-  getRestaurant(id);
-  getCart();
-  // console.log(restaurant, 'restaurant in useEffect')
-},[])
+  useEffect(() => {
+    getRestaurant(id);
+    getCart();
+    // console.log(restaurant, 'restaurant in useEffect')
+  }, [])
 
-const defaultImage = '/no-image.svg';
+  const defaultImage = '/no-image.svg';
+  const maxLength = 180;
 
-if (restaurant === null) {
-  return <div>Loading...</div>
-}
+  if (restaurant === null) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="container">
-      <div><button onClick = {() => navigateBackToHome() }>Back To Home</button></div>
+      <div><button onClick={() => navigateBackToHome()}>Back To Home</button></div>
       {/* <h6 className="text-center">Restaurant Page Component</h6> */}
       <img src={defaultImage}></img>
-      <div><h2>{restaurant.name}</h2>
+      <div className='restaurant-name'><h2>{restaurant.name}</h2>
       </div>
 
-      <div>
-        {cartMap}
-      </div>
+      <div className='cart'>
+  {cartMap ? (
+    <>
+      <span style={{fontSize: '1em'}}>Your cart from {restaurant.name}:</span> {cartMap}
+    </>
+  ) : null}
+</div>
 
-      <div>
-        
-      <h6>Menu:</h6>
-      <ul>
+      <div className='menu-container'>
+
+        <h6>Menu:</h6>
         {restaurant.menu?.map((menuItem, index) => (
-          <ul key={index}>
-            <strong onClick={()=> {toMenuItemPage(id, menuItem._id)}}>{menuItem.dishName}</strong>: {menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> +</button>         
-          </ul>
+          <div key={index} className="menu-item">
+            <strong onClick={() => { toMenuItemPage(id, menuItem._id) }}>{menuItem.dishName}</strong>: {menuItem.description.length > maxLength ? menuItem.description.substring(0, maxLength): menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> +</button>
+          </div>
         ))}
-      </ul>
-    </div>
+      </div>
     </div>
   )
 }

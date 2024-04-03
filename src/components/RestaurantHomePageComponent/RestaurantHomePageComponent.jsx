@@ -25,7 +25,7 @@ const defaultImage = '/no-image.svg';
       <img src={defaultImage} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       <div style={{ padding: '10px' }}>
         <h2>{name}</h2>
-        {/* Any additional information you want to display can go here */}
+
       </div>
     </div>
   );
