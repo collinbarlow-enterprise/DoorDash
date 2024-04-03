@@ -12,7 +12,7 @@ export function getOneRestaurant(id) {
 }
 
 export function getMenuItem(id, menuId) {
-    console.log(id, 'ID made it inside getMenuItem api')
-    console.log(menuId, 'menuID made it inside getMenuItem api')
+    // console.log(id, 'ID made it inside getMenuItem api')
+    // console.log(menuId, 'menuID made it inside getMenuItem api')
     return sendRequest(`${BASE_URL}/getMenuItem/${id}/${menuId}`, 'GET')
 }

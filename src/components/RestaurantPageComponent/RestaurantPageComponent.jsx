@@ -4,6 +4,7 @@ import * as restaurantsAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import CartComponent from '../CartComponent/CartComponent'
 import '../../../src/app.css/'
+import '../../../src/menuStyles.css'
 
 
 export default function RestaurantPageComponent({}) {
@@ -25,7 +26,7 @@ export default function RestaurantPageComponent({}) {
   }}
 
   function navigateBackToHome() {
-    navigate(`/home`)
+    navigate(`/`)
   }
 
   async function getRestaurant(restaurantID) {
