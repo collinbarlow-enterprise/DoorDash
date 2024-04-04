@@ -79,7 +79,7 @@ export default function RestaurantPageComponent({ }) {
     console.log(itemId, 'item id in handleChangeQty on Cart Component')
     console.log(newQty, 'new Qty in handleChangeQty on Cart Component')
     const updatedCart = await ordersAPI.setItem(itemId, newQty);
-    // console.log(updatedCart, 'updatedCart in handleChangeQty')
+    console.log(updatedCart, 'updatedCart in handleChangeQty')
     setCart(updatedCart)
   }
 
@@ -116,7 +116,7 @@ export default function RestaurantPageComponent({ }) {
       </div>
 
       <div className='cart'>
-  {cartMap ? (
+  {cart.lineItems && cart.lineItems.length > 0 ? (
     <>
       <span style={{fontSize: '1em'}}>Your cart from {restaurant.name}:</span> {cartMap}
     </>

@@ -53,6 +53,10 @@ export default function CartComponent({ cartItem, itemQty, cart, handleChangeQty
   useEffect(() => {
     findCartItem(cartItem);
   }, [])
+
+  if (itemDescription === null || id === null) {
+    return <div>Loading...</div>
+  }
   // need to get it so that the cartItem.item 's name is found and not just the id number
   return (
     <div className="menu-item-container">
