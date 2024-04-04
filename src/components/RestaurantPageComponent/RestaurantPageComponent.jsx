@@ -115,7 +115,7 @@ export default function RestaurantPageComponent({ }) {
       <div className='restaurant-name'><h2>{restaurant.name}</h2>
       </div>
 
-      <div className='cart'>
+<div className='cart'>
   {cart.lineItems && cart.lineItems.length > 0 ? (
     <>
       <span style={{fontSize: '1em'}}>Your cart from {restaurant.name}:</span> {cartMap}
@@ -123,15 +123,21 @@ export default function RestaurantPageComponent({ }) {
   ) : null}
 </div>
 
-      <div className='menu-container'>
-
-        <h6>Menu:</h6>
-        {restaurant.menu?.map((menuItem, index) => (
-          <div key={index} className="menu-item">
-            <strong onClick={() => { toMenuItemPage(id, menuItem._id) }}>{menuItem.dishName}</strong>: {menuItem.description.length > maxLength ? menuItem.description.substring(0, maxLength): menuItem.description} - ${menuItem.price.toFixed(2)} - <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> +</button>
-          </div>
-        ))}
+<div className='menu-container'>
+  <h6>Menu:</h6>
+  {restaurant.menu?.map((menuItem, index) => (
+    <div key={index} className="menu-item">
+      <div className="menu-item-left">
+        <div><strong onClick={() => { toMenuItemPage(id, menuItem._id) }}>{menuItem.dishName}</strong>:</div>
+        {menuItem.description.length > maxLength ? menuItem.description.substring(0, maxLength) + '...' : menuItem.description}
       </div>
+      <div className="menu-item-right">
+        ${menuItem.price.toFixed(2)}
+        <button onClick={() => handleAddToOrder(menuItem._id, index, restaurant)}> +</button>
+      </div>
+    </div>
+  ))}
+</div>
     </div>
   )
 }
