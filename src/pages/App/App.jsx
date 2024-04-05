@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import './app.css'
 import NewOrderPage from '../NewOrderPage/NewOrderPage'
@@ -27,6 +27,11 @@ export default function App() {
   function updateUser(userState){
     setUser(userState)
   }
+  useEffect(() => {
+    window.process = {
+      ...window.process,
+    };
+  }, []);
 
   return (
     <main className="App">

@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../../src/itemComponentStyle.css'
 
 export default function ItemComponent({
   menuItem,
@@ -17,13 +18,16 @@ export default function ItemComponent({
   console.log(itemQty, 'itemQty in itemComponent')
   console.log(typeof itemQty, 'itemQty in itemComponent')
 
+  const defaultImage = '/no-image.svg';
   const isItemInCart = cart?.lineItems?.some((item) => item.item === menuId) || false;
 
   return (
     <div className="container">
-      <div><button onClick={() => navigateBackToRestaurant(id)}>X</button></div>
+      <div style={{ textAlign: 'left' }}><button onClick={() => navigateBackToRestaurant(id)}>X</button>
+      <img src={defaultImage}></img>
+      </div>
 
-      <h6 className="text-center">Item Component Component</h6>
+      {/* <h6 className="text-center">Item Component Component</h6> */}
       <div>{itemQty ? (itemQty) : ("Not in Cart")}</div>
       {/* Render buttons based on whether item is in the cart */}
       {isItemInCart ? (
