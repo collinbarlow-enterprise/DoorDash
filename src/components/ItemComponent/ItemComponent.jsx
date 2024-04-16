@@ -38,22 +38,22 @@ export default function ItemComponent({
         </div>
       </div>
       <div className='itemInfo'>
-      <h2>{menuItem.dishName} </h2>
-      <div>{menuItem.description}</div>
-      <div><strong>Ingredients:</strong> {menuItem.ingredients?.join(', ')}</div>
-      </div>
-      <div className='cartQty'>{itemQty ? `${itemQty} ${itemQuantity} in your cart` : ("Not in Cart")}</div>
+  <h2>{menuItem.dishName}</h2>
+  <div>{menuItem.description}</div>
+  <div><strong>Ingredients:</strong> {menuItem.ingredients?.join(', ')}</div>
+</div>
 
-      {isItemInCart ? (
-        <div>
-          <button onClick={() => handleChangeQty(menuId, itemQty -1)}>-</button>
-          <button onClick={() => handleChangeQty(menuId, itemQty +1)}>+</button>
+{isItemInCart ? (
+  <div className="cartControls">
+    <button onClick={() => handleChangeQty(menuId, itemQty - 1)}>-</button>
+    <div className='cartQty'>{itemQty ? `${itemQty} in your cart` : ("Not in Cart")}</div>
+    <button onClick={() => handleChangeQty(menuId, itemQty + 1)}>+</button>
+  </div>
+) : (
+  <div>
+    <button onClick={() => handleAddToOrderFromItemPage()}>Add to Order {menuItem.price}</button>
+  </div>
 
-        </div>
-      ) : (
-        <div>
-          <button onClick={() => handleAddToOrderFromItemPage()}>Add to Order {menuItem.price}</button>
-        </div>
       )}
     </div>
   )

@@ -16,3 +16,13 @@
   .cartQty {
     left: 0px;
   }
+
+  .cartControls {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically in the center */
+    justify-content: center;
+}
+  
+  .cartControls button {
+    margin: 0 5px; /* Add some margin between buttons */
+  }
