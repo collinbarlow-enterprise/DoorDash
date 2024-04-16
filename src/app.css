@@ -6,7 +6,13 @@
 }
 
 .home-page-container {
-  padding: 5rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  /* padding: 16px; */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+;
 }
 
 .home-page-title {
@@ -14,7 +20,9 @@
 }
 
 .cuisine-group {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    padding: 10px;
   }
 
 .cuisine-buttons-parent {
@@ -99,5 +107,17 @@
 .restaurant-card h2 {
   font-size: medium;
   margin-top: -10px; /* Add spacing between the image and the restaurant name */
+}
+
+.slick-slider {
+  margin-left: 0; /* Adjust as needed to align the slider */
+}
+
+.slick-slider .slick-arrow {
+  /* background-color: lightgrey; */
+}
+
+.slider-parent {
+  margin: 0 27px;
 }
 

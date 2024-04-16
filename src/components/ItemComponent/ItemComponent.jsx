@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../../src/itemComponentStyle.css'
 
 export default function ItemComponent({
@@ -31,30 +31,35 @@ export default function ItemComponent({
   // itemQty changes upon the handleChangeQty
 
   return (
-    <div>
+    <div className = "itemPage">
       <div className="itemHeader">
         <div ><button onClick={() => navigateBackToRestaurant(id)}>X</button>
           <img src={defaultImage} alt='No Picture Loaded'></img>
         </div>
       </div>
+      <br />
       <div className='itemInfo'>
-  <h2>{menuItem.dishName}</h2>
-  <div>{menuItem.description}</div>
-  <div><strong>Ingredients:</strong> {menuItem.ingredients?.join(', ')}</div>
-</div>
+        <div className='itemName'>{menuItem.dishName}</div>
+        <br/>
+        <div>{menuItem.description}</div>
+        <div>Ingredients:<br/> {menuItem.ingredients?.join(', ')}</div>
+        <br/>
+      </div>
 
-{isItemInCart ? (
-  <div className="cartControls">
-    <button onClick={() => handleChangeQty(menuId, itemQty - 1)}>-</button>
-    <div className='cartQty'>{itemQty ? `${itemQty} in your cart` : ("Not in Cart")}</div>
-    <button onClick={() => handleChangeQty(menuId, itemQty + 1)}>+</button>
-  </div>
-) : (
-  <div>
-    <button onClick={() => handleAddToOrderFromItemPage()}>Add to Order {menuItem.price}</button>
-  </div>
+      {isItemInCart ? (
+        <div className="cartControls">
+          <button onClick={() => handleChangeQty(menuId, itemQty - 1)}>-</button>
+          <div className='cartQty'>{itemQty ? `${itemQty} in your cart` : ("Not in Cart")}</div>
+          <button onClick={() => handleChangeQty(menuId, itemQty + 1)}>+</button>
+        </div>
+      ) : (
+        <div className="cartControls">
+          <button onClick={() => handleAddToOrderFromItemPage()}>Add to Order {menuItem.price}</button>
+        </div>
+
 
       )}
+      <br />
     </div>
   )
 }

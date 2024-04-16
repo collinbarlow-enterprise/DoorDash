@@ -104,6 +104,7 @@ export default function HomePage() {
                         <div key={cuisine} className="cuisine-group">
                             <h2 className="cuisine-title">{cuisine}</h2>
                             <br/>
+                            <div className = 'slider-parent'>
                             <Slider
                                 dots={false}
                                 infinite={false}
@@ -123,6 +124,7 @@ export default function HomePage() {
                                     </div>
                                 ))}
                             </Slider>
+                            </div>
                         </div>
                     ))}
                 </div>
