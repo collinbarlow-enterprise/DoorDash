@@ -1,0 +1,18 @@
+.itemHeader {
+    position: relative;
+  }
+  
+  .itemHeader button {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 1;
+  }
+  
+  .itemHeader img {
+    position: relative; /* Ensures the image respects the button's positioning */
+  }
+
+  .cartQty {
+    left: 0px;
+  }

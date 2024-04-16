@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import '../../../src/itemComponentStyle.css'
 
 export default function ItemComponent({
@@ -18,41 +18,43 @@ export default function ItemComponent({
   console.log(itemQty, 'itemQty in itemComponent')
   console.log(typeof itemQty, 'itemQty in itemComponent')
 
+  const [itemQuantity, setItemQuantity] = useState(null);
+
   const defaultImage = '/no-image.svg';
   const isItemInCart = cart?.lineItems?.some((item) => item.item === menuId) || false;
 
-  return (
-    <div className="container">
-      <div style={{ textAlign: 'left' }}><button onClick={() => navigateBackToRestaurant(id)}>X</button>
-      <img src={defaultImage}></img>
-      </div>
+  useEffect(() => {
+    setItemQuantity(itemQty)
+  }, [handleChangeQty, handleAddToOrderFromItemPage])
 
-      {/* <h6 className="text-center">Item Component Component</h6> */}
-      <div>{itemQty ? (itemQty) : ("Not in Cart")}</div>
-      {/* Render buttons based on whether item is in the cart */}
+  // i need a useEffect to cause a reload when the 
+  // itemQty changes upon the handleChangeQty
+
+  return (
+    <div>
+      <div className="itemHeader">
+        <div ><button onClick={() => navigateBackToRestaurant(id)}>X</button>
+          <img src={defaultImage} alt='No Picture Loaded'></img>
+        </div>
+      </div>
+      <div className='itemInfo'>
+      <h2>{menuItem.dishName} </h2>
+      <div>{menuItem.description}</div>
+      <div><strong>Ingredients:</strong> {menuItem.ingredients?.join(', ')}</div>
+      </div>
+      <div className='cartQty'>{itemQty ? `${itemQty} ${itemQuantity} in your cart` : ("Not in Cart")}</div>
+
       {isItemInCart ? (
         <div>
-          <button onClick={() => handleChangeQty(menuId, -1)}>-</button>
-          <button onClick={() => handleChangeQty(menuId, 1)}>+</button>
+          <button onClick={() => handleChangeQty(menuId, itemQty -1)}>-</button>
+          <button onClick={() => handleChangeQty(menuId, itemQty +1)}>+</button>
 
         </div>
       ) : (
         <div>
-          <button onClick={() => handleAddToOrderFromItemPage()}>Add to Order</button>
+          <button onClick={() => handleAddToOrderFromItemPage()}>Add to Order {menuItem.price}</button>
         </div>
       )}
-
-      <div>{menuItem.dishName} {menuItem.price}</div>
-      <div>{menuItem.description}</div>
-      <div><strong>Ingredients:</strong>
-      <ul>
-        {menuItem.ingredients?.map((ingredient, index) => (
-          <li key={index}>{ingredient}</li>
-        ))}
-      </ul></div>
-      <br />
-      <br />
-      <br />
     </div>
   )
 }
