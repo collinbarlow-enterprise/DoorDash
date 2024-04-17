@@ -1,12 +1,12 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import '../../../src/cartPageComponentStyle.css'
+export default function CartPageComponent({ cart, restaurant, toRestaurant }) {
 
-export default function CartPageComponent({cart, restaurant, toRestaurant}) {
+  const navigate = useNavigate();
+  //   console.log(cart, 'cart in CARTPAGECOMPONENT ')
+  console.log(restaurant, 'restaurant in CARTPAGECOMPONENT ')
 
-    const navigate = useNavigate();
-//   console.log(cart, 'cart in CARTPAGECOMPONENT ')
-//   console.log(restaurant, 'restaurant in CARTPAGECOMPONENT ')
-  
 
 
   if (restaurant === null || cart === null) {
@@ -14,11 +14,14 @@ export default function CartPageComponent({cart, restaurant, toRestaurant}) {
   }
 
   return (
-    <div className="container">
-      <h6 className="text-center">Cart Page Component</h6>
-    <div>{restaurant.name} <strong><button onClick={() => { toRestaurant() }}>Back To {restaurant.name}</button></strong></div>
-    
-    
+    <div className='restaurantNameContainer'>
+      <div className='restaurantName'>
+        {restaurant.name}
+      </div>
+      <div className='restaurantBack'>
+        <button onClick={() => { toRestaurant() }}>Back to Restaurant
+        </button>
+      </div>
     </div>
   )
 }

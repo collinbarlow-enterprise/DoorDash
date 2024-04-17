@@ -1,12 +1,13 @@
 import React from 'react'
 import CartLineItemComponent from '../../components/CartLineItemComponent/CartLineItemComponent'
 
-export default function CartMapComponent({cart, setCart}) {
+export default function CartMapComponent({cart, restaurant, setCart}) {
 
 
     const cartMap =cart.lineItems ? cart.lineItems.map((item) => 
 <CartLineItemComponent
 key = {item._id}
+restaurant = {restaurant}
 cartItem = {item}
 itemQty = {item.quantity}
 cart = {cart}
@@ -16,8 +17,7 @@ setCart = {setCart}
 />) : console.log('no cart')
 
   return (
-    <div className="container">
-      <h6 className="text-center">Cart Map Component</h6>
+    <div>
       <div>{cartMap}</div>
     </div>
   )

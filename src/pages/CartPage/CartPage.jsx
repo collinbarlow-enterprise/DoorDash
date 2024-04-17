@@ -59,7 +59,6 @@ export default function CartPage() {
     }
   }
 
-
   function toCheckOutPage() {
     // navigate to the summary page
     navigate(`/checkout`);
@@ -83,26 +82,27 @@ export default function CartPage() {
     console.log(restaurant, 'restaurant in cart page')
   }, [cart])
 
+
   if (restaurant === null || cart === null || user === null || total === null) {
     return <div>Cart Is Empty</div>;
   }
 
   return (
     <div>
-      <h1>Still Under Construction</h1>
-      <div><button onClick={() => navigateBackToHome()}>X</button></div>
-      <h1>Cart Page</h1>
-      <div>
-        <div>
-          <CartPageComponent cart={cart} restaurant={restaurant} toRestaurant={toRestaurant} />
-        </div>
-      </div>
-      <div>
-        <div>
-          <CartMapComponent cart={cart} setCart={setCart} />
-        </div>
-        <div>
-          <button onClick={() => { toRestaurant() }}>+ Add More Items</button>
+      {/* <div><button onClick={() => navigateBackToHome()}>Back Home</button></div> */}
+      <div className='container'>
+          <div>
+            <CartPageComponent cart={cart} restaurant={restaurant} toRestaurant={toRestaurant} />
+          </div>
+          <div>
+            <div>
+              <CartMapComponent cart={cart} restaurant={restaurant} setCart={setCart} />
+            </div>
+
+            <div style={{marginTop: '10px'}}>
+              <button onClick={() => { toRestaurant() }}>+ Add More Items</button>
+            </div>
+
         </div>
       </div>
 

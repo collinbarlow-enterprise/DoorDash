@@ -2,8 +2,8 @@ import React from 'react'
 
 
 export default function CartPageSummaryComponent({cart}) {
-    console.log(cart, 'cart in summary component')
-    console.log(cart.cart, 'cart.cart in summary component')
+    // console.log(cart, 'cart in summary component')
+    // console.log(cart.cart, 'cart.cart in summary component')
     // check why cart is wrapped in another cart object
 
     if (cart === null) {

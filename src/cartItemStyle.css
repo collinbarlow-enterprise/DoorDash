@@ -1,0 +1,56 @@
+.containerCart {
+    display: flex;
+    align-items: center; /* Vertically center all items in the container */
+    justify-content: space-between; /* Spread children evenly */
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Optional border for clarity */
+}
+
+.DishImage {
+    flex: 0 0 100px; /* Do not grow or shrink, width of 100px */
+    height: 100px; /* Height of the image container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.DishImage img {
+    width: 100%; /* Make the image take up the full width of its container */
+    height: 100%; /* Make the image take up the full height of its container */
+    object-fit: cover; /* Resize image to cover the whole container without distorting aspect ratio */
+}
+
+.lineItemNamePrice {
+    flex: 1; /* Take up remaining space */
+    padding: 0 15px; /* Some padding between columns */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Vertically center the content */
+    text-align: left;
+}
+
+.adjustItemQty {
+    display: flex;
+    align-items: center; /* Center align the buttons and quantity text */
+    justify-content: center; /* Center everything horizontally */
+}
+
+.adjustItemQty button {
+    margin: 0 5px; /* Spacing between buttons */
+}
+
+/* Additional styling for the buttons for better appearance */
+.adjustItemQty button {
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: lightgrey;
+    border: none;
+    color: black;
+    border-radius: 16px;
+}
+
+.adjustItemQty strong {
+    min-width: 20px;
+    text-align: center;
+    display: inline-block;
+}
