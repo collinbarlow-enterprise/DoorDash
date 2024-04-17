@@ -91,23 +91,26 @@ export default function CartPage() {
     <div>
       {/* <div><button onClick={() => navigateBackToHome()}>Back Home</button></div> */}
       <div className='container'>
+        <div>
+          <CartPageComponent cart={cart} restaurant={restaurant} toRestaurant={toRestaurant} />
+        </div>
+        <div>
           <div>
-            <CartPageComponent cart={cart} restaurant={restaurant} toRestaurant={toRestaurant} />
+            <CartMapComponent cart={cart} restaurant={restaurant} setCart={setCart} />
           </div>
-          <div>
-            <div>
-              <CartMapComponent cart={cart} restaurant={restaurant} setCart={setCart} />
-            </div>
 
-            <div style={{marginTop: '10px'}}>
-              <button onClick={() => { toRestaurant() }}>+ Add More Items</button>
-            </div>
+          <div style={{ marginTop: '10px' }}>
+            <button onClick={() => { toRestaurant() }}>Add More Items</button>
+          </div>
 
         </div>
       </div>
+      
+      <div className='complementCart'>
+        <div>Complement You Cart Below</div>
+        <div><CartRestaurantMenuMap cart={cart} setCart={setCart} restaurant={restaurant} /></div>
+      </div>
 
-      <div>Complement You Cart Below</div>
-      <div><CartRestaurantMenuMap cart={cart} setCart={setCart} restaurant={restaurant} /></div>
       <div>Summary Section Below</div>
       <div><CartPageSummaryComponent cart={cart} /></div>
       <div>Chase Saphire Section Below</div>
