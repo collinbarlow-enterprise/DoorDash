@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../../src/cartPageSummaryComponent.css'
 
 
 export default function CartPageSummaryComponent({cart}) {
@@ -10,14 +11,27 @@ export default function CartPageSummaryComponent({cart}) {
         return <div>Loading...</div>
     }
   return (
-    <div>
-        <h1>Still Under Construction</h1>
-        <h1>CartPage Summary Component Page</h1>
-        <div>Subtotal: {cart.subTotal}</div>
-        <div>Deliver Fees: {cart.deliveryFee}</div>
-        <div>Taxes and Fees: {cart.taxesAndFees}</div>
-        <div>Total: {cart.total} </div>
-    
+    <div className='container'>
+    <div className="summary-container">
+    {/* <div className="summary-title">Summary Component Page</div> */}
+    <div className="summary-title">Summary</div>
+    <div className="summary-item">
+      <span>Subtotal:</span>
+      <span>${cart.subTotal}</span>
     </div>
-  )
+    <div className="summary-item">
+      <span>Delivery Fees:</span>
+      <span>${cart.deliveryFee}</span>
+    </div>
+    <div className="summary-item">
+      <span>Taxes and Fees:</span>
+      <span>${cart.taxesAndFees}</span>
+    </div>
+    <div className="summary-item">
+      <span>Total:</span>
+      <span><strong>${cart.total}</strong></span>
+    </div>
+  </div>
+  </div>
+);
 }

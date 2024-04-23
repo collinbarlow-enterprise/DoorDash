@@ -111,11 +111,14 @@ export default function CartPage() {
         <div><CartRestaurantMenuMap cart={cart} setCart={setCart} restaurant={restaurant} /></div>
       </div>
 
-      <div>Summary Section Below</div>
+      {/* <div>Summary Section Below</div> */}
+      <br/>
       <div><CartPageSummaryComponent cart={cart} /></div>
-      <div>Chase Saphire Section Below</div>
+      <br/>
+      {/* <div>Chase Saphire Section Below</div> */}
       {user.chaseMember ? (<ChaseSapphireComponent cart={cart} />) : (<div>Not a Chase Member</div>)}
-      <div>Continue Button Below</div>
+      <br/>
+      {/* <div>Continue Button Below</div> */}
       <div><button onClick={() => { toCheckOutPage() }}>Continue</button></div>
     </div>
   )

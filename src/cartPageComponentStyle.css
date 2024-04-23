@@ -8,6 +8,8 @@
   .restaurantName {
     flex-grow: 1;
     text-align: left;
+    font-size: larger;
+    font-weight: bold;
   }
   
   .restaurantBack button {

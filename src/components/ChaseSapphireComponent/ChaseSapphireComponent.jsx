@@ -7,8 +7,8 @@ export default function ChaseSapphireComponent({cart}) {
     const savings = -(cart.chaseSavings)
     console.log(savings)
   return (
-    <div className="container">
-      <h6 className="text-center">Chase Sapphire  Component</h6>
+    <div className="chase-sapphire-container" style={{ backgroundColor: 'teal', color: 'white', padding: '10px' }}>
+      {/* <h6 className="text-center">Chase Sapphire  Component</h6> */}
       <div>Saving ${savings} with DashPass + Chase Sapphire</div>
     </div>
   )
