@@ -105,9 +105,9 @@ export default function CartPage() {
 
         </div>
       </div>
-      
+<br/>
       <div className='complementCart'>
-        <div>Complement You Cart Below</div>
+        {/* <div>Complement You Cart Below</div> */}
         <div><CartRestaurantMenuMap cart={cart} setCart={setCart} restaurant={restaurant} /></div>
       </div>
 

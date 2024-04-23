@@ -59,7 +59,7 @@
     flex: 1;
     min-width: 250px; /* Minimum width of each card */
     border: 1px solid #ccc; /* Border for the card */
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 8px; /*Rounded corners */
     overflow: hidden; /* Ensures content fits within the borders */
     cursor: pointer;
     padding: 16px;

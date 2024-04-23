@@ -1,0 +1,61 @@
+.text-left {
+    text-align: left;
+}
+
+.containerCartComplement {
+    flex: 1;
+    min-width: 250px; /* Minimum width of each card */
+    border: 1px solid #ccc; /* Border for the card */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensures content fits within the borders */
+    cursor: pointer;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds shadow for depth */
+  }
+  
+  .cart-complement-item {
+    margin-bottom: 16px; /* Add some bottom margin to separate each complement item */
+  }
+  
+  .complement-details {
+    display: flex;
+    justify-content: space-between; /* Aligns children items horizontally with space between them */
+    align-items: center; /* Vertically center items */
+    text-align: left;
+  }
+  
+  .dish-details {
+    display: flex;
+    flex-direction: column; /* Stack dish name and price vertically */
+  }
+  
+  .dish-name {
+    font-weight: bold; /* Make dish name bold */
+  }
+  
+  .add-to-order-button {
+    padding: 8px 16px; /* Add some padding to the button */
+    border: none;
+    background-color: lightgrey;
+    color: ba;cl;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .add-to-order-button:hover {
+    background-color:grey;
+  }
+
+  .slick-prev {
+    left: 0px; /* Or enough to align it as desired */
+    z-index: 1; /* Ensure it's above other content */
+    margin-top: 25px;
+  }
+  
+  /* Adjusting right arrow position */
+  .slick-next {
+    right: 0px; /*Or enough to align it as desired */
+    margin-top: 25px;
+    z-index: 1; /* Ensure it's above other content */
+  }

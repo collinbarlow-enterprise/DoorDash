@@ -1,5 +1,6 @@
 import React from 'react'
 import * as ordersAPI from '../../utilities/orders-api'
+import '../../../src/cartComplementItemStyle.css'
 
 export default function CartComplementItems({menuItem, restaurantId, cart, setCart}) {
 // console.log(menuItem, 'menuItem in COMPLEMENTITEMS')
@@ -31,11 +32,16 @@ export default function CartComplementItems({menuItem, restaurantId, cart, setCa
 // }
 
   return (
-    <div className="container">
-      <h6 className="text-center">CartComplement Component</h6>
-      <div>{menuItem.dishName}</div>
-      <div>{menuItem.price}</div>
-      <div><button onClick={() => handleAddToOrderFromCartPage()}>+</button></div>
+    <div className='containerCartComplement'>
+    <div className="cart-complement-item">
+      <div className="complement-details">
+        <div className="dish-details">
+          <div className="dish-name">{menuItem.dishName}</div>
+          <div className="dish-price">${menuItem.price}</div>
+        </div>
+        <button className="add-to-order-button" onClick={() => handleAddToOrderFromCartPage()}>+</button>
+      </div>
     </div>
-  )
-}
+    </div>
+  );
+};
