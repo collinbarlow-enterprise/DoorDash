@@ -12,7 +12,7 @@ import * as usersAPI from '../../utilities/users-service'
 import * as usersAPI2 from '../../utilities/users-api'
 import * as paidOrdersAPI from '../../utilities/paidOrders-api'
 
-import CheckOutComponent from '../../components/CheckOutComponent/CheckOutComponent'
+
 import GoogleMapsContainerComponenet from '../../components/GoogleMapsContainerComponent/GoogleMapsContainerComponent';
 import CheckOutPageCreditCard from '../../components/CheckOutPageCreditCardComponent/CheckOutPageCreditCard';
 import CheckOutPageCartComponent from '../../components/CheckOutPageCartComponent/CheckOutPageCartComponent';
@@ -224,18 +224,10 @@ export default function CheckOutPage() {
 
   return (
     <div>
-      <h1>Still Under Construction</h1>
-
-      <CheckOutComponent />
-
-      <h1>Check Out Page</h1>
-      <div>Restaurant Name</div>
       <div>{restaurant.name}</div>
-      <br />
-      <div>Google Maps API Section</div>
+      {/* <br /> */}
+      {/* <div>Google Maps API Section</div> */}
       <GoogleMapsContainerComponenet user={user} />
-
-      <div></div>
       <div>Delivery Time Section</div>
 
       {/* // delivery options which will be 3, the premier one will add to the total(how would I accomplish that?), the middle will be the normal one which will just be a set time (should do a RNG with a specific range), and then third will be a scheduled order (goes to another page that has a time wheel, need to look into that more) */}
