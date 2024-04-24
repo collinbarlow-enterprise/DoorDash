@@ -3,53 +3,30 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 export default function GoogleMapsContainerComponenet({ user }) {
 
-  console.log(user, 'user at the beginning')
+  // console.log(user, 'user at the beginning')
 
-  const [center, setCenter] = useState(null);
+  const [center, setCenter] = useState(user ? {
+    lat: user.location.coordinates[1],
+    lng: user.location.coordinates[0]
+  } : null);
   const [containerStyle, setContainerStyle] = useState({
     width: 'auto',
     height: '400px'
   });
   const [isLoaded, setIsLoaded] = useState(false);
   const [map, setMap] = useState(null);
-
-  useEffect(() => {
-    if (user) {
-      setCenter({
-        lat: user.location.coordinates[1],
-        lng: user.location.coordinates[0]
-      });
-    }
-  }, [user]);
+  const [zoom, setZoom] = useState(18)
 
   const { isLoaded: apiIsLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: `AIzaSyCX2bWFyZvH_rjXTpikoIC_8tO0KFcNQYI`
   });
 
-  const loadAdvancedMarker = async () => {
-    try {
-      const libraries = await google.maps.importLibrary("marker");
-      const AdvancedMarkerElement = libraries.AdvancedMarkerElement;
-      console.log(AdvancedMarkerElement, 'advancedMarker in loadAdvancedMarker function');
-    } catch (error) {
-      console.error('Error loading advanced marker:', error);
-    }
-  };
-
-  useEffect(() => {
-    setIsLoaded(apiIsLoaded);
-    if (apiIsLoaded && center) {
-      loadAdvancedMarker();
-    }
-  }, [apiIsLoaded, center]);
-
   const onLoad = useCallback(
     async function callback(map) {
-      const bounds = new window.google.maps.LatLngBounds(center);
-      map.fitBounds(bounds);
+      // const bounds = new window.google.maps.LatLngBounds(center);
+      // map.fitBounds(bounds);
       setMap(map);
-      await loadAdvancedMarker();
       console.log(center, 'center coordinates in onLoad')
     },
     [center]
@@ -62,33 +39,33 @@ export default function GoogleMapsContainerComponenet({ user }) {
     []
   );
 
-  console.log(center, 'center before return')
+  useEffect(() => {
+    if (user) {
+      setCenter({
+        lat: user.location.coordinates[1],
+        lng: user.location.coordinates[0]
+      });
+    }
+  }, [user]);
 
-  // if (center == null) {
-  //   return <div>Loading...</div>
-  // }
-  // console.log(AdvancedMarkerElement, 'advancedMarker')
+  useEffect(() => {
+    setIsLoaded(apiIsLoaded);
+    console.log('made it inside useEffect for isLoaded', isLoaded)
+  }, [apiIsLoaded]);
+
+  console.log(center, 'center before return')
   return (
     <div className="container">
-      {/* <h6 className="text-center">Google Maps Container Component</h6> */}
-      {/* <div>Google Maps API Section</div> */}
-      {isLoaded ? (
+      {isLoaded && center && (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
-          zoom={15}
+          zoom={zoom}
           onLoad={onLoad}
           onUnmount={onUnmount}
         >
-        <div className='marker position'>
-          {center && (
-
-            <Marker position={center} />
-          )}
-          </div>
+          {center && <Marker position={center} />}
         </GoogleMap>
-      ) : (
-        <>No map to be displayed</>
       )}
     </div>
   );
