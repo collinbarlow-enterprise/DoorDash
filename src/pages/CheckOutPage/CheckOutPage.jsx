@@ -162,10 +162,8 @@ export default function CheckOutPage() {
       console.log(user, 'user in setDropOff in handleDrop')
       return newDropOffInstructions;
     })
-    // getUser();
   }
 
-  // navigate functions to orders page
   function navigateToOrderStatusPage() {
     console.log('made it inside order status navigation')
     navigate(`/orderstatus`)
@@ -190,17 +188,6 @@ export default function CheckOutPage() {
     }
   }
 
-
-  // CheckOut Page
-  // restaurant name
-  // google maps api that shows the user's address
-  // delivery time 
-
-  // conditional rendering for being a chase sapphire member
-
-  // conditional rendering for if the order is being scheduled ahead of time, show that time selected 
-  // place order 
-
   useEffect(() => {
     async function fetchData() {
       await getUser();
@@ -214,46 +201,21 @@ export default function CheckOutPage() {
     getRestaurant();
   }, [cart])
 
-  // useEffect(() => {
-  //   getUser();
-  // // }, [newDropOffInstructions, user])
-
   if (restaurant === null || cart === null) {
     return <div>Loading...</div>
   }
 
   return (
-    <div>
+    <div className='container'>
       <div>{restaurant.name}</div>
-      {/* <br /> */}
-      {/* <div>Google Maps API Section</div> */}
-      <GoogleMapsContainerComponenet user={user} />
-      <div>Delivery Time Section</div>
 
-      {/* // delivery options which will be 3, the premier one will add to the total(how would I accomplish that?), the middle will be the normal one which will just be a set time (should do a RNG with a specific range), and then third will be a scheduled order (goes to another page that has a time wheel, need to look into that more) */}
+      <GoogleMapsContainerComponenet user={user} />
 
       <div>Delivery Options</div>
       <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 
-      {/* {deliveryOption === 'schedule' && (
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          showTimeSelect
-          timeFormat="HH:mm"
-          dateFormat="MMMM d, yyyy h:mm aa"
-        />
-      )} */}
-
-      {/* <button onClick={() => console.log('Place Order', deliveryOption, selectedDate)}>
-        Set Delivery Time
-      </button> */}
-
-      {/* // a field for drop off instructions (looks like it has its own page, which would have two options and a form field, guess drop off instructions would be a field on the order?) */}
-
       <div>User Address: {user.address}</div>
-      {/* // a field for the address (if I want to get ambitious I can swap to a list of addresses that a user can add and delete in a drop down menu) */}
-      <div></div>
+
       <div>Drop Off Instructions: {dropOffInstructions} </div>
 
       <div>
@@ -266,10 +228,7 @@ export default function CheckOutPage() {
               onChange={(e) => setDropOffInstructions(e.target.value)}
             />
           </label>
-          {/* with the type submit a refresh is caused, and b/c the state value doesn't persist we just start over at square one....so submit is not the way to go */}
           <input type="submit" />
-
-          {/* <button onClick={handleSetInstructions}> Set Drop Off Instructions </button> */}
         </form>
       </div>
 
@@ -281,13 +240,7 @@ export default function CheckOutPage() {
 
       {giftStatus ? <div>Sending this as a gift!</div> : <div></div>}
 
-      {/* // send as a gift (goes to a page that has a few fields, but actually I don't think this would be that hard, it would just need to change something about the order indicating it was for someone else? maybe another optional field on the order model which would be default to null, but would be orderRecipient, and then on the order summary I could conditionally render based on that value */}
-
       <div>Cart Summary Section</div>
-
-      {/* // Cart Summary
-  // lists all menu items and ingredients */}
-      {/* seems to be a 3 div container (Quantity x Item, Ingredients, Price), with bootstrap to align things correctly */}
 
       <div>cart items with price and ingredients - another jsx component that maps over the array of the cart with something like this:  </div>
       <div>Item: { } | Quantity { } | Ingredients{ } | Price{ } </div>
@@ -295,8 +248,6 @@ export default function CheckOutPage() {
       <CheckOutPageCartComponent cart={cart} restaurant={restaurant} />
 
       <div>Order Summary</div>
-      {/* // Summary Field
-  // lot of reusable components in both the summary and cart summary - wonder how I could accomplish some sort of reusability, slight UI differences, and really wouldn't be a massive pain to code, but would be cool if I could do it */}
 
       <div>Subtotal: {cart.subTotal} (which would be order.price)</div>
 
@@ -323,24 +274,18 @@ export default function CheckOutPage() {
         <div><button onClick={() => dasherTipAdjustment(15)}> 15%</button></div>
         <div><button onClick={() => dasherTipAdjustment(20)}> 20%</button></div>
         <div><button onClick={() => navigateToOtherTipPage()}> Other</button></div>
-        {/* if the tip is going to be accessed from more than one page than there needs to be a field in the model that will allow me to grab, and update the field, the state value can be defaulted to 0, grabbed and updated on the otherTipPage, updated on this field, and then when the place order button is clicked the value will be finalized  */}
       </div>
 
       <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>
 
       <div>Total: {parseInt(cart.total) + dasherTip - discount} </div>
-      {/* right now the creditcard is set up as an array which makes sense if you have multiple credit cards, if there are more multiple credit cards you need to be able to select which one you want to use */}
-      {/* if that is the case I need to map over the creditcards, and then select have that been a state value that is selected via a parent component where the child component has the user data passed down via props */}
 
       <CheckOutPageCreditCard user={user} />
 
       <div>Conditional Rendering based on Chase Sapphire</div>
       {user.chaseMember ? (<div>You're a chase member!</div>) : (<div>Not a Chase Member</div>)}
-
       <div>Place Order Button</div>
       <div onClick={() => convertCartToPaidOrder()} ><button>PLACE THE ORDER</button></div>
-      {/* the navigateToOrderStatusPage should be nested inside another function that flips the order status from cart to placed order */}
-
     </div>
 
   )

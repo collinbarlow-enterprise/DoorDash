@@ -1,5 +1,6 @@
 import React from 'react'
 import CheckOutPageLineItemComponent from '../CheckOutPageCartLineItemComponent/CheckOutPageCartLineItemComponent'
+import '../../../src/checkOutPageDeliveryOptionsStyle.css'
 
 export default function CheckOutPageCartComponent({cart, restaurant}) {
     // console.log(cart, 'cart in cart component')

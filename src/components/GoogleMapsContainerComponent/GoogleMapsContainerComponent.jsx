@@ -27,7 +27,7 @@ export default function GoogleMapsContainerComponenet({ user }) {
       // const bounds = new window.google.maps.LatLngBounds(center);
       // map.fitBounds(bounds);
       setMap(map);
-      console.log(center, 'center coordinates in onLoad')
+      // console.log(center, 'center coordinates in onLoad')
     },
     [center]
   );
@@ -50,10 +50,10 @@ export default function GoogleMapsContainerComponenet({ user }) {
 
   useEffect(() => {
     setIsLoaded(apiIsLoaded);
-    console.log('made it inside useEffect for isLoaded', isLoaded)
+    // console.log('made it inside useEffect for isLoaded', isLoaded)
   }, [apiIsLoaded]);
 
-  console.log(center, 'center before return')
+  // console.log(center, 'center before return')
   return (
     <div className="container">
       {isLoaded && center && (
