@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, setDeliveryOption, selectedDate, setSelectedDate }) {
 
   const [clickedButton, setClickedButton] = useState(null);
+  const [setDeliveryTimeClicked, setSetDeliveryTimeClicked] = useState(false);
 
 
 
@@ -17,6 +18,15 @@ export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, s
       console.log(option, 'option in handleDelivery Change')
       return option;
     })
+    if (option === 'scheduleAhead') {
+      setSetDeliveryTimeClicked(false);  // Reset on changing delivery option
+    }
+  };
+
+  const handleSetDeliveryTimeClick = () => {
+    setSetDeliveryTimeClicked(true);
+    console.log('Place Order', deliveryOption, selectedDate);
+    // Add additional functionality for setting delivery time here
   };
 
   return (
@@ -48,7 +58,10 @@ export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, s
         needs to do something more -> send the scheduled date and time
         to the order document  */}
         {deliveryOption === 'scheduleAhead' && (
-          <button onClick={() => console.log('Place Order', deliveryOption, selectedDate)}>
+          <button 
+            onClick={handleSetDeliveryTimeClick} 
+            className={setDeliveryTimeClicked ? 'clicked' : ''}
+          >
             Set Delivery Time
           </button>
         )}
