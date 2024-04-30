@@ -31,6 +31,7 @@ export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, s
 
   return (
     <div className="container">
+    <div style={{textAlign: 'left'}}>Delivery Time:</div>
       <div>
         <button onClick={() => handleDeliveryOptionChange('standard')}
           className={clickedButton === 'standard' ? 'clicked' : ''}

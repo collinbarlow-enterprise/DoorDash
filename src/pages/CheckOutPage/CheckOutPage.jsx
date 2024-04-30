@@ -6,6 +6,8 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import '../../../src/checkOutPageStyle.css'
+
 import * as restaurantAPI from '../../utilities/restaurants-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import * as usersAPI from '../../utilities/users-service'
@@ -46,12 +48,13 @@ export default function CheckOutPage() {
     }
     );
     if (user.dropOffInstructions != 'none') {
-    setDropOffInstructions((prevState) => {
-      setDropOffInstructions(user.dropOffInstructions)
-    })
-    console.log(user.dropOffInstructions, 'drop off instructions')
-    // userLocation();
-  }};
+      setDropOffInstructions((prevState) => {
+        setDropOffInstructions(user.dropOffInstructions)
+      })
+      console.log(user.dropOffInstructions, 'drop off instructions')
+      // userLocation();
+    }
+  };
 
   async function getCart() {
     const cart = await ordersAPI.getCart();
@@ -183,7 +186,7 @@ export default function CheckOutPage() {
         console.log('didnt work')
       }
     }
-    catch(error) {
+    catch (error) {
       console.log(error, 'error')
     }
   }
@@ -210,36 +213,34 @@ export default function CheckOutPage() {
       <div>{restaurant.name}</div>
 
       <GoogleMapsContainerComponenet user={user} />
-
-      <div>Delivery Options</div>
+      <br />
+      {/* <div>Delivery Options</div> */}
       <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-
-      <div>User Address: {user.address}</div>
-
-      <div>Drop Off Instructions: {dropOffInstructions} </div>
-
-      <div>
-        <form onSubmit={handleDropOffInstructionsSubmit}>
-          <label>Enter Drop Off Notes:
-            <input
-              type='text'
-              placeholder={dropOffInstructions}
-              value={dropOffInstructions}
-              onChange={(e) => setDropOffInstructions(e.target.value)}
-            />
-          </label>
-          <input type="submit" />
-        </form>
-      </div>
-
-      <div>Phone Number: {user.phoneNumber}</div>
-
-      <div>
-        <button onClick={() => changeGiftStatus()} > Send as a gift</button>
-      </div>
-
-      {giftStatus ? <div>Sending this as a gift!</div> : <div></div>}
-
+      <br/>
+      <div className='checkout-container'>
+  <div>Address: {user.address}</div>
+  <div>Drop Off Instructions: {dropOffInstructions} </div>
+  <div>
+  <form onSubmit={handleDropOffInstructionsSubmit}>
+    <div class="form-group">
+        <label for="dropOffInstructions">Enter Drop Off Notes:</label>
+        <input
+            type='text'
+            id="dropOffInstructions"
+            placeholder={dropOffInstructions}
+            value={dropOffInstructions}
+            onChange={(e) => setDropOffInstructions(e.target.value)}
+        />
+    </div>
+    <input type="submit" />
+</form>
+  </div>
+  <div>Phone Number: {user.phoneNumber}</div>
+  <div>
+    <button onClick={() => changeGiftStatus()}>Send as a gift</button>
+  </div>
+  {giftStatus ? <div style={{textAlign: "center"}}>Sending this as a gift!</div> : <div></div>}
+</div>
       <div>Cart Summary Section</div>
 
       <div>cart items with price and ingredients - another jsx component that maps over the array of the cart with something like this:  </div>

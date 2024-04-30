@@ -1,0 +1,82 @@
+/* Common styles for the container */
+.checkout-container {
+    flex: 1;
+    min-width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Align text to the left */
+.checkout-container > div {
+    text-align: left;
+    margin-bottom: 8px; /* Add some space between divs */
+}
+
+/* Enlarge the 'Send as a gift' button */
+.checkout-container button {
+    font-size: 16px !important;
+    padding: 12px 24px; /* Adjust padding to make button larger */
+    display: block; /* Ensure button takes up full width */
+    margin: 0 auto; /* Center the button horizontally */
+}
+
+/* Adjust form layout */
+.checkout-container form {
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* Make input wider than button */
+    gap: 1.25vmin;
+}
+
+/* Set width of input to take up most of the div */
+.checkout-container input[type='text'] {
+    width: calc(100% - 16px); /* Adjust width as needed */
+}
+
+/* Style the submit button */
+form input[type="submit"] {
+    background-color: lightgrey; /* Set background color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Add border radius */
+    padding: 8px 16px; /* Adjust padding */
+    font-size: 16px; /* Adjust font size */
+    font-weight: bold;
+    color: black;
+    cursor: pointer; /* Add pointer cursor */
+    height: 2em; 
+    line-height: 1; /* Reset line height */
+    margin-top: 4.5vmin;
+}
+
+/* Style the submit button on hover */
+form input[type="submit"]:hover {
+    background-color: #d3d3d3; /* Lighter grey on hover */
+}
+
+/* Style the input element */
+form input[type="text"] {
+    padding: 8px; /* Adjust padding */
+    font-size: 16px; /* Adjust font size */
+    height: auto; /* Reset height */
+    line-height: 1; /* Reset line height */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+}
+
+/* Style the label */
+.form-group label {
+    margin-bottom: 0.5em; /* Add some space below the label */
+}
+
+.checkout-container button:active, 
+.checkout-container input[type="submit"]:active {
+    opacity: 0.5;
+    background-color: black;
+    color: white;
+}
