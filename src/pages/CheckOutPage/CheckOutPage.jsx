@@ -175,6 +175,10 @@ export default function CheckOutPage() {
     navigate(`/otherTipPage`)
   }
 
+  const formatToTwoDecimalPlaces = (value) => {
+    return parseFloat(value).toFixed(2);
+};
+
   async function convertCartToPaidOrder() {
     console.log(cart, 'cart in convert function frontend');
     try {
@@ -262,10 +266,10 @@ export default function CheckOutPage() {
             (<div className="cost-item">Discount: <span>${discount}</span></div>) :
             (<div className="cost-item">No discount applied</div>)}
 
-          <div className="cost-item">Subtotal: <span>${cart.subTotal}</span></div>
-          <div className="cost-item">Delivery Fee: <span>${cart.deliveryFee}</span></div>
-          <div className="cost-item">Fees and Estimated Tax: <span>${cart.taxesAndFees}</span></div>
-          <div className="cost-item">Dasher Tip: <span>${dasherTip}</span></div>
+            <div className="cost-item">Subtotal: <span>${formatToTwoDecimalPlaces(cart.subTotal)}</span></div>
+    <div className="cost-item">Delivery Fee: <span>${formatToTwoDecimalPlaces(cart.deliveryFee)}</span></div>
+    <div className="cost-item">Fees and Estimated Tax: <span>${formatToTwoDecimalPlaces(cart.taxesAndFees)}</span></div>
+    <div className="cost-item">Dasher Tip: <span>${formatToTwoDecimalPlaces(dasherTip)}</span></div>
 
           <div className="tip-buttons-container">
             <button className="tip-button" onClick={() => dasherTipAdjustment(10)}>10%</button>
@@ -274,7 +278,7 @@ export default function CheckOutPage() {
             <button className="tip-button" onClick={() => navigateToOtherTipPage()}>Other</button>
           </div>
 
-          <div className="cost-item total-cost-item">Total: <span>${parseInt(cart.total) + dasherTip - discount}</span></div>
+          <div className="cost-item total-cost-item">Total: <span>${formatToTwoDecimalPlaces(parseInt(cart.total) + dasherTip - discount)}</span></div>
         </div>
       </div>
       <br />

@@ -104,6 +104,7 @@ form input[type="text"] {
 /* Style for the cost item div that houses the 'Total' */
 .total-cost-item {
     border-bottom: none; /* Remove border for the 'Total' item */
+    font-weight: bold;
 }
 
 /* Style for the Dasher tip buttons container */
