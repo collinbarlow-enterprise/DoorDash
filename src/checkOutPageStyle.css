@@ -119,3 +119,27 @@ form input[type="text"] {
     margin: 2px; /* Small margin to prevent buttons from touching */
     padding: 8px 0; /* Padding for better touch targets */
 }
+
+.chase-member {
+    width: 120%; /* Span the width of the parent */
+    color: white;
+    background-color: teal;
+    margin-left: -10%;
+}
+
+.credit-card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Optional: adds space between this and the next element */
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #333; /* Dark grey color for the text */
+  }
+  
+  .value {
+    font-weight: normal;
+    color: #666; /* Lighter grey color for the value */
+  }

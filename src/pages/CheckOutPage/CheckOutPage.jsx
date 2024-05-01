@@ -284,9 +284,6 @@ export default function CheckOutPage() {
       <br />
       <CheckOutPageCreditCard user={user} />
 
-      <div>Conditional Rendering based on Chase Sapphire</div>
-      {user.chaseMember ? (<div>You're a chase member!</div>) : (<div>Not a Chase Member</div>)}
-      <div>Place Order Button</div>
       <div onClick={() => convertCartToPaidOrder()} ><button>PLACE THE ORDER</button></div>
     </div>
 

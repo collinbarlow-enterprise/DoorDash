@@ -21,7 +21,11 @@ useEffect(() => {
 
   return (
     <div className="container">
-      <div>Credit Card : {user.creditCard ? (<span>...{creditCard}</span>) : <span>No Credit Card on File</span>}</div>
+  <div className="credit-card-info">
+    <span className="label">Credit Card :</span>
+    <span className="value">{user.creditCard ? `...${creditCard}` : "No Credit Card on File"}</span>
+  </div>
+      {user.chaseMember ? (<div className='chase-member'>You're a Chase Member!</div>) : null}
     </div>
   )
 }
