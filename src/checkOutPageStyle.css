@@ -80,3 +80,41 @@ form input[type="text"] {
     background-color: black;
     color: white;
 }
+
+/* Styles for the Order Summary and other labels */
+.order-summary {
+    text-align: left;
+}
+
+/* Styles for the input field to take up full width */
+.promo-code-input {
+    width: 100%;
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    margin-bottom: 8px; /* Space below the input field */
+}
+
+/* General style for cost-related items */
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 8px 0;
+}
+
+/* Style for the cost item div that houses the 'Total' */
+.total-cost-item {
+    border-bottom: none; /* Remove border for the 'Total' item */
+}
+
+/* Style for the Dasher tip buttons container */
+.tip-buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Style for each Dasher tip button to ensure even spacing */
+.tip-button {
+    flex-grow: 1; /* Each button will grow to fill the container equally */
+    margin: 2px; /* Small margin to prevent buttons from touching */
+    padding: 8px 0; /* Padding for better touch targets */
+}

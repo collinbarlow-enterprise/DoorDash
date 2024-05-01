@@ -1,45 +1,40 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import * as restaurantsAPI from '../../utilities/restaurants-api' 
+import * as restaurantsAPI from '../../utilities/restaurants-api'
+import '../../../src/checkOutPageCartStyle.css';
 
-export default function CheckOutPageLineItemComponent({cart, cartItem, restaurant}) {
+export default function CheckOutPageLineItemComponent({ cart, cartItem, restaurant }) {
 
-const [itemName, setItemName] = useState(null)
-// console.log(restaurant, 'restaurant in lineItem')
-// console.log(cartItem, 'cartItem')
+  const [itemName, setItemName] = useState(null)
 
-let itemId = cartItem.item
-// console.log(itemId, 'itemId variable')
+  let itemId = cartItem.item;
+  let restaurantDishArray = restaurant.menu;
 
-let restaurantDishArray = restaurant.menu
-
-// console.log(restaurantDishArray, 'restaurantDishArray') 
-
-// need to use the cartRestaurant object which should be the restaurant id to find the restaurant
-
-function determineDishName(){
- for (let i = 0; i<restaurantDishArray.length-1; i++) {
-    if (itemId == restaurantDishArray[i]._id) {
+  function determineDishName() {
+    for (let i = 0; i < restaurantDishArray.length - 1; i++) {
+      if (itemId == restaurantDishArray[i]._id) {
         let discoveredDishName = restaurantDishArray[i].dishName;
 
         setItemName((prevState) => {
-            // console.log(discoveredDishName, 'dish name discovered in for loop');
-            return discoveredDishName;
+          // console.log(discoveredDishName, 'dish name discovered in for loop');
+          return discoveredDishName;
         });
+      }
     }
- }
-}
+  }
 
-useEffect(() => {
+  useEffect(() => {
     determineDishName();
-})
+  })
 
+let itemQty = cartItem.quantity;
 
-  return (
-    <div className="container">
-      <h6 className="text-center">CheckOutPage Line Item for Cart Component </h6>
-      Item: {itemName} | Qty: {cartItem.quantity}  | Price: {cartItem.price} | SubTotal Price: {cartItem.extPrice}
-
-    
+return (
+  <div className="item-container">
+    <div className="item-details">
+      <div className="item-qty">Qty: {itemQty} |</div>
+      <div className="item-name">Item: {itemName}</div>
     </div>
-  )
+    <div className="item-subtotal">SubTotal Price: ${cartItem.extPrice.toFixed(2)}</div>
+  </div>
+);
 }

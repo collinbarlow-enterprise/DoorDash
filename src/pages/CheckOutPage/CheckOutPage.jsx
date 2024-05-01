@@ -34,7 +34,7 @@ export default function CheckOutPage() {
   const [dropOffInstructions, setDropOffInstructions] = useState('')
 
   const [total, setTotal] = useState(null);
-  const [dasherTip, setDasherTip] = useState(null);
+  const [dasherTip, setDasherTip] = useState(10);
 
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -216,71 +216,68 @@ export default function CheckOutPage() {
       <br />
       {/* <div>Delivery Options</div> */}
       <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-      <br/>
+      <br />
       <div className='checkout-container'>
-  <div>Address: {user.address}</div>
-  <div>Drop Off Instructions: {dropOffInstructions} </div>
-  <div>
-  <form onSubmit={handleDropOffInstructionsSubmit}>
-    <div class="form-group">
-        <label for="dropOffInstructions">Enter Drop Off Notes:</label>
-        <input
-            type='text'
-            id="dropOffInstructions"
-            placeholder={dropOffInstructions}
-            value={dropOffInstructions}
-            onChange={(e) => setDropOffInstructions(e.target.value)}
-        />
-    </div>
-    <input type="submit" />
-</form>
-  </div>
-  <div>Phone Number: {user.phoneNumber}</div>
-  <div>
-    <button onClick={() => changeGiftStatus()}>Send as a gift</button>
-  </div>
-  {giftStatus ? <div style={{textAlign: "center"}}>Sending this as a gift!</div> : <div></div>}
-</div>
-      <div>Cart Summary Section</div>
-
-      <div>cart items with price and ingredients - another jsx component that maps over the array of the cart with something like this:  </div>
-      <div>Item: { } | Quantity { } | Ingredients{ } | Price{ } </div>
-
+        <div>Address: {user.address}</div>
+        <div>Drop Off Instructions: {dropOffInstructions} </div>
+        <div>
+          <form onSubmit={handleDropOffInstructionsSubmit}>
+            <div className="form-group">
+              <label htmlFor="dropOffInstructions">Enter Drop Off Notes:</label>
+              <input
+                type='text'
+                id="dropOffInstructions"
+                placeholder={dropOffInstructions}
+                value={dropOffInstructions}
+                onChange={(e) => setDropOffInstructions(e.target.value)}
+              />
+            </div>
+            <input type="submit" />
+          </form>
+        </div>
+        <div>Phone Number: {user.phoneNumber}</div>
+        <div>
+          <button onClick={() => changeGiftStatus()}>Send as a gift</button>
+        </div>
+        {giftStatus ? <div style={{ textAlign: "center" }}>Sending this as a gift!</div> : <div></div>}
+      </div>
+      <br />
       <CheckOutPageCartComponent cart={cart} restaurant={restaurant} />
-
-      <div>Order Summary</div>
-
-      <div>Subtotal: {cart.subTotal} (which would be order.price)</div>
-
-      <div>Add a Promo Field: if the promo field matches a hard coded list somewhere in the model? or database? then a discount is applied, but only one discount should be able to be applied at one time...is it a form with a field? Are there several fields for a single form that could be created here?</div>
-
+      <br />
       <div>
-        <input
-          type='text'
-          placeholder='Enter Promo Code - try SAVE10'
-          value={promoCode}
-          onChange={(e) => setPromoCode(e.target.value)}
-        />
-        <button onClick={applyPromoCode}> Apply Promo </button>
+        <div className='container'>
+          <div className="order-summary">Order Summary</div>
+          <div>
+            <input
+              className="promo-code-input"
+              type='text'
+              placeholder='Enter Promo Code - try SAVE10'
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+            />
+            <button onClick={applyPromoCode}>Apply Promo</button>
+          </div>
+
+          {discount ?
+            (<div className="cost-item">Discount: <span>${discount}</span></div>) :
+            (<div className="cost-item">No discount applied</div>)}
+
+          <div className="cost-item">Subtotal: <span>${cart.subTotal}</span></div>
+          <div className="cost-item">Delivery Fee: <span>${cart.deliveryFee}</span></div>
+          <div className="cost-item">Fees and Estimated Tax: <span>${cart.taxesAndFees}</span></div>
+          <div className="cost-item">Dasher Tip: <span>${dasherTip}</span></div>
+
+          <div className="tip-buttons-container">
+            <button className="tip-button" onClick={() => dasherTipAdjustment(10)}>10%</button>
+            <button className="tip-button" onClick={() => dasherTipAdjustment(15)}>15%</button>
+            <button className="tip-button" onClick={() => dasherTipAdjustment(20)}>20%</button>
+            <button className="tip-button" onClick={() => navigateToOtherTipPage()}>Other</button>
+          </div>
+
+          <div className="cost-item total-cost-item">Total: <span>${parseInt(cart.total) + dasherTip - discount}</span></div>
+        </div>
       </div>
-      {discount ? (<div>Discount: ${discount}</div>) : (<div>No discount applied</div>)}
-
-      <div>Delivery Fee : {cart.deliveryFee}</div>
-
-      <div>Fees and Estimated Tax : {cart.taxesAndFees} which field is the right part of the model? There needs to be a clearer labeling for the difference between taxesAndFees and feesAndTaxes</div>
-
-      <div>Dasher Tip : {dasherTip}</div>
-      <div>
-        <div><button onClick={() => dasherTipAdjustment(10)}> 10%</button></div>
-        <div><button onClick={() => dasherTipAdjustment(15)}> 15%</button></div>
-        <div><button onClick={() => dasherTipAdjustment(20)}> 20%</button></div>
-        <div><button onClick={() => navigateToOtherTipPage()}> Other</button></div>
-      </div>
-
-      <div>3 recommended options, and one which is 'other' that leads to another page and would update the order, are the options hard-coded or a percentage of the total price? 10,15,20%? </div>
-
-      <div>Total: {parseInt(cart.total) + dasherTip - discount} </div>
-
+      <br />
       <CheckOutPageCreditCard user={user} />
 
       <div>Conditional Rendering based on Chase Sapphire</div>

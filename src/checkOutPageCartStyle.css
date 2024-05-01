@@ -1,0 +1,41 @@
+.container {
+    width: 100%;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-summary {
+    text-align: left;
+    font-size: 1.2em;
+    margin-bottom: 8px; /* Space between summary and item list */
+  }
+  
+  .restaurant-info {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 8px; /* Space between restaurant info and items */
+  }
+  
+  .item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 8px 0;
+  }
+  
+  .item-details {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between qty and item name */
+  }
+  
+  .item-qty,
+  .item-name {
+    text-align: left;
+  }
+  
+  .item-subtotal {
+    text-align: right;
+    flex-grow: 1; /* Ensure it pushes to the right */
+  }
