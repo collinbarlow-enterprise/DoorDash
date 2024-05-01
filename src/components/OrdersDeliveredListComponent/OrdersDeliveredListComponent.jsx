@@ -2,7 +2,7 @@ import React from 'react';
 
 const OrdersDeliveredListComponent = ({ orders }) => {
 
-    console.log(orders, 'orders in list component')
+    console.log(orders, 'orders in DELIVERED list component')
   return (
     <div>
       <h2>Delivered Order List</h2>

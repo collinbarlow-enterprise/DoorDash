@@ -38,6 +38,7 @@ export default function CheckOutPage() {
 
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
+  const [chaseSavings, setChaseSavings] = useState(null)
 
   async function getUser() {
     const user = await usersAPI.getUser();
@@ -60,7 +61,7 @@ export default function CheckOutPage() {
     const cart = await ordersAPI.getCart();
     // console.log(cart, 'CART IN GETCART FUNCTION ON HOMEPAGE COMPO BEFORE setting cart')
     setCart((prevState) => {
-      // console.log(cart, 'cart in getCart on CartPage')
+      console.log(cart, 'cart in getCart on CheckOut')
       return cart;
     })
     setCart(cart);
@@ -73,6 +74,12 @@ export default function CheckOutPage() {
     setGiftStatus((prevState) => {
       // console.log(cart.isGift, 'cart.isGift in setGiftStatus in getCart')
       setGiftStatus(cart.isGift)
+    })
+    setChaseSavings((prevState) => {
+      let savings = parseFloat(-(cart.chaseSavings)).toFixed(2);
+      // console.log(savings, 'savings')
+      // parseFloat(savings).toFixed(2)
+      setChaseSavings(savings)
     })
   }
 
@@ -282,7 +289,7 @@ export default function CheckOutPage() {
         </div>
       </div>
       <br />
-      <CheckOutPageCreditCard user={user} />
+      <CheckOutPageCreditCard user={user} chaseSavings={chaseSavings} />
 
       <div onClick={() => convertCartToPaidOrder()} ><button>PLACE THE ORDER</button></div>
     </div>
