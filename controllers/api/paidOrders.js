@@ -9,10 +9,10 @@ module.exports = {
 }
 
 async function getPaidOrders(req, res) {
-    console.log(req.body, 'get paid orders function')
-    console.log(req.body.user, 'req.body.user')
-    console.log(req, 'req')
-    console.log(req.user._id, 'user id')
+    // console.log(req.body, 'get paid orders function')
+    // console.log(req.body.user, 'req.body.user')
+    // console.log(req, 'req')
+    // console.log(req.user._id, 'user id')
 
     const id = req.user._id
 
@@ -39,10 +39,10 @@ async function getPaidOrders(req, res) {
 }}
 
 async function convertToPaidOrder(req, res) {
-    console.log(req.body, 'req.body in convert to paid order CONTROLLER')
+    console.log(req.body, 'REQ.BODY in convert to paid order CONTROLLER')
     const filter = { _id: req.body.cart._id };
-    console.log(filter, 'filter');
-    console.log(typeof filter, 'filter');
+    // console.log(filter, 'filter');
+    // console.log(typeof filter, 'filter');
 
     try {
         console.log('made it into convert paid order controller')
@@ -54,7 +54,7 @@ async function convertToPaidOrder(req, res) {
             new: true
         });
 
-        console.log(updatedCart, 'updatedCart')
+        console.log(updatedCart, 'UPDATED CART')
 
         // const order = await Order.findById(filter).populate('lineItems.item').exec(); 
 
@@ -63,7 +63,7 @@ async function convertToPaidOrder(req, res) {
             restaurant: updatedCart.restaurant,
             orderItems: updatedCart.orderItems,
             driver: updatedCart.driver,
-            totalPrice: updatedCart.totalPrice,
+            totalPrice: updatedCart.total,
             status: updatedCart.status,
             feesAndTaxes: updatedCart.feesAndTaxes,
             promoCode: updatedCart.promoCode,
@@ -103,24 +103,24 @@ async function convertToPaidOrder(req, res) {
 }
 
 async function updateOrderStatusCtrl(req, res) {
-    console.log(req.body, 'req.body in updateStatusCtrl');
+    // console.log(req.body, 'req.body in updateStatusCtrl');
 
     const statusArray = ['order received', 'order in progress', 'waiting on driver', 'driver on route', 'order delivered'];
 
 
     try {
         const orderArray = req.body.ordersInProgress;
-        console.log(orderArray, 'orderArray in updateCTRL');
+        // console.log(orderArray, 'orderArray in updateCTRL');
 
         const updatedOrders = [];
 
         // i need to iterate through the array
         for (let i = 0; i < orderArray.length; i++) {
             const filter = { _id: orderArray[i]._id};
-            console.log(filter, 'filter in updateStatusCtrl')
+            // console.log(filter, 'filter in updateStatusCtrl')
 
             const currentStatus = orderArray[i].deliveryStatus;
-            console.log(currentStatus, 'currentStatus in updateCtrl')
+            // console.log(currentStatus, 'currentStatus in updateCtrl')
 
             let nextStatus = '';
 
@@ -130,7 +130,7 @@ async function updateOrderStatusCtrl(req, res) {
                         nextStatus = statusArray[s + 1]
                     }
                 }
-                console.log(nextStatus, 'nextStatus in for loop ')
+                // console.log(nextStatus, 'nextStatus in for loop ')
             };
 
 
@@ -138,7 +138,7 @@ async function updateOrderStatusCtrl(req, res) {
 
             const thisOrder = await PaidOrder.findOneAndUpdate(filter, update, { new: true })
 
-            console.log(thisOrder, 'thisOrder after update')
+            // console.log(thisOrder, 'thisOrder after update')
         
             updatedOrders.push(thisOrder);
         }

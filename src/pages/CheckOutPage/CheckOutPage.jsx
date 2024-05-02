@@ -188,6 +188,12 @@ export default function CheckOutPage() {
 
   async function convertCartToPaidOrder() {
     console.log(cart, 'cart in convert function frontend');
+    console.log(cart.total, 'BEFORE frontend');
+    console.log(discount, 'discount BEFORE frontend');
+    console.log(dasherTip, 'dasherTip BEFORE frontend');
+    cart.total = parseFloat(cart.total)
+    cart.total = parseFloat((cart.total + dasherTip - discount).toFixed(2))
+    console.log(cart.total, 'AFTER cart.total')
     try {
       const submittedOrder = await paidOrdersAPI.convertOrderToPaidOrder(cart)
 

@@ -2,33 +2,29 @@ import React from 'react';
 
 const OrdersInProgressListComponent = ({ orders }) => {
 
-    console.log(orders, 'orders in list component')
+    console.log(orders, 'orders in INPROGRESS list component')
   return (
-    <div>
+    <div className='container'>
       <h2>Order List</h2>
       <ul>
         {orders.map(order => (
           <li key={order.id}>
-          {/* <div className="cost-item">Delivery Fee: <span>${formatToTwoDecimalPlaces(cart.deliveryFee)}</span></div> */}
           <div className='order-info'>Order Status <span>{order.deliveryStatus}</span></div>
           <div className='order-info'>Order ID: <span>{order.id}</span></div>
           <div className='order-info'>Order Placed: <span>{order.createdAt}</span></div>
           <div className='order-info'>Restaurant: <span>{order.restaurant}</span></div>
-          <div className='order-info'>Order Amount: <span>{order.amount}</span></div>
+          <div className='order-info'>Order Amount: <span>{order.totalPrice}</span></div>
           <div className='order-info'># of Items: <span>{order.lineItems.length}</span></div>
-
-            {/* <p>Order ID: {order.id}</p> */}
-            {/* <p>Created At: {order.createdAt}</p> */}
-            {/* <p>Delivery Status: {order.deliveryStatus}</p> */}
-            {/* Add more details as needed */}
-            {/* <h4>Line Items:</h4> */}
-            <ul>
+          <ul className="line-items-list">
               {order.lineItems.map(item => (
-                <li key={item._id}>
-                  <p>Item ID: {item._id}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <p>Price: {item.price}</p>
-                  {/* Add more details as needed */}
+                <li key={item._id} className="line-item">
+                  <div className="left-info">
+                    <span className="item-id">Item ID: {item._id}</span>
+                    <span className="quantity">Quantity: {item.quantity}</span>
+                  </div>
+                  <div className="right-info">
+                    <span className="price">Price: {item.price}</span>
+                  </div>
                 </li>
               ))}
             </ul>

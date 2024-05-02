@@ -8,6 +8,7 @@ import OrdersInProgressListComponent from '../../components/OrdersInProgressList
 
 import OrdersDeliveredListComponent from '../../components/OrdersDeliveredListComponent/OrdersDeliveredListComponent'
 
+import '../../../src/orderStatusPageStyle.css'
 
 export default function OrderStatusPage() {
 // i'm going to have two main jsx components one that shows the current delivery status of a non-delivery order, and the second will show the order history
@@ -24,7 +25,7 @@ export default function OrderStatusPage() {
 // ordersInProgress
 // orderStatus
 
-const [ paidOrders, setPaidOrders] = useState([]);
+const [ paidOrders, setPaidOrders] = useState(null);
 const [ deliveredOrders, setDeliveredOrders] = useState([]);
 const [ ordersInProgress, setOrdersInProgress ] = useState([]);
 const [orderStatus, setOrderStatus ] = useState('');
@@ -34,14 +35,21 @@ const [updateOrderStatusTrigger, setUpdateOrderStatusTrigger] = useState(true);
 
 async function getPaidOrders() {
   const orders = await paidOrdersAPI.getPaidOrders();
-  console.log(orders, 'orders in getPaid orders')
+  console.log(orders, 'orders in GETPAIDorders')
   setPaidOrders((prevState) => {
     return orders;
   })}
 
 function filterPaidOrders(){
+  console.log(paidOrders, 'paidOrders in FILTERPAID')
   const paidOrdersArray = [...paidOrders];
+  console.log(paidOrdersArray, 'paidOrdersArray in FILTERPAID')
   const completedOrdersArray = []
+
+  const nonDeliveredOrders = paidOrdersArray.filter(order => order.deliveryStatus !== 'order delivered');
+  console.log(nonDeliveredOrders, 'nonDeliveredOrders in filterPaid')
+  const deliveredOrders = paidOrdersArray.filter(order => order.deliveryStatus === 'order delivered');
+  console.log(deliveredOrders, 'deliveredOrders in filterPaid')
 
   for (let i = 0; i<paidOrdersArray.length; i++) {
     if (paidOrdersArray[i].deliveryStatus === 'order delivered') {
@@ -52,26 +60,31 @@ function filterPaidOrders(){
       }
     }
     setOrdersInProgress((prevState) => {
-      return paidOrdersArray;
+      console.log(nonDeliveredOrders, 'paidOrdersArray in setOrdersInProgress')
+      return nonDeliveredOrders;
     });
     setDeliveredOrders((prevState) => {
-      return completedOrdersArray;
+      console.log(deliveredOrders, 'completedOrdersArray in setDeliveredOrders')
+      return deliveredOrders;
     });
   }
   // going to look at the paidOrders and separate them out into two groups - one that is not completed and another that is completed
 
 
 async function updateOrderStatus(){
+  console.log('inside update order status')
   const ordersToBeUpated = await paidOrdersAPI.updateOrderStatusAPI(ordersInProgress)
   const updatedOrders = ordersToBeUpated.updatedOrders;
-  console.log(updatedOrders, 'updatedOrderson front end ')
+  // console.log(updatedOrders, 'updatedOrderson front end ')
   const nonDeliveredOrders = updatedOrders.filter(order => order.deliveryStatus !== 'order delivered');
 
   setOrdersInProgress((prevState) => {
+    console.log(nonDeliveredOrders, 'NON DELIVERED ORDERS in updateorderStatus')
     return nonDeliveredOrders;
   })
   
   const deliveredOrders = updatedOrders.filter(order => order.deliveryStatus === 'order delivered');
+  console.log(deliveredOrders, 'DELIVERED ORDERS in updateOrderStatus')
   setDeliveredOrders(prevState => [...prevState, ...deliveredOrders]);
   if (nonDeliveredOrders.length<1) {
     setUpdateOrderStatusTrigger(false)
@@ -84,7 +97,9 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  filterPaidOrders();
+  if (paidOrders !== null) {
+    filterPaidOrders();
+  }
 }, [paidOrders]);
 
 useEffect(() => {
@@ -107,26 +122,22 @@ useEffect(() => {
 
   return (
     <div>
+    {paidOrders === null ? (
+      <p>Loading...</p>
+    ) : (
+      <>
         <h1>Still Under Construction</h1>
         <h1>Order Status Page</h1>
-        <button onClick={() => updateOrderStatus()}> update order status button</button>
+        <button onClick={() => updateOrderStatus()}>update order status button</button>
         <div>First Component is going to be undelivered orders</div>
-        <OrdersInProgressListComponent orders = {ordersInProgress}
-        />
-        
-
-      <div onClick={() => filterPaidOrders()} ><button>filterPaidOrders</button></div>
-
-        <div>Second Component is going to be delivered orders </div>
+        <OrdersInProgressListComponent orders={ordersInProgress} />
+        <div onClick={() => filterPaidOrders()}><button>filterPaidOrders</button></div>
+        <div>Second Component is going to be delivered orders</div>
         <div>Completed</div>
-
-        <OrdersDeliveredListComponent orders = {deliveredOrders}
-        />
-        {/* some sort of map */}
-        <div>Restaurant Name | a button that takes you back to the restaurant page</div>
-        <div>Order Date | Order Amount | # of Items</div>
-        <div>List the items out</div>
-        <div>button to reorder | button to view receipt</div>
-    </div>
-  )
+        <OrdersDeliveredListComponent orders={deliveredOrders} />
+        <br />
+      </>
+    )}
+  </div>
+);
 }
