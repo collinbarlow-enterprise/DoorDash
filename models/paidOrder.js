@@ -5,6 +5,7 @@ const lineItemSchema = new Schema({
     quantity: { type: Number },
     item: { type: Schema.Types.ObjectId, ref: 'MenuItem' },
     price: { type: Number },
+    itemName: {type: String, default : 'none'},
 }, {
     timestamps: true,
     toJSON: { virtuals: true }
@@ -17,6 +18,7 @@ lineItemSchema.virtual('extPrice').get(function() {
 const paidOrderSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     restaurant: { type: Schema.Types.ObjectId, ref: 'Restaurant', required: false },
+    restaurantName: {type: String, default: 'none'},
     orderItems: [{ type: Schema.Types.ObjectId, ref: 'Restaurant', required: false }],
     driver: { type: Schema.Types.ObjectId, ref: 'Driver', required: false },
     totalPrice: { type: Number },

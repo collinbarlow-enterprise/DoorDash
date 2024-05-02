@@ -126,7 +126,6 @@ useEffect(() => {
       <p>Loading...</p>
     ) : (
       <>
-        <h1>Still Under Construction</h1>
         <h1>Order Status Page</h1>
         <button onClick={() => updateOrderStatus()}>update order status button</button>
         <div>First Component is going to be undelivered orders</div>
