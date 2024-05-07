@@ -3,11 +3,13 @@ import React from 'react';
 const OrdersDeliveredListComponent = ({ orders }) => {
 
   console.log(orders, 'orders in DELIVERED list component')
+  const sortedOrders = orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
     <div className='container'>
       <h2>Order List</h2>
       <ul>
-        {orders.map(order => (
+        {sortedOrders.map(order => (
           <li key={order.id}>
             <div className='order-info'>Order Status <span>{order.deliveryStatus.toUpperCase()}</span></div>
             <div className='order-info'>Order ID: <span>{order.id}</span></div>
@@ -38,7 +40,7 @@ const OrdersDeliveredListComponent = ({ orders }) => {
             <div className='order-info'>Drop Off Instructions: <span>{order.dropOffInstructions}</span></div>
             {order.isGift ? (
               <>
-                <div className='order-info'>Order is a Gift? <span>{order.isGift}</span></div>
+                <div className='order-info'>Order is a Gift? <span>Yes</span></div>
               </>
             ) : (
               <></>

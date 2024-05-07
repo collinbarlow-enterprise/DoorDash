@@ -30,7 +30,7 @@ export default function CheckOutPage() {
   const [deliveryOption, setDeliveryOption] = useState(null)
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const [giftStatus, setGiftStatus] = useState(null)
+  const [giftStatus, setGiftStatus] = useState(false)
   const [dropOffInstructions, setDropOffInstructions] = useState('')
 
   const [total, setTotal] = useState(null);
@@ -52,7 +52,7 @@ export default function CheckOutPage() {
       setDropOffInstructions((prevState) => {
         setDropOffInstructions(user.dropOffInstructions)
       })
-      console.log(user.dropOffInstructions, 'drop off instructions')
+      // console.log(user.dropOffInstructions, 'drop off instructions')
       // userLocation();
     }
   };
@@ -81,6 +81,9 @@ export default function CheckOutPage() {
       // parseFloat(savings).toFixed(2)
       setChaseSavings(savings)
     })
+    // console.log(user.dropOffInstructions, 'user drop off in get cart')
+    // console.log(user, 'user in get cart')
+    // console.log(user.dropOffInstructions, 'user.drop off instructions')
   }
 
   // need to find a way to get the Restaurant id...from the cart or order? 
@@ -141,9 +144,11 @@ export default function CheckOutPage() {
   }
 
   function changeGiftStatus() {
-    console.log(giftStatus, 'giftStatus in changeGiftStatus');
-    setGiftStatus(!giftStatus);
-    console.log(giftStatus, 'giftstatus after boolean switch')
+    // console.log(giftStatus, 'giftStatus in changeGiftStatus');
+    setGiftStatus(currentStatus => !currentStatus);
+    // console.log(giftStatus, 'giftstatus after boolean switch')
+    // cart.giftStatus = giftStatus;
+    // console.log(cart.giftStatus, 'giftStatus in CART')
   }
 
   let temporaryInstructions = '';
@@ -172,6 +177,8 @@ export default function CheckOutPage() {
       console.log(user, 'user in setDropOff in handleDrop')
       return newDropOffInstructions;
     })
+    cart.dropOffInstructions= dropOffInstructions
+    console.log(cart.dropOffInstructions, 'cart.drop off')
   }
 
   function navigateToOrderStatusPage() {
@@ -188,9 +195,9 @@ export default function CheckOutPage() {
 
   async function convertCartToPaidOrder() {
     console.log(cart, 'cart in convert function frontend');
-    console.log(cart.total, 'BEFORE frontend');
-    console.log(discount, 'discount BEFORE frontend');
-    console.log(dasherTip, 'dasherTip BEFORE frontend');
+    // console.log(cart.total, 'BEFORE frontend');
+    // console.log(discount, 'discount BEFORE frontend');
+    // console.log(dasherTip, 'dasherTip BEFORE frontend');
     cart.total = parseFloat(cart.total)
     cart.total = parseFloat((cart.total + dasherTip - discount).toFixed(2))
     console.log(cart.total, 'AFTER cart.total')
@@ -218,8 +225,26 @@ export default function CheckOutPage() {
   }, []);
 
   useEffect(() => {
+    console.log(user, cart, 'user and cart')
+    if (user && cart) {    
+    cart.dropOffInstructions = user.dropOffInstructions
+    console.log(cart.dropOffInstructions, 'cart.drop off')}
+  }, [user, cart])
+
+  useEffect(() => {
     getRestaurant();
+    // console.log(user, 'user in getRestaurant')
+    // console.log(cart, 'cart in getRestaruatn')
+    // cart.dropOffInstructions = user.dropOffInstructions
+    // console.log(cart.dropOffInstructions, 'cart.dropOFF')
   }, [cart])
+
+  useEffect(() => {
+    console.log(giftStatus, 'giftStatus after boolean switch');
+    if (cart) {
+    cart.giftStatus = giftStatus;
+    console.log(cart.giftStatus, 'giftstatus in CART');}
+  }, [giftStatus])
 
   if (restaurant === null || cart === null) {
     return <div>Loading...</div>

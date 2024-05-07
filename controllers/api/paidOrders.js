@@ -42,7 +42,7 @@ async function getPaidOrders(req, res) {
 }
 
 async function convertToPaidOrder(req, res) {
-    // console.log(req.body, 'REQ.BODY in convert to paid order CONTROLLER')
+    console.log(req.body, 'REQ.BODY in convert to paid order CONTROLLER')
     const filter = { _id: req.body.cart._id };
     // console.log(filter, 'filter');
     // console.log(typeof filter, 'filter');
@@ -50,7 +50,11 @@ async function convertToPaidOrder(req, res) {
     try {
         // console.log('made it into convert paid order controller')
 
-        const update = { isPaid: true }
+        const update = { 
+            isPaid: true,
+            dropOffInstructions: req.body.cart.dropOffInstructions,
+            isGift: req.body.cart.giftStatus,
+        }
 
         // find the cart document and update the isPaid field to true
         const updatedCart = await Order.findOneAndUpdate(filter, update, {
@@ -58,30 +62,30 @@ async function convertToPaidOrder(req, res) {
         });
 
         console.log(updatedCart, 'UPDATED CART')
-        console.log('Restaurant ID:', updatedCart.restaurant);
+        // console.log('Restaurant ID:', updatedCart.restaurant);
 
-        console.log(Restaurant);  // This should show a function or a model object
+        // console.log(Restaurant);  // This should show a function or a model object
 
         // Assuming Restaurant is your model for the restaurant collection
         const restaurantData = await Restaurant.findById(updatedCart.restaurant).exec();
-        console.log(restaurantData, 'RESTAURANT DATA')
+        // console.log(restaurantData, 'RESTAURANT DATA')
 
         const restaurantName = restaurantData ? restaurantData.name : 'Unknown Restaurant';
 
-        console.log(restaurantName, 'RESTAURANT NAME in paidCART')
+        // console.log(restaurantName, 'RESTAURANT NAME in paidCART')
         // const order = await Order.findById(filter).populate('lineItems.item').exec(); 
 
         // Function to fetch item name
         async function getItemName(itemId, restaurantData) {
-            console.log(itemId, 'Item ID being queried');
-            console.log(restaurantData.menu, 'Menu Items in restaurant');
+            // console.log(itemId, 'Item ID being queried');
+            // console.log(restaurantData.menu, 'Menu Items in restaurant');
 
             // Find the menu item in the restaurant's menu array using Array.find
             // Find the menu item in the restaurant's menu array using Array.find
             
             const menuItem = restaurantData.menu.find(item => item._id.equals(itemId));
 
-            console.log(menuItem, 'Menu Item found');
+            // console.log(menuItem, 'Menu Item found');
 
             return menuItem ? menuItem.dishName : 'Unknown Item';
         }
@@ -100,9 +104,9 @@ async function convertToPaidOrder(req, res) {
         // }));
 
         const lineItemsWithNames = await Promise.all(updatedCart.lineItems.map(async (lineItem) => {
-            console.log(lineItem.item, 'Item ID being queried');  // Check the actual ID being passed
+            // console.log(lineItem.item, 'Item ID being queried');  // Check the actual ID being passed
             const itemName = await getItemName(lineItem.item, restaurantData);
-            console.log(itemName, 'itemName in lineItemMapping');  // Check the fetched name
+            // console.log(itemName, 'itemName in lineItemMapping');  // Check the fetched name
             return {
                 quantity: lineItem.quantity,
                 item: lineItem.item,
@@ -143,7 +147,7 @@ async function convertToPaidOrder(req, res) {
         const paidOrder = new PaidOrder(paidOrderData);
         await paidOrder.save();
 
-        console.log('PaidOrder created:', paidOrder);
+        // console.log('PaidOrder created:', paidOrder);
 
         const userFilter = { _id: req.body.cart.user }
         const userUpdate = { $push: { orders: paidOrder._id } }
@@ -152,7 +156,7 @@ async function convertToPaidOrder(req, res) {
             new: true
         });
 
-        console.log(addOrderToUser, 'addOrderToUser')
+        // console.log(addOrderToUser, 'addOrderToUser')
         // Respond with success or any other necessary information
         return res.status(200).json({ success: true, message: 'PaidOrder created successfully' });
     } catch (error) {

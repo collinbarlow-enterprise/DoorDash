@@ -38,7 +38,7 @@ const OrdersInProgressListComponent = ({ orders }) => {
             <div className='order-info'>Drop Off Instructions: <span>{order.dropOffInstructions}</span></div>
             {order.isGift ? (
               <>
-                <div className='order-info'>Order is a Gift? <span>{order.isGift}</span></div>
+                <div className='order-info'>Order is a Gift? <span>Yes</span></div>
               </>
             ) : (
               <></>
