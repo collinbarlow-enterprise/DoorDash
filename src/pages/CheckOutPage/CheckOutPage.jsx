@@ -29,6 +29,8 @@ export default function CheckOutPage() {
 
   const [deliveryOption, setDeliveryOption] = useState(null)
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showWarning, setShowWarning] = useState(true);
+
 
   const [giftStatus, setGiftStatus] = useState(false)
   const [dropOffInstructions, setDropOffInstructions] = useState('')
@@ -151,6 +153,10 @@ export default function CheckOutPage() {
     // console.log(cart.giftStatus, 'giftStatus in CART')
   }
 
+  function resetWarning() {
+    setShowWarning(false)
+  };
+
   let temporaryInstructions = '';
 
   function changeDropOffInstructions(e) {
@@ -198,6 +204,12 @@ export default function CheckOutPage() {
     // console.log(cart.total, 'BEFORE frontend');
     // console.log(discount, 'discount BEFORE frontend');
     // console.log(dasherTip, 'dasherTip BEFORE frontend');
+    if (!deliveryOption) {
+      setShowWarning(true); // Show warning if no delivery option is selected
+      setTimeout(() => setShowWarning(false), 3000); // Hide warning after 3 seconds
+      return;
+    }
+
     cart.total = parseFloat(cart.total)
     cart.total = parseFloat((cart.total + dasherTip - discount).toFixed(2))
     console.log(cart.total, 'AFTER cart.total')
@@ -257,7 +269,8 @@ export default function CheckOutPage() {
       <GoogleMapsContainerComponenet user={user} />
       <br />
       {/* <div>Delivery Options</div> */}
-      <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+      <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate}  resetWarning={resetWarning}
+/>
       <br />
       <div className='checkout-container'>
         <div>Address: {user.address}</div>
@@ -322,7 +335,13 @@ export default function CheckOutPage() {
       <br />
       <CheckOutPageCreditCard user={user} chaseSavings={chaseSavings} />
 
-      <div onClick={() => convertCartToPaidOrder()} ><button>PLACE THE ORDER</button></div>
+      {/* <div onClick={() => convertCartToPaidOrder()} ><button>PLACE THE ORDER</button></div> */}
+      {showWarning && (
+        <div style={{ color: 'red' }}>Please select a delivery option before placing the order.</div>
+      )}
+      <div onClick={convertCartToPaidOrder}>
+        <button disabled={showWarning}>PLACE THE ORDER</button>
+      </div>
     </div>
 
   )

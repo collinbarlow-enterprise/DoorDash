@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, setDeliveryOption, selectedDate, setSelectedDate }) {
+export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, setDeliveryOption, selectedDate, setSelectedDate, resetWarning }) {
 
   const [clickedButton, setClickedButton] = useState(null);
   const [setDeliveryTimeClicked, setSetDeliveryTimeClicked] = useState(false);
@@ -11,7 +11,7 @@ export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, s
 
 
   const handleDeliveryOptionChange = (option) => {
-
+    resetWarning();
     console.log(clickedButton, 'clickedButton')
     setClickedButton(option);
     setDeliveryOption((prevState) => {
@@ -60,7 +60,10 @@ export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, s
         to the order document  */}
         {deliveryOption === 'scheduleAhead' && (
           <button 
-            onClick={handleSetDeliveryTimeClick} 
+            onClick={() => {
+              handleSetDeliveryTimeClick();
+              resetWarning();
+            }} 
             className={setDeliveryTimeClicked ? 'clicked' : ''}
           >
             Set Delivery Time
