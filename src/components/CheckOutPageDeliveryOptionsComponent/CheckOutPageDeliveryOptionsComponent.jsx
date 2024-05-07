@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import '../../../src/checkOutPageDeliveryOptionsStyle.css'
 
 export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, setDeliveryOption, selectedDate, setSelectedDate, resetWarning }) {
 
