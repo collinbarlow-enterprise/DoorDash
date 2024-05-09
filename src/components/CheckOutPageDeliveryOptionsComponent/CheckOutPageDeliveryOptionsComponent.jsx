@@ -9,8 +9,6 @@ export default function CheckOutPageDeliveryOptionsComponent({ deliveryOption, s
   const [clickedButton, setClickedButton] = useState(null);
   const [setDeliveryTimeClicked, setSetDeliveryTimeClicked] = useState(false);
 
-
-
   const handleDeliveryOptionChange = (option) => {
     resetWarning();
     console.log(clickedButton, 'clickedButton')

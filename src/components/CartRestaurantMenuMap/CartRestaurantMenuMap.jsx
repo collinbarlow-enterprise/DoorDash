@@ -38,29 +38,20 @@ if (restaurantMenu === null) {
     <div className="container">
     {/* <h6 className="text-left">CartRestaurantMenuMap Component</h6> */}
     <div className="text-left">Complement Your Cart Below</div>
-    <Slider {...settings}>
-      {menuItemsNotInCart.map((menuItem) => (
-        <div key={menuItem._id} className="cart-complement-item">
-          <CartComplementItems
-            menuItem={menuItem}
-            restaurantId={restaurantId}
-            cart={cart}
-            setCart={setCart}
-          />
-        </div>
-      ))}
-    </Slider>
+    <div id="cartSlider">  {/* Wrapper div with ID */}
+      <Slider {...settings}>
+        {menuItemsNotInCart.map((menuItem) => (
+          <div key={menuItem._id} className="cart-complement-item">
+            <CartComplementItems
+              menuItem={menuItem}
+              restaurantId={restaurantId}
+              cart={cart}
+              setCart={setCart}
+            />
+          </div>
+        ))}
+      </Slider>
+    </div>
   </div>
-);
+  );
 }; 
-//     <div className="container">
-//       <h6 className="text-center">CartRestaurantMenuMap Component</h6>
-//       <div>
-//       {menuItemsNotInCart.map((menuItem) => (
-//     <CartComplementItems key={menuItem._id} menuItem={menuItem} restaurantId={restaurantId} cart = {cart} setCart = {setCart}/>
-//   ))}
-
-//       </div>
-//     </div>
-//   )
-// }
