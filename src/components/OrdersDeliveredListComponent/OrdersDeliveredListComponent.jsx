@@ -7,10 +7,10 @@ const OrdersDeliveredListComponent = ({ orders }) => {
 
   return (
     <div className='container'>
-      <h2>Order List</h2>
+      <h2>Orders Delivered</h2>
       <ul>
         {sortedOrders.map(order => (
-          <li key={order.id}>
+          <li key={order.id} className='order-item'>
             <div className='order-info'>Order Status <span>{order.deliveryStatus.toUpperCase()}</span></div>
             <div className='order-info'>Order ID: <span>{order.id}</span></div>
             <div className='order-info'>Order Placed:   <span>

@@ -23,6 +23,13 @@ ul li p {
     margin: 0;
 }
 
+.order-item {
+  border: 1px solid #ccc;  /* light grey border */
+  padding: 10px;
+  margin-bottom: 10px;     /* adds space between items */
+  background-color: #f9f9f9; /* light background color */
+}
+
 .line-items-list {
     list-style-type: none;
     padding: 0;

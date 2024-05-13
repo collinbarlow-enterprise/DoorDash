@@ -126,13 +126,10 @@ useEffect(() => {
       <p>Loading...</p>
     ) : (
       <>
-        <h1>Order Status Page</h1>
-        <button onClick={() => updateOrderStatus()}>update order status button</button>
-        <div>First Component is going to be undelivered orders</div>
+        {/* <h1>Order Status Page</h1> */}
         <OrdersInProgressListComponent orders={ordersInProgress} />
-        <div onClick={() => filterPaidOrders()}><button>filterPaidOrders</button></div>
-        <div>Second Component is going to be delivered orders</div>
-        <div>Completed</div>
+
+        {/* <div>Completed</div> */}
         <OrdersDeliveredListComponent orders={deliveredOrders} />
         <br />
       </>
