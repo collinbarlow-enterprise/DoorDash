@@ -30,7 +30,7 @@ export default function CheckOutPage() {
   const [deliveryOption, setDeliveryOption] = useState(null)
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showWarning, setShowWarning] = useState(true);
-
+  const [clickedButton, setClickedButton] = useState(null);
 
   const [giftStatus, setGiftStatus] = useState(false)
   const [dropOffInstructions, setDropOffInstructions] = useState('')
@@ -183,7 +183,7 @@ export default function CheckOutPage() {
       console.log(user, 'user in setDropOff in handleDrop')
       return newDropOffInstructions;
     })
-    cart.dropOffInstructions= dropOffInstructions
+    cart.dropOffInstructions = dropOffInstructions
     console.log(cart.dropOffInstructions, 'cart.drop off')
   }
 
@@ -197,7 +197,7 @@ export default function CheckOutPage() {
 
   const formatToTwoDecimalPlaces = (value) => {
     return parseFloat(value).toFixed(2);
-};
+  };
 
   async function convertCartToPaidOrder() {
     console.log(cart, 'cart in convert function frontend');
@@ -238,9 +238,10 @@ export default function CheckOutPage() {
 
   useEffect(() => {
     console.log(user, cart, 'user and cart')
-    if (user && cart) {    
-    cart.dropOffInstructions = user.dropOffInstructions
-    console.log(cart.dropOffInstructions, 'cart.drop off')}
+    if (user && cart) {
+      cart.dropOffInstructions = user.dropOffInstructions
+      console.log(cart.dropOffInstructions, 'cart.drop off')
+    }
   }, [user, cart])
 
   useEffect(() => {
@@ -254,8 +255,9 @@ export default function CheckOutPage() {
   useEffect(() => {
     console.log(giftStatus, 'giftStatus after boolean switch');
     if (cart) {
-    cart.giftStatus = giftStatus;
-    console.log(cart.giftStatus, 'giftstatus in CART');}
+      cart.giftStatus = giftStatus;
+      console.log(cart.giftStatus, 'giftstatus in CART');
+    }
   }, [giftStatus])
 
   if (restaurant === null || cart === null) {
@@ -269,8 +271,8 @@ export default function CheckOutPage() {
       <GoogleMapsContainerComponenet user={user} />
       <br />
       {/* <div>Delivery Options</div> */}
-      <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate}  resetWarning={resetWarning}
-/>
+      <CheckOutPageDeliveryOptionsComponent deliveryOption={deliveryOption} setDeliveryOption={setDeliveryOption} selectedDate={selectedDate} setSelectedDate={setSelectedDate} resetWarning={resetWarning}
+      />
       <br />
       <div className='checkout-container'>
         <div>Address: {user.address}</div>
@@ -317,16 +319,31 @@ export default function CheckOutPage() {
             (<div className="cost-item">Discount: <span>${discount}</span></div>) :
             (<div className="cost-item">No discount applied</div>)}
 
-            <div className="cost-item">Subtotal: <span>${formatToTwoDecimalPlaces(cart.subTotal)}</span></div>
-    <div className="cost-item">Delivery Fee: <span>${formatToTwoDecimalPlaces(cart.deliveryFee)}</span></div>
-    <div className="cost-item">Fees and Estimated Tax: <span>${formatToTwoDecimalPlaces(cart.taxesAndFees)}</span></div>
-    <div className="cost-item">Dasher Tip: <span>${formatToTwoDecimalPlaces(dasherTip)}</span></div>
+          <div className="cost-item">Subtotal: <span>${formatToTwoDecimalPlaces(cart.subTotal)}</span></div>
+          <div className="cost-item">Delivery Fee: <span>${formatToTwoDecimalPlaces(cart.deliveryFee)}</span></div>
+          <div className="cost-item">Fees and Estimated Tax: <span>${formatToTwoDecimalPlaces(cart.taxesAndFees)}</span></div>
+          <div className="cost-item">Dasher Tip: <span>${formatToTwoDecimalPlaces(dasherTip)}</span></div>
 
           <div className="tip-buttons-container">
-            <button className="tip-button" onClick={() => dasherTipAdjustment(10)}>10%</button>
-            <button className="tip-button" onClick={() => dasherTipAdjustment(15)}>15%</button>
-            <button className="tip-button" onClick={() => dasherTipAdjustment(20)}>20%</button>
-            <button className="tip-button" onClick={() => navigateToOtherTipPage()}>Other</button>
+            <button className={`tip-button ${clickedButton === 'tip10' ? 'clicked' : ''}`}
+              onClick={() => {
+                setClickedButton('tip10');
+                dasherTipAdjustment(10);
+              }}>10%
+            </button>
+            <button className={`tip-button ${clickedButton === 'tip15' ? 'clicked' : ''}`}
+              onClick={() => {
+                setClickedButton('tip15');
+                dasherTipAdjustment(15);
+              }}>15%
+            </button>
+            <button className={`tip-button ${clickedButton === 'tip20' ? 'clicked' : ''}`}
+              onClick={() => {
+                setClickedButton('tip20');
+                dasherTipAdjustment(20);
+              }}>20%
+            </button>
+            {/* <button className="tip-button" onClick={() => navigateToOtherTipPage()}>Other</button> */}
           </div>
 
           <div className="cost-item total-cost-item">Total: <span>${formatToTwoDecimalPlaces(parseInt(cart.total) + dasherTip - discount)}</span></div>
