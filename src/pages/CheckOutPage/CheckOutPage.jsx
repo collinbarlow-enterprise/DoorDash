@@ -265,7 +265,7 @@ export default function CheckOutPage() {
   }
 
   return (
-    <div className='container'>
+    <div className='container' style={{ marginTop: '75px'}}>
       <div>{restaurant.name}</div>
 
       <GoogleMapsContainerComponenet user={user} />

@@ -11,14 +11,16 @@ export default function NavBar({user, updateUser}) {
 
   return (
     <div className="navbar-parent"> 
-    <nav style={{ position: 'fixed', width: '100%', zIndex: 100, top: 0, backgroundColor: 'white', textAlign: 'left', paddingLeft: '2rem'  }}>
-      <Link to="/orderstatus">Orders</Link>
-      &nbsp; | &nbsp;
-      <Link to="/">Home</Link>
-      &nbsp; | &nbsp;
-      <Link to="/cart">Cart</Link>
-      &nbsp; | &nbsp;
-      <Link to='' onClick={handleLogOut}>Log Out</Link>
+      <nav className='navbar' 
+      // style={{ position: 'fixed', width: '100%', zIndex: 100, top: 0, backgroundColor: 'whitesmoke', textAlign: 'left', paddingLeft: '2rem'  }}
+      >
+      <Link to="/orderstatus" className='navbar-link'>Orders</Link>
+      {/* &nbsp; | &nbsp; */}
+      <Link to="/"  className='navbar-link'>Home</Link>
+      {/* &nbsp; | &nbsp; */}
+      <Link to="/cart"  className='navbar-link'>Cart</Link>
+      {/* &nbsp; | &nbsp; */}
+      <Link to='' onClick={handleLogOut}  className='navbar-link'>Log Out</Link>
     </nav>
     </div>
   )

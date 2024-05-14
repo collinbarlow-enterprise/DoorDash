@@ -90,7 +90,7 @@ export default function CartPage() {
   return (
     <div>
       {/* <div><button onClick={() => navigateBackToHome()}>Back Home</button></div> */}
-      <div className='container'>
+      <div className='container' style={{ marginTop: '75px'}}>
         <div>
           <CartPageComponent cart={cart} restaurant={restaurant} toRestaurant={toRestaurant} />
         </div>

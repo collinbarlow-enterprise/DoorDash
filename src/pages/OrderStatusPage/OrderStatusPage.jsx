@@ -121,7 +121,7 @@ useEffect(() => {
 }}, [ordersInProgress]);
 
   return (
-    <div>
+    <div style={{ marginTop: '75px'}}>
     {paidOrders === null ? (
       <p>Loading...</p>
     ) : (

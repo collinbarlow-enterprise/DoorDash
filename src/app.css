@@ -7,9 +7,36 @@
   margin-top: 50px;
 }
 
+.navbar {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: whitesmoke;
+  text-align: left;
+  padding: 0;
+  padding-left: 2rem;
+  justify-content: flex-start;
+  border-bottom: 1px solid #ccc;
+}
+
+.navbar-link {
+  margin: 1vmin;
+  padding: 1vmin;
+  background-color: lightgray;
+  text-decoration: none; /* Remove default underline */
+  color: black; /* Set text color */
+  border: 1px solid #ccc;
+  border-radius: 0.5vmin;
+}
+
+.navbar-link:hover {
+  background-color: gray; /* Change background color on hover */
+}
 
 .home-page-container {
   margin: 1rem;
+  margin-top: 75px;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;

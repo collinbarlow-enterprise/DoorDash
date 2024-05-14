@@ -31,7 +31,7 @@ export default function ItemComponent({
   // itemQty changes upon the handleChangeQty
 
   return (
-    <div className = "itemPage">
+    <div className = "itemPage" style={{ marginTop: '75px'}}>
       <div className="itemHeader">
         <div ><button onClick={() => navigateBackToRestaurant(id)}>X</button>
           <img src={defaultImage} alt='No Picture Loaded'></img>

@@ -108,7 +108,7 @@ export default function RestaurantPageComponent({ }) {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginTop: '75px'}}>
       <div><button onClick={() => navigateBackToHome()}>Back To Home</button></div>
       {/* <h6 className="text-center">Restaurant Page Component</h6> */}
       <img src={defaultImage}></img>
