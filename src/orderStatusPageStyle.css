@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
+    padding: 4px;
     border-bottom: 1px solid #ccc; /* Add bottom border */
 }
 
@@ -25,7 +26,7 @@ ul li p {
 
 .order-item {
   border: 1px solid #ccc;  /* light grey border */
-  padding: 10px;
+  padding: 15px;
   margin-bottom: 10px;     /* adds space between items */
   background-color: #f9f9f9; /* light background color */
 }

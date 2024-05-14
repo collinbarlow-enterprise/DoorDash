@@ -7,7 +7,7 @@ const OrdersDeliveredListComponent = ({ orders }) => {
 
   return (
     <div className='container'>
-      <h2>Orders Delivered</h2>
+      <h3>Orders Delivered</h3>
       <ul>
         {sortedOrders.map(order => (
           <li key={order.id} className='order-item'>

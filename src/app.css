@@ -1,9 +1,12 @@
 .navbar-parent {
   width: 100%;
-  padding: 0; /* Remove any padding */
-  margin: 0; /* Remove any margin */
+  padding: 0;
+  /* Remove any padding */
+  margin: 0;
+  /* Remove any margin */
   margin-top: 50px;
 }
+
 
 .home-page-container {
   margin: 1rem;
@@ -11,7 +14,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   /* padding: 16px; */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -20,10 +23,13 @@
 }
 
 .cuisine-group {
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
+  width: 100%;
+  margin: auto;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5vmin;
+  /* padding: 10px; */
+}
 
 .cuisine-buttons-parent {
   display: flex;
@@ -33,93 +39,110 @@
 
 .cuisine-buttons {
   padding: 2vmin;
-  border-radius: 50vmin; 
+  border-radius: .5vmin;
+  margin-left: -15px;
 }
 
-  /* Title for each cuisine */
-  .cuisine-title {
-    font-size: 24px;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    float: left;
-    
-  }
-  
-  /* Container for restaurant cards within a cuisine */
-  .restaurants-container {
-    display: flex;
-    overflow-x: hidden;
-    flex-wrap: wrap;
-    justify-content: start; /* Align items to the start of the container */
-    gap: 20px; /* Adjust the gap between cards */
-  }
-  
-  /* Individual restaurant card */
-  .container {
-    flex: 1;
-    min-width: 250px; /* Minimum width of each card */
-    border: 1px solid #ccc; /* Border for the card */
-    border-radius: 8px; /*Rounded corners */
-    overflow: hidden; /* Ensures content fits within the borders */
-    cursor: pointer;
-    padding: 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds shadow for depth */
-  }
-  
-  .image-placeholder {
-    background-color: #f0f0f0;
-    height: 150px; /* Fixed height for image placeholder */
-    margin-bottom: 1rem; /* Space between image and text */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    color: #666;
-  }
+/* Title for each cuisine */
+.cuisine-title {
+  font-size: 24px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  float: left;
+  padding: 10px;
+
+}
+
+/* Container for restaurant cards within a cuisine */
+.restaurants-container {
+  display: flex;
+  overflow-x: hidden;
+  flex-wrap: wrap;
+  justify-content: start;
+  /* Align items to the start of the container */
+  gap: 20px;
+  /* Adjust the gap between cards */
+}
+
+/* Individual restaurant card */
+.container {
+  flex: 1;
+  min-width: 250px;
+  /* Minimum width of each card */
+  border: 1px solid #ccc;
+  /* Border for the card */
+  border-radius: 8px;
+  /*Rounded corners */
+  overflow: hidden;
+  /* Ensures content fits within the borders */
+  cursor: pointer;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Optional: Adds shadow for depth */
+}
+
+.image-placeholder {
+  background-color: #f0f0f0;
+  height: 150px;
+  /* Fixed height for image placeholder */
+  margin-bottom: 1rem;
+  /* Space between image and text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #666;
+}
 
 .restaurant-card {
   flex: 1;
   width: 250px;
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  padding: 10px; /* Adjust padding as needed */
+  box-sizing: border-box;
+  /* Include padding and border in the element's total width and height */
+  padding: 10px;
+  /* Adjust padding as needed */
   /* Further styling to ensure consistent appearance */
   font-size: 10px;
   display: flex;
-  flex-direction: column; /* Stack child elements vertically */
+  flex-direction: column;
+  /* Stack child elements vertically */
 }
 
 .restaurant-card img {
-  width: 100%; /* Image takes up 100% width of its container */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: cover; /* Ensure the image covers the entire container */
+  width: 90%;
+  /* Image takes up 100% width of its container */
+  height: auto;
+  /* Maintain aspect ratio */
+  object-fit: cover;
+  /* Ensure the image covers the entire container */
 }
 
 .restaurant-card h2 {
   font-size: medium;
-  margin-top: -10px; /* Add spacing between the image and the restaurant name */
+  margin-top: -10px;
+  /* Add spacing between the image and the restaurant name */
 }
 
 .slick-slider {
-  margin-left: 0; /* Adjust as needed to align the slider */
+  margin-left: 0;
+  /* Adjust as needed to align the slider */
 }
 
 .slider-parent {
   margin: 0 27px;
 }
 
-.slick-prev
-{
-    left: 0px;
-    /* box-shadow: 0 0px 0px rgba(0,0,0,0.1); */
-    /* background-color: lightgray; */
-    /* color: white; */
+.slick-prev {
+  left: 0px;
+  /* box-shadow: 0 0px 0px rgba(0,0,0,0.1); */
+  /* background-color: lightgray; */
+  /* color: white; */
 }
 
-.slick-next
-{
-    right: -30px;
-    /* background-color: lightgrey; */
-    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+.slick-next {
+  right: -30px;
+  /* background-color: lightgrey; */
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
 }
 
 .slick-next:before {
@@ -133,7 +156,9 @@
   border-radius: 50%;
   /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
 }
-.slick-prev.slick-disabled:before, .slick-next.slick-disabled:before {
+
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before {
   opacity: 1;
   /* background-color: white; */
   /* visibility: hidden; */

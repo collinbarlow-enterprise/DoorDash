@@ -126,10 +126,12 @@ useEffect(() => {
       <p>Loading...</p>
     ) : (
       <>
-        {/* <h1>Order Status Page</h1> */}
-        <OrdersInProgressListComponent orders={ordersInProgress} />
+        <h2>Order Status Page</h2>
+        {ordersInProgress.length > 0 && <OrdersInProgressListComponent orders={ordersInProgress} />}
+        {/* <OrdersInProgressListComponent orders={ordersInProgress} /> */}
 
         {/* <div>Completed</div> */}
+        {deliveredOrders.length > 0 && <OrdersDeliveredListComponent orders={deliveredOrders} />}
         <OrdersDeliveredListComponent orders={deliveredOrders} />
         <br />
       </>

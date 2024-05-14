@@ -3,10 +3,11 @@
 }
 .menu-item-container {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Creates two columns of equal width */
+    grid-template-columns: 2fr 1fr; /* Creates two columns of equal width */
     grid-template-rows: 1fr 1fr; /* Creates two rows of equal height */
     /* gap: 10px; Optional: Adds some space between the grid items */
     border: 1px solid #ccc;
+    border-radius: 0.5vmin;
     padding: 10px;
     margin-bottom: 10px;
     /* width: 200px; Set a fixed width, or make it responsive as needed */

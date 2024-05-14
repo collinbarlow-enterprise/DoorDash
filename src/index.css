@@ -133,7 +133,7 @@ a.button {
   text-decoration: none;
   text-align: center;
   border: .1vmin solid var(--tan-2);
-  border-radius: 50vmin;
+  /* border-radius: 50vmin; */
   outline: none;
   cursor: pointer;
 }

@@ -5,7 +5,7 @@ const OrdersInProgressListComponent = ({ orders }) => {
     console.log(orders, 'orders in INPROGRESS list component')
   return (
     <div className='container'>
-      <h2>Orders in Progress</h2>
+      <h3>Orders in Progress</h3>
       <ul>
         {orders.map(order => (
           <li key={order.id} className="order-item">
