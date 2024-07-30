@@ -64,6 +64,7 @@
   .cartControls button {
     margin: 0 5px; /* Add some margin between buttons */
     border: none;
+    background-color: transparent;
     cursor: pointer;
   }
 
