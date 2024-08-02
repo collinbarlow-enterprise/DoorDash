@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// not used in this version of Magic Chef
-
 const driverSchema = new Schema({
     firstName: { type: String },
     lastName: { type: String },
