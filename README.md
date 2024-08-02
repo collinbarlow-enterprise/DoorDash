@@ -21,6 +21,9 @@ Through this project, I gained valuable insights into React's timing and batch u
 ## MockDoorDash Overview
 This web app has several pages:
 
+Database Design / ERD : 
+![ERD](public/screenshots/ERD.png)
+
 Home Page: Displays all available restaurants.
 ![HomePage](public/screenshots/HomePage.png)
 
