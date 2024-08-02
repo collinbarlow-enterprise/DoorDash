@@ -4,7 +4,7 @@
 ## Motivation
 This project was an opportunity to deepen my understanding of React, database design, and APIs. Reverse-engineering DoorDash and implementing a similar workflow was a rewarding experience. The most challenging aspect was integrating the Google Maps API, especially since the project uses a now-deprecated version. This challenge highlighted my initial lack of experience with APIs, which was a key motivation for this project.
 
-Through this project, I gained valuable insights into React's timing and batch updates, enhancing my comprehension of data management and manipulation in web applications.
+Through this project, I gained valuable insights into React's timing and batch updates, and how data is managed or manipulated in web applications.
 
  ## Technologies Used
 
