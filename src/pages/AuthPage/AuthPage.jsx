@@ -11,7 +11,7 @@ export default function AuthPage({user, setUser}) {
     <>
       <h1>AuthPage</h1>
       <button onClick={()=> setShowAuth(!showAuth)}>
-      {showAuth ? 'Do You Want to Log In' : 'Do You Want to Sign Up'}</button>
+      {showAuth ? 'Do You Want to Sign Up?' : 'Do You Want to Log In?'}</button>
       {showAuth ? <LoginForm setUser={setUser}/> : <SignUpForm setUser={setUser}/> }
       
     </>
